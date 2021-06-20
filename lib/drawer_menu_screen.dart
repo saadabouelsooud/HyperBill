@@ -1,6 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery/payments/ui/payments_screen.dart';
+import 'package:grocery/prices/ui/prices_screen.dart';
+import 'package:grocery/recharge/ui/recharge.dart';
+import 'package:grocery/support/ui/support_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
 import 'consumptions/ui/cosumption_screen.dart';
@@ -42,12 +46,12 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             style: TextStyle(color: Colors.white),
           ),
           icon: Icon(Icons.payment, color: Colors.white),
-          page: MainPage(),
+          page: PaymentsScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text('Recharge', style: TextStyle(color: Colors.white)),
           icon: Icon(Icons.charging_station, color: Colors.white),
-          page: MainPage(),
+          page: RechargeScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
@@ -55,7 +59,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             style: TextStyle(color: Colors.white),
           ),
           icon: Icon(Icons.price_change, color: Colors.white),
-          page: MainPage(),
+          page: PricesScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
@@ -63,7 +67,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             style: TextStyle(color: Colors.white),
           ),
           icon: Icon(Icons.support, color: Colors.white),
-          page: MainPage(),
+          page: SupportScreen(),
         ),
       ],
     );

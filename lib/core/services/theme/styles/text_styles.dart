@@ -31,12 +31,12 @@ class TextStyles {
     fontFamily: "din_lt_arabic",
   );
   static const hintHeaderStyle = TextStyle(
-    color: AppColors.hintColor,
+    color: AppColors.primaryBackground,
     fontSize: 15,
     fontFamily: "din_lt_arabic",
   );
   static const largeHintHeaderStyle = TextStyle(
-    color: AppColors.hintColor,
+    color: Colors.green,
     fontSize: 20,
     fontFamily: "din_lt_arabic",
   );  static const largeHintHeaderStyleBold = TextStyle(
@@ -54,7 +54,7 @@ class TextStyles {
     fontFamily: "din_lt_arabic",
   );
 
-  static const headerStyle = TextStyle(color: Colors.black, fontSize: 15, fontFamily: "din_lt_arabic", fontWeight: FontWeight.bold);
+  static const headerStyle = TextStyle(color: Colors.black, fontSize: 12, fontFamily: "din_lt_arabic", fontWeight: FontWeight.bold);
   static const headerStyleNormal = TextStyle(color: Colors.black, fontSize: 15, fontFamily: "din_lt_arabic", fontWeight: FontWeight.normal);
   static const headerStyleWithColor =
       TextStyle(color: AppColors.mainColor, fontSize: 17, fontFamily: "din_lt_arabic", fontWeight: FontWeight.bold);

@@ -1,20 +1,16 @@
-import 'dart:math';
-
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:grocery/consumptions/ui/chart.dart';
-import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
-class ConsumptionsScreen extends KFDrawerContent {
+class PaymentsScreen extends KFDrawerContent {
+
   @override
-  _ConsumptionsState createState() => _ConsumptionsState();
+  _PaymentsScreenState createState() => _PaymentsScreenState();
 }
 
-class _ConsumptionsState extends State<ConsumptionsScreen> {
+class _PaymentsScreenState extends State<PaymentsScreen> {
   final List<Map> _products = List.generate(10, (i) {
-    return {"Month": "Jan-2021", "Date": "01-Feb-2021", "KWh": "935.042", "Amount": "1,128.349"};
+    return {"Date": "27-May-2021 12:11", "Type": "ONLINE", "Receipt": "270521_10000055", "Amount": "48"};
   });
 
   int _currentSortColumn = 0;
@@ -24,14 +20,15 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Consumptions"),
-          actions: [
-            InkWell( onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-            },child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.asset("assets/images/profile.png",),
-            ))
+          title: Text("Payments"),
+            actions: [
+              InkWell( onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+              },child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset("assets/images/profile.png",),
+              ))
+
           ],
           leading: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -54,28 +51,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Expanded(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Column(
-                      children: [
-                        Expanded(child: PieChartSample2()),
-                        Text(
-                          "Consumption ",
-                          style: TextStyles.largeHintHeaderStyle,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Expanded(child: PieChartSample2()),
-                        Text("Amount EGP " ,style: TextStyles.largeHintHeaderStyle,),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+
               Expanded(
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -90,27 +66,9 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         columns: [
                           DataColumn(
                               label: Text(
-                                'Month',
+                                'Date',
                                 style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Month'].compareTo(productA['Month']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Month'].compareTo(productB['Month']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Reading Date'),
                               onSort: (columnIndex, _) {
                                 setState(() {
                                   _currentSortColumn = columnIndex;
@@ -128,23 +86,41 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                 });
                               }),
                           DataColumn(
-                              label: Text('KWh'),
+                              label: Text('Type'),
                               onSort: (columnIndex, _) {
                                 setState(() {
                                   _currentSortColumn = columnIndex;
                                   if (_isAscending == true) {
                                     _isAscending = false;
                                     // sort the product list in Ascending, order by Price
-                                    _products.sort((productA, productB) => productB['KWh'].compareTo(productA['KWh']));
+                                    _products
+                                        .sort((productA, productB) => productB['Type'].compareTo(productA['Type']));
                                   } else {
                                     _isAscending = true;
                                     // sort the product list in Descending, order by Price
-                                    _products.sort((productA, productB) => productA['KWh'].compareTo(productB['KWh']));
+                                    _products
+                                        .sort((productA, productB) => productA['Type'].compareTo(productB['Type']));
                                   }
                                 });
                               }),
                           DataColumn(
-                              label: Text('Amount EGP'),
+                              label: Text('Receipt No .'),
+                              onSort: (columnIndex, _) {
+                                setState(() {
+                                  _currentSortColumn = columnIndex;
+                                  if (_isAscending == true) {
+                                    _isAscending = false;
+                                    // sort the product list in Ascending, order by Price
+                                    _products.sort((productA, productB) => productB['Receipt'].compareTo(productA['Receipt']));
+                                  } else {
+                                    _isAscending = true;
+                                    // sort the product list in Descending, order by Price
+                                    _products.sort((productA, productB) => productA['Receipt'].compareTo(productB['Receipt']));
+                                  }
+                                });
+                              }),
+                          DataColumn(
+                              label: Text('Amount'),
                               onSort: (columnIndex, _) {
                                 setState(() {
                                   _currentSortColumn = columnIndex;
@@ -165,9 +141,9 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         ],
                         rows: _products.map((item) {
                           return DataRow(cells: [
-                            DataCell(Text(item['Month'].toString())),
-                            DataCell(Text(item['Date'])),
-                            DataCell(Text(item['KWh'].toString())),
+                            DataCell(Text(item['Date'].toString())),
+                            DataCell(Text(item['Type'])),
+                            DataCell(Text(item['Receipt'].toString())),
                             DataCell(Text(item['Amount'].toString())),
                           ]);
                         }).toList(),
