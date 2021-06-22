@@ -16,6 +16,6 @@ class AppColors {
   static const seconedMainColor = Color.fromRGBO(186, 0, 81, 1);
   static const iconsColor = Color.fromRGBO(186, 0, 81, 1);
   static const textColor = Color.fromRGBO(96, 125, 139, 1);
-  static const hintColor = Color(0xff7C7C7D);
+  static const hintColor = Color(0xff23A551);
   static const borderColor = Color(0xff707070);
 }

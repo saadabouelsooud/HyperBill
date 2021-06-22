@@ -1,6 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grocery/core/services/theme/styles/colors.dart';
+import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/payments/ui/payments_screen.dart';
 import 'package:grocery/prices/ui/prices_screen.dart';
 import 'package:grocery/recharge/ui/recharge.dart';
@@ -28,14 +30,14 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       initialPage: DashboardScreen(),
       items: [
         KFDrawerItem.initWithPage(
-          text: Text('Dashboard', style: TextStyle(color: Colors.white)),
+          text: Text('Dashboard', style:TextStyles.LargeHeaderStyle),
           icon: Icon(Icons.dashboard, color: Colors.white),
           page: DashboardScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
             'Consumptions',
-            style: TextStyle(color: Colors.white),
+            style: TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.show_chart, color: Colors.white),
           page: ConsumptionsScreen(),
@@ -43,20 +45,20 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         KFDrawerItem.initWithPage(
           text: Text(
             'Payments',
-            style: TextStyle(color: Colors.white),
+            style:TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.payment, color: Colors.white),
           page: PaymentsScreen(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text('Recharge', style: TextStyle(color: Colors.white)),
+          text: Text('Recharge', style: TextStyles.LargeHeaderStyle),
           icon: Icon(Icons.charging_station, color: Colors.white),
           page: RechargeScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
             'Prices',
-            style: TextStyle(color: Colors.white),
+            style:TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.price_change, color: Colors.white),
           page: PricesScreen(),
@@ -64,7 +66,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         KFDrawerItem.initWithPage(
           text: Text(
             'Support',
-            style: TextStyle(color: Colors.white),
+            style:TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.support, color: Colors.white),
           page: SupportScreen(),
@@ -91,7 +93,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                       'HypeBill',
                       textStyle: const TextStyle(
                         fontSize: 32.0,
-                        color: Color.fromRGBO(44, 72, 171, 1.0),
+                        color:AppColors.hintColor,
                         fontWeight: FontWeight.bold,
                       ),
                       speed: const Duration(milliseconds: 300),
@@ -127,7 +129,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color.fromRGBO(255, 255, 255, 1.0), Color.fromRGBO(44, 72, 171, 1.0)],
+            colors: [Color.fromRGBO(255, 255, 255, 1.0), AppColors.hintColor,],
             tileMode: TileMode.repeated,
           ),
         ),

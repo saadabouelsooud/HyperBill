@@ -13,8 +13,8 @@ class TextStyles {
     fontWeight: FontWeight.bold,
     fontFamily: "din_lt_arabic",
   );static const LargeHeaderStyle = TextStyle(
-    color: Colors.black,
-    fontSize: 25,
+    color: Colors.white,
+    fontSize: 30,
     fontWeight: FontWeight.bold,
     fontFamily: "din_lt_arabic",
   );
@@ -40,7 +40,7 @@ class TextStyles {
     fontSize: 20,
     fontFamily: "din_lt_arabic",
   );  static const largeHintHeaderStyleBold = TextStyle(
-    color: AppColors.hintColor,
+    color: AppColors.primaryBackground,
     fontSize: 20,fontWeight: FontWeight.bold,
     fontFamily: "din_lt_arabic",
   ); static const mediumHintHeaderStyleBold = TextStyle(
