@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
+import 'package:grocery/support/ui/ticket_screen.dart';
 import 'dart:math';
 
 import 'package:kf_drawer/kf_drawer.dart';
@@ -20,7 +21,7 @@ class _SupportScreenState extends State<SupportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {  },child:Icon( Icons.add),),
+      floatingActionButton: FloatingActionButton(onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (_)=>TicketScreen())); },child:Icon( Icons.add),),
       body: Container(
         child: Center(
           child: Column(
@@ -49,55 +50,50 @@ class _SupportScreenState extends State<SupportScreen> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: _isAscending,
-                        headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
-                        columns: [
-                          DataColumn(
-                              label: Text('Date',  style: TextStyle(
-                          color: Colors.blue, fontWeight: FontWeight.bold),),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['price'].compareTo(productA['price']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['price'].compareTo(productB['price']));
-                                  }
-                                });
-                              }),
-                          DataColumn(label: Text('Type')),
-                          DataColumn(label: Text('Description')),
-                          DataColumn(label: Text('Status')),
-                          DataColumn(label: Text('Action',),
-                            // Sorting function
-                          ),
-                        ],
-                        rows: _products.map((item) {
-                          return DataRow(cells: [
-                            DataCell(Text(item['id'].toString())),
-                            DataCell(Text(item['name'])),
-                            DataCell(Text(item['price'].toString())),
-                            DataCell(Text(item['Status'].toString())),
-                            DataCell(Text(item['View'].toString()))
-                          ]);
-                        }).toList(),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: DataTable(columnSpacing: 20,
+                    sortColumnIndex: _currentSortColumn,
+                    sortAscending: _isAscending,
+                    headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
+                    columns: [
+                      DataColumn(
+                          label: Text('Date',  style: TextStyle(
+                      color: Colors.blue, fontWeight: FontWeight.bold),),
+                          onSort: (columnIndex, _) {
+                            setState(() {
+                              _currentSortColumn = columnIndex;
+                              if (_isAscending == true) {
+                                _isAscending = false;
+                                // sort the product list in Ascending, order by Price
+                                _products
+                                    .sort((productA, productB) => productB['price'].compareTo(productA['price']));
+                              } else {
+                                _isAscending = true;
+                                // sort the product list in Descending, order by Price
+                                _products
+                                    .sort((productA, productB) => productA['price'].compareTo(productB['price']));
+                              }
+                            });
+                          }),
+                      DataColumn(label: Text('Type')),
+                      DataColumn(label: Text('Description')),
+                      DataColumn(label: Text('Status')),
+                      DataColumn(label: Text('Action',),
+                        // Sorting function
                       ),
-                    ),
+                    ],
+                    rows: _products.map((item) {
+                      return DataRow(cells: [
+                        DataCell(Text(item['id'].toString())),
+                        DataCell(Text(item['name'])),
+                        DataCell(Text(item['price'].toString())),
+                        DataCell(Text(item['Status'].toString())),
+                        DataCell(Text(item['View'].toString()))
+                      ]);
+                    }).toList(),
                   ),
                 ),
               ),

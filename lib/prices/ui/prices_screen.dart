@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:grocery/core/services/theme/styles/text_styles.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
@@ -60,119 +61,117 @@ class _PricesScreenState extends State<PricesScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: _isAscending,
-                        headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
-                        columns: [
-                          DataColumn(
-                              label: Text(
-                                'From',
-                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-                              ),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['From'].compareTo(productA['From']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['From'].compareTo(productB['From']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('To'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products.sort((productA, productB) => productB['To'].compareTo(productA['To']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products.sort((productA, productB) => productA['To'].compareTo(productB['To']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Consumption Rate'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Rate'].compareTo(productA['Rate']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Rate'].compareTo(productB['Rate']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Customer Service'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products.sort(
-                                        (productA, productB) => productB['Service'].compareTo(productA['Service']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products.sort(
-                                        (productA, productB) => productA['Service'].compareTo(productB['Service']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text(
-                                'Extra',
-                              ),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Extra'].compareTo(productA['Extra']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Extra'].compareTo(productB['Extra']));
-                                  }
-                                });
-                              }
-                              // Sorting function
-                              ),
-                        ],
-                        rows: _products.map((item) {
-                          return DataRow(cells: [
-                            DataCell(Text(item['From'].toString() + "KWh")),
-                            DataCell(Text(item['To'].toString() + "KWh")),
-                            DataCell(Text(item['Rate'].toString() + "EGP")),
-                            DataCell(Text(item['Service'].toString() + "EGP")),
-                            DataCell(Text(item['Extra'].toString() + "EGP"))
-                          ]);
-                        }).toList(),
-                      ),
+                    child: DataTable(
+                      columnSpacing: 10,
+                      sortColumnIndex: _currentSortColumn,
+                      sortAscending: _isAscending,
+                      headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
+                      columns: [
+                        DataColumn(
+                            label: Text(
+                              'From',
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                            ),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productB['From'].compareTo(productA['From']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productA['From'].compareTo(productB['From']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text('To'),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products.sort((productA, productB) => productB['To'].compareTo(productA['To']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products.sort((productA, productB) => productA['To'].compareTo(productB['To']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text(' Rate'),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productB['Rate'].compareTo(productA['Rate']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productA['Rate'].compareTo(productB['Rate']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text('Service',),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products.sort(
+                                      (productA, productB) => productB['Service'].compareTo(productA['Service']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products.sort(
+                                      (productA, productB) => productA['Service'].compareTo(productB['Service']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text(
+                              'Extra',
+                            ),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productB['Extra'].compareTo(productA['Extra']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productA['Extra'].compareTo(productB['Extra']));
+                                }
+                              });
+                            }
+                            // Sorting function
+                            ),
+                      ],
+                      rows: _products.map((item) {
+                        return DataRow(cells: [
+                          DataCell(Text(item['From'].toString() + "KWh")),
+                          DataCell(Text(item['To'].toString() + "KWh")),
+                          DataCell(Text(item['Rate'].toString() + "EGP")),
+                          DataCell(Text(item['Service'].toString() + "EGP")),
+                          DataCell(Text(item['Extra'].toString() + "EGP"))
+                        ]);
+                      }).toList(),
                     ),
                   ),
                 ),

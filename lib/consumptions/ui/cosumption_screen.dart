@@ -51,128 +51,116 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: <Widget>[
-              Expanded(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Column(
-                      children: [
-                        Expanded(child: PieChartSample2()),
-                        Text(
-                          "Consumption ",
-                          style: TextStyles.largeHintHeaderStyle,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Expanded(child: PieChartSample2()),
-                        Text("Amount EGP " ,style: TextStyles.largeHintHeaderStyle,),
-                      ],
-                    ),
-                  ],
-                ),
+              Column(
+                children: [
+                  PieChartSample2(),
+                  Text(
+                    "Consumption ",
+                    style: TextStyles.largeHintHeaderStyle,
+                  ),
+                ],
               ),
-              Expanded(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: _isAscending,
-                        headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
-                        columns: [
-                          DataColumn(
-                              label: Text(
-                                'Month',
-                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-                              ),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Month'].compareTo(productA['Month']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Month'].compareTo(productB['Month']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Reading Date'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Date'].compareTo(productA['Date']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Date'].compareTo(productB['Date']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('KWh'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products.sort((productA, productB) => productB['KWh'].compareTo(productA['KWh']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products.sort((productA, productB) => productA['KWh'].compareTo(productB['KWh']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Amount EGP'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Amount'].compareTo(productA['Amount']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Amount'].compareTo(productB['Amount']));
-                                  }
-                                });
-                              }),
-                          // Sorting function
-                        ],
-                        rows: _products.map((item) {
-                          return DataRow(cells: [
-                            DataCell(Text(item['Month'].toString())),
-                            DataCell(Text(item['Date'])),
-                            DataCell(Text(item['KWh'].toString())),
-                            DataCell(Text(item['Amount'].toString())),
-                          ]);
-                        }).toList(),
-                      ),
-                    ),
+              Column(
+                children: [
+                  PieChartSample2(),
+                  Text("Amount EGP " ,style: TextStyles.largeHintHeaderStyle,),
+                ],
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  child: DataTable(columnSpacing: 15,
+                    sortColumnIndex: _currentSortColumn,
+                    sortAscending: _isAscending,
+                    headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
+                    columns: [
+                      DataColumn(
+                          label: Text(
+                            'Month',
+                            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                          ),
+                          onSort: (columnIndex, _) {
+                            setState(() {
+                              _currentSortColumn = columnIndex;
+                              if (_isAscending == true) {
+                                _isAscending = false;
+                                // sort the product list in Ascending, order by Price
+                                _products
+                                    .sort((productA, productB) => productB['Month'].compareTo(productA['Month']));
+                              } else {
+                                _isAscending = true;
+                                // sort the product list in Descending, order by Price
+                                _products
+                                    .sort((productA, productB) => productA['Month'].compareTo(productB['Month']));
+                              }
+                            });
+                          }),
+                      DataColumn(
+                          label: Text('Reading Date'),
+                          onSort: (columnIndex, _) {
+                            setState(() {
+                              _currentSortColumn = columnIndex;
+                              if (_isAscending == true) {
+                                _isAscending = false;
+                                // sort the product list in Ascending, order by Price
+                                _products
+                                    .sort((productA, productB) => productB['Date'].compareTo(productA['Date']));
+                              } else {
+                                _isAscending = true;
+                                // sort the product list in Descending, order by Price
+                                _products
+                                    .sort((productA, productB) => productA['Date'].compareTo(productB['Date']));
+                              }
+                            });
+                          }),
+                      DataColumn(
+                          label: Text('KWh'),
+                          onSort: (columnIndex, _) {
+                            setState(() {
+                              _currentSortColumn = columnIndex;
+                              if (_isAscending == true) {
+                                _isAscending = false;
+                                // sort the product list in Ascending, order by Price
+                                _products.sort((productA, productB) => productB['KWh'].compareTo(productA['KWh']));
+                              } else {
+                                _isAscending = true;
+                                // sort the product list in Descending, order by Price
+                                _products.sort((productA, productB) => productA['KWh'].compareTo(productB['KWh']));
+                              }
+                            });
+                          }),
+                      DataColumn(
+                          label: Text('Amount EGP'),
+                          onSort: (columnIndex, _) {
+                            setState(() {
+                              _currentSortColumn = columnIndex;
+                              if (_isAscending == true) {
+                                _isAscending = false;
+                                // sort the product list in Ascending, order by Price
+                                _products
+                                    .sort((productA, productB) => productB['Amount'].compareTo(productA['Amount']));
+                              } else {
+                                _isAscending = true;
+                                // sort the product list in Descending, order by Price
+                                _products
+                                    .sort((productA, productB) => productA['Amount'].compareTo(productB['Amount']));
+                              }
+                            });
+                          }),
+                      // Sorting function
+                    ],
+                    rows: _products.map((item) {
+                      return DataRow(cells: [
+                        DataCell(Text(item['Month'].toString())),
+                        DataCell(Text(item['Date'])),
+                        DataCell(Text(item['KWh'].toString())),
+                        DataCell(Text(item['Amount'].toString())),
+                      ]);
+                    }).toList(),
                   ),
                 ),
               ),

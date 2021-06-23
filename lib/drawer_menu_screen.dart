@@ -8,7 +8,7 @@ import 'package:grocery/prices/ui/prices_screen.dart';
 import 'package:grocery/recharge/ui/recharge.dart';
 import 'package:grocery/support/ui/support_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-
+import 'auth/ui/Login1Screen.dart';
 import 'consumptions/ui/cosumption_screen.dart';
 import 'dashboard/ui/dashboard_screen.dart';
 
@@ -30,8 +30,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       initialPage: DashboardScreen(),
       items: [
         KFDrawerItem.initWithPage(
-          text: Text('Dashboard', style:TextStyles.LargeHeaderStyle),
-          icon: Icon(Icons.dashboard, color: Colors.white),
+          text: Text('Dashboard', style: TextStyles.LargeHeaderStyle),
+          icon: Icon(Icons.dashboard, color: Colors.black),
           page: DashboardScreen(),
         ),
         KFDrawerItem.initWithPage(
@@ -39,36 +39,36 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             'Consumptions',
             style: TextStyles.LargeHeaderStyle,
           ),
-          icon: Icon(Icons.show_chart, color: Colors.white),
+          icon: Icon(Icons.show_chart, color: Colors.black),
           page: ConsumptionsScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
             'Payments',
-            style:TextStyles.LargeHeaderStyle,
+            style: TextStyles.LargeHeaderStyle,
           ),
-          icon: Icon(Icons.payment, color: Colors.white),
+          icon: Icon(Icons.payment, color: Colors.black),
           page: PaymentsScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text('Recharge', style: TextStyles.LargeHeaderStyle),
-          icon: Icon(Icons.charging_station, color: Colors.white),
+          icon: Icon(Icons.charging_station, color: Colors.black),
           page: RechargeScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
             'Prices',
-            style:TextStyles.LargeHeaderStyle,
+            style: TextStyles.LargeHeaderStyle,
           ),
-          icon: Icon(Icons.price_change, color: Colors.white),
+          icon: Icon(Icons.price_change, color: Colors.black),
           page: PricesScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
             'Support',
-            style:TextStyles.LargeHeaderStyle,
+            style: TextStyles.LargeHeaderStyle,
           ),
-          icon: Icon(Icons.support, color: Colors.white),
+          icon: Icon(Icons.support, color: Colors.black),
           page: SupportScreen(),
         ),
       ],
@@ -93,7 +93,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                       'HypeBill',
                       textStyle: const TextStyle(
                         fontSize: 32.0,
-                        color:AppColors.hintColor,
+                        color: AppColors.hintColor,
                         fontWeight: FontWeight.bold,
                       ),
                       speed: const Duration(milliseconds: 300),
@@ -110,26 +110,24 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         footer: KFDrawerItem(
           text: Text(
             'SIGN IN',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
           ),
           icon: Icon(
             Icons.input,
-            color: Colors.white,
+            color: Colors.black,
           ),
           onPressed: () {
-            // Navigator.of(context).push(CupertinoPageRoute(
-            //   fullscreenDialog: true,
-            //   builder: (BuildContext context) {
-            //     return AuthPage();
-            //   },
-            // ));
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
           },
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color.fromRGBO(255, 255, 255, 1.0), AppColors.hintColor,],
+            colors: [
+              Color.fromRGBO(255, 255, 255, 1.0),
+              Color.fromRGBO(255, 255, 255, 1.0),
+            ],
             tileMode: TileMode.repeated,
           ),
         ),
@@ -187,14 +185,22 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-const colorizeColors = [
-  Colors.purple,
-  Colors.blue,
-  Colors.yellow,
-  Colors.red,
+var icons = [
+  Icons.dashboard,
+  Icons.show_chart,
+  Icons.payment,
+  Icons.charging_station,
+  Icons.price_change,
+  Icons.support,
 ];
 
-const colorizeTextStyle = TextStyle(
-  fontSize: 50.0,
-  fontFamily: 'Horizon',
-);
+var screens = [
+  DashboardScreen(),
+  ConsumptionsScreen(),
+  PaymentsScreen(),
+  RechargeScreen(),
+  PricesScreen(),
+  SupportScreen()
+];
+
+var texts = ["Dashboard", "Consumptions", "Payments", "Recharge", "Prices", "Support"];

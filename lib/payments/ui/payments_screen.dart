@@ -57,97 +57,94 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        sortColumnIndex: _currentSortColumn,
-                        sortAscending: _isAscending,
-                        headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
-                        columns: [
-                          DataColumn(
-                              label: Text(
-                                'Date',
-                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
-                              ),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Date'].compareTo(productA['Date']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Date'].compareTo(productB['Date']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Type'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Type'].compareTo(productA['Type']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Type'].compareTo(productB['Type']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Receipt No .'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products.sort((productA, productB) => productB['Receipt'].compareTo(productA['Receipt']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products.sort((productA, productB) => productA['Receipt'].compareTo(productB['Receipt']));
-                                  }
-                                });
-                              }),
-                          DataColumn(
-                              label: Text('Amount'),
-                              onSort: (columnIndex, _) {
-                                setState(() {
-                                  _currentSortColumn = columnIndex;
-                                  if (_isAscending == true) {
-                                    _isAscending = false;
-                                    // sort the product list in Ascending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productB['Amount'].compareTo(productA['Amount']));
-                                  } else {
-                                    _isAscending = true;
-                                    // sort the product list in Descending, order by Price
-                                    _products
-                                        .sort((productA, productB) => productA['Amount'].compareTo(productB['Amount']));
-                                  }
-                                });
-                              }),
-                          // Sorting function
-                        ],
-                        rows: _products.map((item) {
-                          return DataRow(cells: [
-                            DataCell(Text(item['Date'].toString())),
-                            DataCell(Text(item['Type'])),
-                            DataCell(Text(item['Receipt'].toString())),
-                            DataCell(Text(item['Amount'].toString())),
-                          ]);
-                        }).toList(),
-                      ),
+                    child: DataTable(columnSpacing: 15,
+                      sortColumnIndex: _currentSortColumn,
+                      sortAscending: _isAscending,
+                      headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
+                      columns: [
+                        DataColumn(
+                            label: Text(
+                              'Date',
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                            ),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productB['Date'].compareTo(productA['Date']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productA['Date'].compareTo(productB['Date']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text('Type'),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productB['Type'].compareTo(productA['Type']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productA['Type'].compareTo(productB['Type']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text('Receipt No .'),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products.sort((productA, productB) => productB['Receipt'].compareTo(productA['Receipt']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products.sort((productA, productB) => productA['Receipt'].compareTo(productB['Receipt']));
+                                }
+                              });
+                            }),
+                        DataColumn(
+                            label: Text('Amount'),
+                            onSort: (columnIndex, _) {
+                              setState(() {
+                                _currentSortColumn = columnIndex;
+                                if (_isAscending == true) {
+                                  _isAscending = false;
+                                  // sort the product list in Ascending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productB['Amount'].compareTo(productA['Amount']));
+                                } else {
+                                  _isAscending = true;
+                                  // sort the product list in Descending, order by Price
+                                  _products
+                                      .sort((productA, productB) => productA['Amount'].compareTo(productB['Amount']));
+                                }
+                              });
+                            }),
+                        // Sorting function
+                      ],
+                      rows: _products.map((item) {
+                        return DataRow(cells: [
+                          DataCell(Text(item['Date'].toString())),
+                          DataCell(Text(item['Type'])),
+                          DataCell(Text(item['Receipt'].toString())),
+                          DataCell(Text(item['Amount'].toString())),
+                        ]);
+                      }).toList(),
                     ),
                   ),
                 ),
