@@ -43,10 +43,10 @@ dependencies:
   kf_drawer:
   animated_text_kit:
   flutter_staggered_animations:
-  fl_chart:
-
+  material_design_icons_flutter:
   cupertino_icons: ^1.0.2
-
+  line_chart:
+  intl:
 dev_dependencies:
   flutter_test:
     sdk: flutter

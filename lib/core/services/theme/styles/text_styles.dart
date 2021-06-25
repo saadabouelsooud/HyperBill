@@ -25,8 +25,7 @@ class TextStyles {
     fontFamily: "Schyler",
   );
   static const massiveHeaderStyleNormal = TextStyle(
-    color: Colors.black,
-    fontSize: 30,
+    color: Colors.green,    fontSize: 30,
     fontWeight: FontWeight.normal,
     fontFamily: "Schyler",
   );

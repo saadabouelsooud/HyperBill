@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
+import '../../widget.dart';
+
 class PaymentsScreen extends KFDrawerContent {
 
   @override
@@ -51,6 +53,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SliderWidget(1),
 
               Expanded(
                 child: Container(

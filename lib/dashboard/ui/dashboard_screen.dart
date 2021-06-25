@@ -5,6 +5,8 @@ import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
+import '../../widget.dart';
+
 class DashboardScreen extends KFDrawerContent {
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -42,6 +44,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
+            SliderWidget(1),
+
             Expanded(
               child: AnimationLimiter(
                 child: GridView.builder(
