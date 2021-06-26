@@ -1,7 +1,8 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
+import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
@@ -22,12 +23,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
             AppBar(
               title: Text("Dashboard"),
               actions: [
-                InkWell( onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-                },child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Image.asset("assets/images/profile.png",),
-                ))
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset(
+                        "assets/images/profile.png",
+                      ),
+                    ))
               ],
               leading: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -44,38 +49,110 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
-            SliderWidget(1),
+            Consumer(
+              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+                var asyncValue = watch(dashboardMeterDataFutureProvider);
+                int count = watch(counterProvider).state;
 
-            Expanded(
-              child: AnimationLimiter(
-                child: GridView.builder(
-                  itemCount: 6,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: const Duration(milliseconds: 2),
-                      child: SlideAnimation(
-                        verticalOffset: 50.0,
-                        child: FadeInAnimation(
-                          child: Container(
-                            margin: EdgeInsets.all(20),
-                            child: Card(
-                              child: Item(
-                                icon: dashboardItemsIcons[index],
-                                text: dashboardItemsName[index],
-                              ),
-                            ),
-                          ),
+                return asyncValue.when(
+                    data: (data) {
+                      return Expanded(
+                        child: ListView(
+                          children: [
+                            SliderWidget(data),
+                            Consumer(
+                              builder:
+                                  (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
+                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
+                                return asyncValue2.when(
+                                    data: (data) {
+                                      return GridView(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Card(
+                                              child: Item(
+                                                icon: dashboardItemsIcons[0],
+                                                text: dashboardItemsName[0],
+                                                text2: data.balance,
+                                              ),
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Card(
+                                              child: Item(
+                                                icon: dashboardItemsIcons[1],
+                                                text: dashboardItemsName[1],
+                                                text2: data.status,
+                                              ),
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Card(
+                                              child: Item(
+                                                icon: dashboardItemsIcons[2],
+                                                text: dashboardItemsName[2],
+                                                text2: data.totalConsumption,
+                                              ),
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Card(
+                                              child: Item(
+                                                icon: dashboardItemsIcons[3],
+                                                text: dashboardItemsName[3],
+                                                text2: data.lastReadingDate,
+                                              ),
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Card(
+                                              child: Item(
+                                                icon: dashboardItemsIcons[4],
+                                                text: dashboardItemsName[4],
+                                                text2: data.thisMonthConsumptionEgp,
+                                              ),
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Card(
+                                              child: Item(
+                                                icon: dashboardItemsIcons[5],
+                                                text: dashboardItemsName[5],
+                                                text2: data.thisMonthConsumptionKwh,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                        ),
+                                      );
+                                    },
+                                    loading: () => Center(child: CircularProgressIndicator()),
+                                    error: (e, ee) {
+                                      print(ee.toString());
+
+                                      return Center(
+                                        child: Text("something error please try again"),
+                                      );
+                                    });
+                              },
+                            )
+                          ],
                         ),
-                      ),
-                    );
-                  },
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                ),
-              ),
-            ),
+                      );
+                    },
+                    loading: () => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    error: (e, ee) => Center(
+                          child: Text("something error please try again"),
+                        ));
+              },
+            )
           ],
         ),
       ),
@@ -86,8 +163,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 class Item extends StatefulWidget {
   final icon;
   final text;
+  final text2;
 
-  const Item({this.text, this.icon});
+  const Item({this.text, this.icon, this.text2});
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -108,7 +186,6 @@ class _MainPageState extends State<Item> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -145,7 +222,7 @@ class _MainPageState extends State<Item> with SingleTickerProviderStateMixin {
             height: 10,
           ),
           Text(
-            "60,500 Eg",
+            widget.text2.toString(),
             style: TextStyles.largeHintHeaderStyle,
           ),
         ],

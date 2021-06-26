@@ -53,7 +53,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SliderWidget(1),
+              // SliderWidget(1),
 
               Expanded(
                 child: Container(

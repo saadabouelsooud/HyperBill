@@ -10,6 +10,7 @@ import 'package:grocery/support/ui/support_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'auth/ui/Login1Screen.dart';
 import 'consumptions/ui/cosumption_screen.dart';
+import 'core/services/preference/preference.dart';
 import 'dashboard/ui/dashboard_screen.dart';
 
 class MainWidget extends StatefulWidget {
@@ -117,6 +118,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             color: Colors.black,
           ),
           onPressed: () {
+            Preference.clear();
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
           },
         ),
@@ -136,54 +138,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   }
 }
 
-class MainPage extends KFDrawerContent {
-  MainPage({
-    Key key,
-  });
 
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  child: Material(
-                    shadowColor: Colors.transparent,
-                    color: Colors.transparent,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                      ),
-                      onPressed: widget.onMenuPressed,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Main'),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 var icons = [
   Icons.dashboard,

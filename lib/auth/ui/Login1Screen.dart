@@ -5,12 +5,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery/auth/controller/auth_controller.dart';
 import 'package:grocery/core/services/theme/styles/colors.dart';
 import 'package:grocery/core/services/theme/styles/text_styles.dart';
 import 'package:grocery/core/utils/size_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../drawer_menu_screen.dart';
-import 'ForgotPassword1Screen.dart';
+import '../../widget.dart';
 import 'ForgotPassword2Screen.dart';
 
 class Login1Screen extends StatefulWidget {
@@ -24,7 +27,14 @@ class _Login1ScreenState extends State<Login1Screen> {
   var email = TextEditingController();
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var provider = context.read(authControllerProvider);
     MySize().init(context);
     return Scaffold(
         body: ListView(
@@ -61,7 +71,7 @@ class _Login1ScreenState extends State<Login1Screen> {
                 children: <Widget>[
                   TextFormField(
                     controller: email,
-                    style: TextStyles.hintHeaderStyle,
+                    style: TextStyles.largeHintHeaderStyle,
                     decoration: InputDecoration(
                       hintText: "Email",
                       hintStyle: TextStyles.largeHintHeaderStyle,
@@ -121,7 +131,34 @@ class _Login1ScreenState extends State<Login1Screen> {
                         color: AppColors.hintColor,
                         splashColor: Colors.white,
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (c) => MainWidget()));
+                          if (provider.isLoginValidation(email.text, pass.text)) {
+                            showLoaderDialog(context);
+
+                            provider.login(email.text, pass.text).then((value) {
+                              Navigator.pop(context);
+                              if (value) {
+                                Navigator.push(context, MaterialPageRoute(builder: (c) => MainWidget()));
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: provider.message,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                            });
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: provider.message,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
                         },
                         child: Text("LOGIN", style: TextStyles.hintHeaderStyle)),
                   ),

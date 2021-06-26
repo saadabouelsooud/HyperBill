@@ -64,7 +64,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
           height: MediaQuery.of(context).size.height,
           child: ListView(
             children: <Widget>[
-              SliderWidget(1),
+              // SliderWidget(1),
               Column(
                 children: [
                   Stack(

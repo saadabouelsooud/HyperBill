@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
+import 'package:grocery/dashboard/model/meter_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'dashboard/controller/dashboard_controller.dart';
 
 class SliderWidget extends StatefulWidget {
-  final int number;
+  final List<MeterModel> number;
 
   SliderWidget(this.number, {Key key}) : super(key: key);
 
@@ -13,6 +17,7 @@ class SliderWidget extends StatefulWidget {
 class _SliderWidgetState extends State<SliderWidget> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.all(10),
       child: Card(
@@ -23,21 +28,44 @@ class _SliderWidgetState extends State<SliderWidget> {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios))],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.timer,size: 30,color: Colors.green,),
-                  SizedBox(height: 10,),
-                  Text("Meter"),
-                  Text("Unit No : ${widget.number}",style: TextStyles.massiveHeaderStyleNormal,),
-                  Text("Meter serial :5015485 "),
+                  IconButton(
+                      onPressed: () {
+                        if (context.read(counterProvider).state>0)
+                          context.read(counterProvider).state--;
+                      },
+                      icon: Icon(Icons.arrow_back_ios))
                 ],
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [IconButton(onPressed: () {}, icon: Icon(Icons.arrow_forward_ios))],
+                children: [
+                  Icon(
+                    Icons.timer,
+                    size: 30,
+                    color: Colors.green,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Meter"),
+                  Text(
+                    "Unit No : ${widget.number.elementAt(context.read(counterProvider).state).unitNo}",
+                    style: TextStyles.massiveHeaderStyleNormal,
+                  ),
+                  Text("Meter serial :${widget.number.elementAt(context.read(counterProvider).state).serial}"),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        if (widget.number.length > (context.read(counterProvider).state+1))
+                          context.read(counterProvider).state++;
+                      },
+                      icon: Icon(Icons.arrow_forward_ios))
+                ],
               ),
             ],
           ),
@@ -45,4 +73,22 @@ class _SliderWidgetState extends State<SliderWidget> {
       ),
     );
   }
+}
+
+showLoaderDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: new Row(
+      children: [
+        CircularProgressIndicator(),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+      ],
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

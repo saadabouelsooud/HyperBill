@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:grocery/core/services/theme/styles/colors.dart';
-import 'package:grocery/drawer_menu_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grocery/core/services/preference/preference.dart';
+import 'package:grocery/splash_screen.dart';
+
 
 import 'auth/ui/Login1Screen.dart';
 
-void main() {
-  runApp(MyApp());
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Preference.init();
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: Login1Screen(),
+      home: SplashScreen(),
     );
   }
 }

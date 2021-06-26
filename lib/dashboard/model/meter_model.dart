@@ -1,37 +1,75 @@
-
-
 class MeterModel {
   MeterModel({
-    this.type,
-    this.title,
-    this.status,
-    this.detail,
-    this.path,
-    this.message,
+    this.meterId,
+    this.serial,
+    this.unitNo,
+    this.customerNameEn,
+    this.customerNameAr,
+    this.customerDisplayName,
   });
 
-  String type;
-  String title;
-  int status;
-  String detail;
-  String path;
-  String message;
+  int meterId;
+  String serial;
+  String unitNo;
+  String customerNameEn;
+  String customerNameAr;
+  dynamic customerDisplayName;
 
   factory MeterModel.fromJson(Map<String, dynamic> json) => MeterModel(
-    type: json["type"],
-    title: json["title"],
-    status: json["status"],
-    detail: json["detail"],
-    path: json["path"],
-    message: json["message"],
+    meterId: json["meterId"],
+    serial: json["serial"],
+    unitNo: json["unitNo"],
+    customerNameEn: json["customerNameEN"],
+    customerNameAr: json["customerNameAR"],
+    customerDisplayName: json["customerDisplayName"],
   );
 
   Map<String, dynamic> toJson() => {
-    "type": type,
-    "title": title,
+    "meterId": meterId,
+    "serial": serial,
+    "unitNo": unitNo,
+    "customerNameEN": customerNameEn,
+    "customerNameAR": customerNameAr,
+    "customerDisplayName": customerDisplayName,
+  };
+}
+
+class MeterDetailModel {
+  MeterDetailModel({
+    this.meterId,
+    this.balance,
+    this.status,
+    this.totalConsumption,
+    this.lastReadingDate,
+    this.thisMonthConsumptionEgp,
+    this.thisMonthConsumptionKwh,
+  });
+
+  int meterId;
+  double balance;
+  bool status;
+  double totalConsumption;
+  DateTime lastReadingDate;
+  int thisMonthConsumptionEgp;
+  double thisMonthConsumptionKwh;
+
+  factory MeterDetailModel.fromJson(Map<String, dynamic> json) => MeterDetailModel(
+    meterId: json["meterId"],
+    balance: json["balance"],
+    status: json["status"],
+    totalConsumption: json["totalConsumption"].toDouble(),
+    lastReadingDate: DateTime.parse(json["lastReadingDate"]),
+    thisMonthConsumptionEgp: json["thisMonthConsumptionEGP"],
+    thisMonthConsumptionKwh: json["thisMonthConsumptionKWH"].toDouble(),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "meterId": meterId,
+    "balance": balance,
     "status": status,
-    "detail": detail,
-    "path": path,
-    "message": message,
+    "totalConsumption": totalConsumption,
+    "lastReadingDate": lastReadingDate.toIso8601String(),
+    "thisMonthConsumptionEGP": thisMonthConsumptionEgp,
+    "thisMonthConsumptionKWH": thisMonthConsumptionKwh,
   };
 }

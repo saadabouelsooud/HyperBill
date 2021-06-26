@@ -1,0 +1,89 @@
+
+import 'package:flutter/material.dart';
+import 'package:grocery/auth/ui/Login1Screen.dart';
+
+import 'auth/controller/auth_controller.dart';
+import 'drawer_menu_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key key}) : super(key: key);
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  AnimationController animation;
+  Animation<double> _fadeInFadeOut;
+  bool showAnimate = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    animation = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(animation);
+
+
+    animation.forward();
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        showAnimate = true;
+      });
+    });
+
+
+    Future.delayed(Duration(seconds: 4),(){
+      var provider = context.read(authControllerProvider);
+
+      if(provider.isUserLogged!=null &&provider.isUserLogged){
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => MainWidget()), (route) => false);
+      }else{
+
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
+
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Stack(
+          children: [
+
+            AnimatedPositioned(
+              bottom: showAnimate ? height*.7 :height*.4,
+              left: 100,
+              right:  100,
+              duration: Duration(milliseconds: 500),
+              child: Center(
+                child: FadeTransition(
+                  opacity: _fadeInFadeOut,
+                  child: Container(
+                    child: Text("Hyper Bill"),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void deactivate() {
+    animation.dispose();    // TODO: implement dispose
+
+    // TODO: implement deactivate
+    super.deactivate();
+  }
+}
