@@ -45,12 +45,12 @@ class _SliderWidgetState extends State<SliderWidget> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Meter"),
+                  Text("Meter",style: TextStyles.headerStyle,),
                   Text(
                     "Unit No : ${widget.number.elementAt(context.read(counterProvider).state).unitNo}",
                     style: TextStyles.massiveHeaderStyleNormal,
                   ),
-                  Text("Meter serial :${widget.number.elementAt(context.read(counterProvider).state).serial}"),
+                  Text("Meter serial :${widget.number.elementAt(context.read(counterProvider).state).serial}",style: TextStyles.headerStyle),
                 ],
               ),
               Column(

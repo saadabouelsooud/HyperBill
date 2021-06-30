@@ -53,7 +53,7 @@ class TextStyles {
     fontFamily: "Schyler",
   );
 
-  static const headerStyle = TextStyle(color: Colors.black, fontSize: 12, fontFamily: "Schyler", fontWeight: FontWeight.bold);
+  static const headerStyle = TextStyle(color: AppColors.textColor, fontSize: 12, fontFamily: "Schyler", fontWeight: FontWeight.bold);
   static const headerStyleNormal = TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Schyler", fontWeight: FontWeight.normal);
   static const headerStyleWithColor =
       TextStyle(color: AppColors.mainColor, fontSize: 17, fontFamily: "Schyler", fontWeight: FontWeight.bold);

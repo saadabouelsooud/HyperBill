@@ -21,8 +21,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Center(
         child: Column(
           children: [
-            AppBar(backgroundColor: AppColors.hintColor,foregroundColor:AppColors.hintColor ,
-              title: Text("Dashboard"),
+            AppBar(backgroundColor: AppColors.primaryBackground,foregroundColor:AppColors.primaryBackground ,
+              title: Text("Dashboard",style: TextStyle(color: AppColors.textColor,),),
               actions: [
                 InkWell(
                     onTap: () {
@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: IconButton(
                     icon: Icon(
                       Icons.menu,
-                      color: Colors.black,
+                      color:AppColors.textColor,
                     ),
                     onPressed: widget.onMenuPressed,
                   ),
