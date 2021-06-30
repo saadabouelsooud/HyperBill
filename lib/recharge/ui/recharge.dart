@@ -22,7 +22,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
           children: [
 
             AppBar(
-              title: Text("Recharge"),actions: [
+              backgroundColor: Colors.white,
+              title: Text("Recharge",style: TextStyle(color: AppColors.textColor,)),actions: [
               InkWell( onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
               },child: Padding(
@@ -38,7 +39,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                   child: IconButton(
                     icon: Icon(
                       Icons.menu,
-                      color: Colors.black,
+                      color:  AppColors.textColor,
                     ),
                     onPressed: widget.onMenuPressed,
                   ),

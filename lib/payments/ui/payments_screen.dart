@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery/core/services/theme/styles/colors.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
@@ -22,7 +23,8 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Payments"),
+          backgroundColor: Colors.white,
+          title: Text("Payments",style: TextStyle(color: AppColors.textColor,)),
             actions: [
               InkWell( onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
@@ -40,7 +42,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
               child: IconButton(
                 icon: Icon(
                   Icons.menu,
-                  color: Colors.black,
+                  color:  AppColors.textColor,
                 ),
                 onPressed: widget.onMenuPressed,
               ),

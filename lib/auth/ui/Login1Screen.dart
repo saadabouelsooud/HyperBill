@@ -46,7 +46,7 @@ class _Login1ScreenState extends State<Login1Screen> {
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                    color: AppColors.hintColor,
+                    color: AppColors.textColor,
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(MySize.size96))),
               ),
               Positioned(
@@ -118,7 +118,7 @@ class _Login1ScreenState extends State<Login1Screen> {
                       borderRadius: BorderRadius.all(Radius.circular(MySize.size24)),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.hintColor,
+                          color: AppColors.textColor,
                           blurRadius: 3,
                           offset: Offset(0, 1),
                         ),
@@ -128,7 +128,7 @@ class _Login1ScreenState extends State<Login1Screen> {
                         padding: EdgeInsets.only(
                             left: MySize.size64, right: MySize.size64, top: MySize.size10, bottom: MySize.size10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(MySize.size24)),
-                        color: AppColors.hintColor,
+                        color: AppColors.textColor,
                         splashColor: Colors.white,
                         onPressed: () {
                           if (provider.isLoginValidation(email.text, pass.text)) {
