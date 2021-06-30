@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
@@ -20,7 +21,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Center(
         child: Column(
           children: [
-            AppBar(
+            AppBar(backgroundColor: AppColors.hintColor,foregroundColor:AppColors.hintColor ,
               title: Text("Dashboard"),
               actions: [
                 InkWell(
@@ -72,57 +73,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         children: [
                                           Container(
                                             margin: EdgeInsets.all(20),
-                                            child: Card(
-                                              child: Item(
-                                                icon: dashboardItemsIcons[0],
-                                                text: dashboardItemsName[0],
-                                                text2: data.balance,
-                                              ),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[0],
+                                              text: dashboardItemsName[0],
+                                              text2: data.balance,
                                             ),
                                           ),     Container(
                                             margin: EdgeInsets.all(20),
-                                            child: Card(
-                                              child: Item(
-                                                icon: dashboardItemsIcons[1],
-                                                text: dashboardItemsName[1],
-                                                text2: data.status,
-                                              ),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[1],
+                                              text: dashboardItemsName[1],
+                                              text2: data.status,
                                             ),
                                           ),     Container(
                                             margin: EdgeInsets.all(20),
-                                            child: Card(
-                                              child: Item(
-                                                icon: dashboardItemsIcons[2],
-                                                text: dashboardItemsName[2],
-                                                text2: data.totalConsumption,
-                                              ),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[2],
+                                              text: dashboardItemsName[2],
+                                              text2: data.totalConsumption,
                                             ),
                                           ),     Container(
                                             margin: EdgeInsets.all(20),
-                                            child: Card(
-                                              child: Item(
-                                                icon: dashboardItemsIcons[3],
-                                                text: dashboardItemsName[3],
-                                                text2: data.lastReadingDate,
-                                              ),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[3],
+                                              text: dashboardItemsName[3],
+                                              text2: data.lastReadingDate,
                                             ),
                                           ),     Container(
                                             margin: EdgeInsets.all(20),
-                                            child: Card(
-                                              child: Item(
-                                                icon: dashboardItemsIcons[4],
-                                                text: dashboardItemsName[4],
-                                                text2: data.thisMonthConsumptionEgp,
-                                              ),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[4],
+                                              text: dashboardItemsName[4],
+                                              text2: data.thisMonthConsumptionEgp,
                                             ),
                                           ),     Container(
                                             margin: EdgeInsets.all(20),
-                                            child: Card(
-                                              child: Item(
-                                                icon: dashboardItemsIcons[5],
-                                                text: dashboardItemsName[5],
-                                                text2: data.thisMonthConsumptionKwh,
-                                              ),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[5],
+                                              text: dashboardItemsName[5],
+                                              text2: data.thisMonthConsumptionKwh,
                                             ),
                                           ),
                                         ],
@@ -136,8 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       print(ee.toString());
 
                                       return Center(
-                                        child: Text("something error please try again"),
-                                      );
+                                        child: Text(e.toString()));
                                     });
                               },
                             )
@@ -149,7 +137,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: CircularProgressIndicator(),
                         ),
                     error: (e, ee) => Center(
-                          child: Text("something error please try again"),
+                          child: Text(e.toString()),
                         ));
               },
             )
@@ -171,17 +159,21 @@ class Item extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<Item> with SingleTickerProviderStateMixin {
+class _MainPageState extends State<Item> with  TickerProviderStateMixin  {
   AnimationController _controller;
+  Animation<double> _fadeInFadeOut;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: 2))..forward();
+    _controller = AnimationController(vsync: this, duration: Duration(seconds: 2),);
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(_controller);
+
+    _controller.forward();
   }
 
-  double pi = 3.1415926535897932;
+
 
   @override
   void dispose() {
@@ -191,41 +183,40 @@ class _MainPageState extends State<Item> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (_, child) {
-        return Transform.rotate(
-          angle: _controller.value * 2 * pi,
-          child: child,
-        );
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            widget.icon,
-            size: 40,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.text,
-                style: TextStyles.headerStyle,
+    return FadeTransition(
+
+      opacity: _fadeInFadeOut,
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 30,width: 30,
+              child: SvgPicture.asset(
+                  widget.icon
               ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            widget.text2.toString(),
-            style: TextStyles.largeHintHeaderStyle,
-          ),
-        ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.text,
+                  style: TextStyles.headerStyle,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              widget.text2.toString(),
+              style: TextStyles.largeHintHeaderStyle,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -241,10 +232,11 @@ const dashboardItemsName = [
 ];
 
 const dashboardItemsIcons = [
-  Icons.money,
-  Icons.flash_on,
-  Icons.watch_later_outlined,
-  Icons.alarm_add,
-  Icons.attach_money_sharp,
-  Icons.show_chart,
+  "assets/images/Current_Balance.svg",
+  "assets/images/Meter_Status.svg",
+  "assets/images/TotalConsumption.svg",
+  "assets/images/Last_Reading_Date.svg",
+  "assets/images/ThisMonthConsumption2.svg",
+  "assets/images/ThisMonthConsumtion.svg",
+
 ];

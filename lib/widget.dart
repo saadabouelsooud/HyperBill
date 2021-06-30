@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/model/meter_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,11 +41,7 @@ class _SliderWidgetState extends State<SliderWidget> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.timer,
-                    size: 30,
-                    color: Colors.green,
-                  ),
+                  Container(child: SvgPicture.asset("assets/images/Meter.svg"),height: 30,width: 30,),
                   SizedBox(
                     height: 10,
                   ),
