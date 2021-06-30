@@ -35,7 +35,7 @@ class TextStyles {
     fontFamily: "Schyler",
   );
   static const largeHintHeaderStyle = TextStyle(
-    color: Colors.green,
+    color: AppColors.textColor,
     fontSize: 20,
     fontFamily: "Schyler",
   );  static const largeHintHeaderStyleBold = TextStyle(

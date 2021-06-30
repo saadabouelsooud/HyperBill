@@ -79,13 +79,13 @@ class _SupportScreenState extends State<SupportScreen> {
                     sortColumnIndex: _currentSortColumn,
                     sortAscending: _isAscending,
                     headingRowColor:
-                        MaterialStateProperty.all(Colors.blueGrey[200]),
+                        MaterialStateProperty.all(Colors.white),
                     columns: [
                       DataColumn(
                           label: Text(
                             'Date',
                             style: TextStyle(
-                                color: Colors.blue,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
                           onSort: (columnIndex, _) {

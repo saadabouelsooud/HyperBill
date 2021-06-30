@@ -193,7 +193,7 @@ class _MainPageState extends State<Item> with  TickerProviderStateMixin  {
             Container(
               height: 30,width: 30,
               child: SvgPicture.asset(
-                  widget.icon
+                  widget.icon,color: Colors.green,
               ),
             ),
             SizedBox(

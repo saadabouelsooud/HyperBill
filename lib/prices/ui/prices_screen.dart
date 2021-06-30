@@ -65,12 +65,12 @@ class _PricesScreenState extends State<PricesScreen> {
                       columnSpacing: 10,
                       sortColumnIndex: _currentSortColumn,
                       sortAscending: _isAscending,
-                      headingRowColor: MaterialStateProperty.all(Colors.blueGrey[200]),
+                      headingRowColor: MaterialStateProperty.all(Colors.white),
                       columns: [
                         DataColumn(
                             label: Text(
                               'From',
-                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                             ),
                             onSort: (columnIndex, _) {
                               setState(() {
