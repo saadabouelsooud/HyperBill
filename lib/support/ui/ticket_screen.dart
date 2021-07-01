@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/core/services/theme/styles/colors.dart';
+import 'package:grocery/core/services/theme/styles/text_styles.dart';
+import 'package:grocery/core/utils/size_config.dart';
 
 class TicketScreen extends StatefulWidget {
   const TicketScreen({Key key}) : super(key: key);
@@ -28,30 +30,69 @@ class _TicketScreenState extends State<TicketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Ticket")),
+      appBar: AppBar(  iconTheme: IconThemeData(
+        color: AppColors.textColor, //change your color here
+      ),
+        title: Text(
+          "Ticket",
+          style: TextStyle(color: AppColors.textColor),
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Container(
         padding: EdgeInsets.all(20),
         child: ListView(
           children: [
             SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text("type"),
+              height: 20,
             ),
             Row(
-              children: [Radio(value: 1, groupValue: _radioValue, onChanged: _handleRadioValueChange), Text("Help")],
-            ),
-            Row(
-              children: [Radio(value: 2, groupValue: _radioValue, onChanged: _handleRadioValueChange), Text("Issue")],
+              children: [
+                Text("Type"),
+                SizedBox(
+                  width: 30,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      child: Radio(
+                        value: 1,
+                        groupValue: _radioValue,
+                        onChanged: _handleRadioValueChange,
+                      ),
+                      height: 20,
+                      width: 40,
+                    ),
+                    Text("Help")
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      child: Radio(
+                          value: 2,
+                          groupValue: _radioValue,
+                          onChanged: _handleRadioValueChange),
+                      height: 20,
+                      width: 40,
+                    ),
+                    Text("Issue")
+                  ],
+                ),
+              ],
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text("Title"),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text("Title"),
+            SizedBox(
+              height: 10,
             ),
             Container(
               width: MediaQuery.of(context).size.width * .8,
@@ -72,7 +113,8 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide:
+                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
@@ -80,18 +122,19 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide:
+                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text("Description"),
+            Text("Description"),
+            SizedBox(
+              height: 10,
             ),
             Container(
               width: MediaQuery.of(context).size.width * .8,
@@ -112,7 +155,8 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide:
+                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
@@ -120,7 +164,8 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide:
+                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
@@ -139,10 +184,19 @@ class _TicketScreenState extends State<TicketScreen> {
                 SizedBox(
                   width: 20,
                 ),
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: Text("Save"),
-                  decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(10)),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Text("Save", style: TextStyles.hintHeaderStyle),
+                    padding: EdgeInsets.only(
+                        left: MySize.size64,
+                        right: MySize.size64,
+                        top: MySize.size15,
+                        bottom: MySize.size15),
+                  ),
                 ),
               ],
             )

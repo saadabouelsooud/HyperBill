@@ -80,7 +80,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            border: Border.all(color: Colors.green)),
+                          ),
                         child: LineChart(
                           insidePadding: 50,
                           width: MediaQuery.of(context).size.width * .9,
@@ -153,7 +153,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             children: [
                               Text(
                                 consumptionsText,
-                                style: TextStyles.largeHintHeaderStyle,
+                                style: TextStyles.largeHintHeaderStyleBold,
                               ),
                               SizedBox(
                                 height: 5,
@@ -179,7 +179,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            border: Border.all(color: Colors.green)),
+                            ),
                         child: LineChart(
                           insidePadding: 50,
 
@@ -216,12 +216,12 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                           circleRadiusValue: 6,
                           // The radius value of circle
                           linePointerDecoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Colors.green,
                           ),
                           // Your line pointer decoration,
                           pointerDecoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.black,
+                            color: Colors.green,
                           ),
                           // Your decoration of circle pointer,
                           insideCirclePaint: Paint()..color = Colors.white,
@@ -251,7 +251,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             children: [
                               Text(
                                 amountText,
-                                style: TextStyles.largeHintHeaderStyle,
+                                style: TextStyles.largeHintHeaderStyleBold,
                               ),
                               SizedBox(
                                 height: 5,

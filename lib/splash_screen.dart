@@ -56,25 +56,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Stack(
-          children: [
-
-            AnimatedPositioned(
-              bottom: showAnimate ? height*.7 :height*.4,
-              left: 100,
-              right:  100,
-              duration: Duration(milliseconds: 500),
-              child: Center(
-                child: FadeTransition(
-                  opacity: _fadeInFadeOut,
-                  child: Container(
-                    child: Text("Hyper Bill"),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: Center(child: Text("Hyper Bill"),),
       ),
     );
   }

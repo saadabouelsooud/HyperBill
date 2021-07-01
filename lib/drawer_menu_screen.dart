@@ -84,33 +84,18 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         header: Align(
           alignment: Alignment.centerLeft,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.all(20),
             width: MediaQuery.of(context).size.width * 0.6,
             child: Column(
               children: [
-                AnimatedTextKit(
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      'HypeBill',
-                      textStyle: const TextStyle(
-                        fontSize: 32.0,
-                        color: AppColors.hintColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      speed: const Duration(milliseconds: 300),
-                    ),
-                  ],
-                  repeatForever: true,
-                  displayFullTextOnTap: true,
-                  stopPauseOnTap: true,
-                )
+                Image.asset("assets/images/k.jpg"),
               ],
             ),
           ),
         ),
         footer: KFDrawerItem(
           text: Text(
-            'SIGN IN',
+            ' Sign Out',
             style: TextStyle(color: Colors.black),
           ),
           icon: Icon(

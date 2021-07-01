@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery/core/services/theme/styles/colors.dart';
 import 'package:grocery/core/services/theme/styles/text_styles.dart';
+import 'package:grocery/core/utils/size_config.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
@@ -64,19 +65,19 @@ class _RechargeScreenState extends State<RechargeScreen> {
                   hintStyle: TextStyle(color: AppColors.hintColor),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
               ),
@@ -96,19 +97,19 @@ class _RechargeScreenState extends State<RechargeScreen> {
                   hintStyle: TextStyle(color: AppColors.hintColor),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
               ),
@@ -128,19 +129,19 @@ class _RechargeScreenState extends State<RechargeScreen> {
                   hintStyle: TextStyle(color: AppColors.hintColor),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
               ),
@@ -148,22 +149,21 @@ class _RechargeScreenState extends State<RechargeScreen> {
             SizedBox(
               height: 30,
             ),
-            Container(
-              width: 120,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: (){},
-                child: Text(
-                  "Pay Now !",
-                  style: TextStyles.hintHeaderStyle,
-                ),
-                style: ButtonStyle(
-                    elevation: MaterialStateProperty.all<double>(0),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0), side: BorderSide(color: Colors.blue)))),
+            InkWell(onTap: (){
+
+
+            },
+              child: Container(decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(25)),
+                child:
+                Text("Pay Now !", style: TextStyles.hintHeaderStyle),
+                padding: EdgeInsets.only(
+                    left: MySize.size64,
+                    right: MySize.size64,
+                    top: MySize.size15,
+                    bottom: MySize.size15),
               ),
-            )
+            ),
+
           ],
         ),
       ),

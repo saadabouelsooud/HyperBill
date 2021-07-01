@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/controller/dashboard_controller.dart';
+import 'package:grocery/dashboard/model/meter_model.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
@@ -21,12 +22,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Center(
         child: Column(
           children: [
-            AppBar(backgroundColor: AppColors.primaryBackground,foregroundColor:AppColors.primaryBackground ,
-              title: Text("Dashboard",style: TextStyle(color: AppColors.textColor,),),
+            AppBar(
+              backgroundColor: AppColors.primaryBackground,
+              foregroundColor: AppColors.primaryBackground,
+              title: Text(
+                "Dashboard",
+                style: TextStyle(
+                  color: AppColors.textColor,
+                ),
+              ),
               actions: [
                 InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (c) => ProfileScreen()));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -43,7 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: IconButton(
                     icon: Icon(
                       Icons.menu,
-                      color:AppColors.textColor,
+                      color: AppColors.textColor,
                     ),
                     onPressed: widget.onMenuPressed,
                   ),
@@ -51,94 +60,176 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Consumer(
-              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                var asyncValue = watch(dashboardMeterDataFutureProvider);
-                int count = watch(counterProvider).state;
-
-                return asyncValue.when(
-                    data: (data) {
-                      return Expanded(
-                        child: ListView(
-                          children: [
-                            SliderWidget(data),
-                            Consumer(
-                              builder:
-                                  (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
-                                return asyncValue2.when(
-                                    data: (data) {
-                                      return GridView(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[0],
-                                              text: dashboardItemsName[0],
-                                              text2: data.balance,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[1],
-                                              text: dashboardItemsName[1],
-                                              text2: data.status,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[2],
-                                              text: dashboardItemsName[2],
-                                              text2: data.totalConsumption,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[3],
-                                              text: dashboardItemsName[3],
-                                              text2: data.lastReadingDate,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[4],
-                                              text: dashboardItemsName[4],
-                                              text2: data.thisMonthConsumptionEgp,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[5],
-                                              text: dashboardItemsName[5],
-                                              text2: data.thisMonthConsumptionKwh,
-                                            ),
-                                          ),
-                                        ],
-                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                        ),
-                                      );
-                                    },
-                                    loading: () => Center(child: CircularProgressIndicator()),
-                                    error: (e, ee) {
-                                      print(ee.toString());
-
-                                      return Center(
-                                        child: Text(e.toString()));
-                                    });
-                              },
-                            )
-                          ],
+              builder: (BuildContext context,
+                  T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+                return Expanded(
+                  child: ListView(
+                    children: [
+                      SliderWidget([MeterModel(unitNo: "1",customerDisplayName: "2,",customerNameAr:"555" , customerNameEn: '50',meterId: 10,serial: "55")]),
+                      GridView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Item(
+                              icon: dashboardItemsIcons[0],
+                              text: dashboardItemsName[0],
+                              text2: "-60200.5",
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Item(
+                              icon: dashboardItemsIcons[1],
+                              text: dashboardItemsName[1],
+                              text2: "true",
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Item(
+                              icon: dashboardItemsIcons[2],
+                              text: dashboardItemsName[2],
+                              text2: "4442285",
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Item(
+                              icon: dashboardItemsIcons[3],
+                              text: dashboardItemsName[3],
+                              text2: "2021-05-26",
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Item(
+                              icon: dashboardItemsIcons[4],
+                              text: dashboardItemsName[4],
+                              text2: "1103349",
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Item(
+                              icon: dashboardItemsIcons[5],
+                              text: dashboardItemsName[5],
+                              text2:"935.04200000",
+                            ),
+                          ),
+                        ],
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
                         ),
-                      );
-                    },
-                    loading: () => Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                    error: (e, ee) => Center(
-                          child: Text(e.toString()),
-                        ));
+                      ),
+                      // Consumer(
+                      //   builder:
+                      //       (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
+                      //     var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
+                      //     return asyncValue2.when(
+                      //         data: (data) {
+                      //
+                      //         },
+                      //         loading: () => Center(child: CircularProgressIndicator()),
+                      //         error: (e, ee) {
+                      //           print(ee.toString());
+                      //
+                      //           return Center(
+                      //               child: Text(e.toString()));
+                      //         });
+                      //   },
+                      // )
+                    ],
+                  ),
+                );
+                // var asyncValue = watch(dashboardMeterDataFutureProvider);
+                // int count = watch(counterProvider).state;
+                // return Expanded(
+                //   child: ListView(
+                //     children: [
+                //       SliderWidget(1),
+                //       Consumer(
+                //         builder:
+                //             (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
+                //           var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
+                //           return asyncValue2.when(
+                //               data: (data) {
+                //                 return GridView(
+                //                   shrinkWrap: true,
+                //                   physics: NeverScrollableScrollPhysics(),
+                //                   children: [
+                //                     Container(
+                //                       margin: EdgeInsets.all(20),
+                //                       child: Item(
+                //                         icon: dashboardItemsIcons[0],
+                //                         text: dashboardItemsName[0],
+                //                         text2: data.balance,
+                //                       ),
+                //                     ),     Container(
+                //                       margin: EdgeInsets.all(20),
+                //                       child: Item(
+                //                         icon: dashboardItemsIcons[1],
+                //                         text: dashboardItemsName[1],
+                //                         text2: data.status,
+                //                       ),
+                //                     ),     Container(
+                //                       margin: EdgeInsets.all(20),
+                //                       child: Item(
+                //                         icon: dashboardItemsIcons[2],
+                //                         text: dashboardItemsName[2],
+                //                         text2: data.totalConsumption,
+                //                       ),
+                //                     ),     Container(
+                //                       margin: EdgeInsets.all(20),
+                //                       child: Item(
+                //                         icon: dashboardItemsIcons[3],
+                //                         text: dashboardItemsName[3],
+                //                         text2: data.lastReadingDate,
+                //                       ),
+                //                     ),     Container(
+                //                       margin: EdgeInsets.all(20),
+                //                       child: Item(
+                //                         icon: dashboardItemsIcons[4],
+                //                         text: dashboardItemsName[4],
+                //                         text2: data.thisMonthConsumptionEgp,
+                //                       ),
+                //                     ),     Container(
+                //                       margin: EdgeInsets.all(20),
+                //                       child: Item(
+                //                         icon: dashboardItemsIcons[5],
+                //                         text: dashboardItemsName[5],
+                //                         text2: data.thisMonthConsumptionKwh,
+                //                       ),
+                //                     ),
+                //                   ],
+                //                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //                     crossAxisCount: 2,
+                //                   ),
+                //                 );
+                //               },
+                //               loading: () => Center(child: CircularProgressIndicator()),
+                //               error: (e, ee) {
+                //                 print(ee.toString());
+                //
+                //                 return Center(
+                //                     child: Text(e.toString()));
+                //               });
+                //         },
+                //       )
+                //     ],
+                //   ),
+                // );
+                // return asyncValue.when(
+                //     data: (data) {
+                //
+                //     },
+                //     loading: () => Center(
+                //           child: CircularProgressIndicator(),
+                //         ),
+                //     error: (e, ee) => Center(
+                //           child: Text(e.toString()),
+                //         ));
               },
             )
           ],
@@ -159,7 +250,7 @@ class Item extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<Item> with  TickerProviderStateMixin  {
+class _MainPageState extends State<Item> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _fadeInFadeOut;
 
@@ -167,13 +258,14 @@ class _MainPageState extends State<Item> with  TickerProviderStateMixin  {
   void initState() {
     super.initState();
 
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: 2),);
-    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(_controller);
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1.5).animate(_controller);
 
     _controller.forward();
   }
-
-
 
   @override
   void dispose() {
@@ -184,38 +276,41 @@ class _MainPageState extends State<Item> with  TickerProviderStateMixin  {
   @override
   Widget build(BuildContext context) {
     return FadeTransition(
-
       opacity: _fadeInFadeOut,
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 30,width: 30,
-              child: SvgPicture.asset(
-                  widget.icon,color: Colors.green,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.text,
-                  style: TextStyles.headerStyle,
+      child: Card(elevation: 5,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 30,
+                width: 30,
+                child: SvgPicture.asset(
+                  widget.icon,
+                  color: Colors.green,
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              widget.text2.toString(),
-              style: TextStyles.largeHintHeaderStyle,
-            ),
-          ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                widget.text,
+                style: TextStyles.headerStyle,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                widget.text2.toString(),
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 20,fontWeight: FontWeight.bold,
+                  fontFamily: "Schyler",
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -238,5 +333,4 @@ const dashboardItemsIcons = [
   "assets/images/Last_Reading_Date.svg",
   "assets/images/ThisMonthConsumption2.svg",
   "assets/images/ThisMonthConsumtion.svg",
-
 ];

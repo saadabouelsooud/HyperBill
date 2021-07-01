@@ -17,8 +17,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
+      appBar: AppBar(  iconTheme: IconThemeData(
+        color: AppColors.textColor, //change your color here
+      ),
+        backgroundColor: Colors.white,
+        title: Text("Profile",style: TextStyle(color: AppColors.textColor),),
       ),
       body: Container(
         margin: EdgeInsets.all(25),
@@ -32,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
                   controller: meterTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -39,14 +43,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: EdgeInsets.all(10.0),
                     counterText: '',
                     labelStyle: TextStyle(color: AppColors.hintColor),
-                   labelText:"Name" ,
+                    labelText: "Name",
                     hintStyle: TextStyle(color: AppColors.hintColor),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.hintColor),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -54,7 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -64,6 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
                   controller: amountTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -78,7 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -86,7 +94,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -96,6 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
                   controller: payTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -110,7 +120,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -118,38 +129,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),  Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width * .7,
-                child: TextFormField(
-                  controller: meterTextEditingController,
-                  keyboardType: TextInputType.number,
-                  onEditingComplete: () {},
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10.0),
-                    counterText: '',
-                    labelStyle: TextStyle(color: AppColors.hintColor),
-                   labelText:"Tenant Name" ,
-                    hintStyle: TextStyle(color: AppColors.hintColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -159,6 +140,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
+                  controller: meterTextEditingController,
+                  keyboardType: TextInputType.number,
+                  onEditingComplete: () {},
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(10.0),
+                    counterText: '',
+                    labelStyle: TextStyle(color: AppColors.hintColor),
+                    labelText: "Tenant Name",
+                    hintStyle: TextStyle(color: AppColors.hintColor),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.hintColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.hintColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * .7,
+                child: TextFormField(
+                  enabled: false,
                   controller: amountTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -173,7 +190,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -181,7 +199,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -191,6 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
                   controller: payTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -205,7 +225,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -213,38 +234,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),  Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width * .7,
-                child: TextFormField(
-                  controller: meterTextEditingController,
-                  keyboardType: TextInputType.number,
-                  onEditingComplete: () {},
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10.0),
-                    counterText: '',
-                    labelStyle: TextStyle(color: AppColors.hintColor),
-                   labelText:"Email" ,
-                    hintStyle: TextStyle(color: AppColors.hintColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -254,6 +245,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
+                  controller: meterTextEditingController,
+                  keyboardType: TextInputType.number,
+                  onEditingComplete: () {},
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(10.0),
+                    counterText: '',
+                    labelStyle: TextStyle(color: AppColors.hintColor),
+                    labelText: "Email",
+                    hintStyle: TextStyle(color: AppColors.hintColor),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.hintColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.hintColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * .7,
+                child: TextFormField(
+                  enabled: false,
                   controller: amountTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -268,7 +295,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -276,7 +304,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -286,6 +315,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
                   controller: payTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -300,7 +330,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -308,38 +339,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),  Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width * .7,
-                child: TextFormField(
-                  controller: meterTextEditingController,
-                  keyboardType: TextInputType.number,
-                  onEditingComplete: () {},
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10.0),
-                    counterText: '',
-                    labelStyle: TextStyle(color: AppColors.hintColor),
-                   labelText:"Commercial Record" ,
-                    hintStyle: TextStyle(color: AppColors.hintColor),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -349,6 +350,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 60,
                 width: MediaQuery.of(context).size.width * .7,
                 child: TextFormField(
+                  enabled: false,
+                  controller: meterTextEditingController,
+                  keyboardType: TextInputType.number,
+                  onEditingComplete: () {},
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(10.0),
+                    counterText: '',
+                    labelStyle: TextStyle(color: AppColors.hintColor),
+                    labelText: "Commercial Record",
+                    hintStyle: TextStyle(color: AppColors.hintColor),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.hintColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.hintColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * .7,
+                child: TextFormField(
+                  enabled: false,
                   controller: amountTextEditingController,
                   keyboardType: TextInputType.number,
                   onEditingComplete: () {},
@@ -363,7 +400,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -371,17 +409,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
               ),
-
               SizedBox(
                 height: 30,
               ),
-
             ],
           ),
         ),

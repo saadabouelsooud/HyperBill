@@ -96,7 +96,7 @@ class _ForgotPassword2ScreenState extends State<ForgotPassword2Screen> {
                                                 BorderRadius.circular(
                                                     MySize.size24)),
                                             color:
-                                            themeData.colorScheme.primary,
+                                            Colors.green,
                                             highlightColor:
                                             themeData.colorScheme.primary,
                                             splashColor:

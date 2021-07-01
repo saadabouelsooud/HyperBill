@@ -39,7 +39,7 @@ class TextStyles {
     fontSize: 20,
     fontFamily: "Schyler",
   );  static const largeHintHeaderStyleBold = TextStyle(
-    color: AppColors.primaryBackground,
+    color: AppColors.textColor,
     fontSize: 20,fontWeight: FontWeight.bold,
     fontFamily: "Schyler",
   ); static const mediumHintHeaderStyleBold = TextStyle(

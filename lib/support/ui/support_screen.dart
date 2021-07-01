@@ -33,7 +33,7 @@ class _SupportScreenState extends State<SupportScreen> {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => TicketScreen()));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,color: Colors.white,),
       ),
       body: Container(
         child: Center(
