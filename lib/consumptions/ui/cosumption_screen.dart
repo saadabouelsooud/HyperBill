@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grocery/consumptions/controller/consumption_controller.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
+import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/widget.dart';
 import 'package:intl/intl.dart';
@@ -36,7 +39,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text("Consumptions",style: TextStyle(color:  AppColors.textColor),),
+          title: Text("Consumptions", style: TextStyle(color: AppColors.textColor),),
           actions: [
             InkWell(
                 onTap: () {
@@ -58,326 +61,376 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
               child: IconButton(
                 icon: Icon(
                   Icons.menu,
-                  color:  AppColors.textColor,
+                  color: AppColors.textColor,
                 ),
                 onPressed: widget.onMenuPressed,
               ),
             ),
           ),
         ),
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: ListView(
-            children: <Widget>[
-              // SliderWidget(1),
-              Column(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                        child: LineChart(
-                          insidePadding: 50,
-                          width: MediaQuery.of(context).size.width * .9,
-                          // Width size of chart
-                          height: 180,
-                          // Height size of chart
-                          data: [
-                            LineChartModel(
-                              amount: 110,
-                              date: DateTime(2020, 1, 9),
+        body: Consumer(
+          builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+            var asyncValue = watch(dashboardMeterDataFutureProvider);
+            return asyncValue.when(
+                data: (data) {
+                  return Container(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height,
+                    child: ListView(
+                      children: <Widget>[
+                        SliderWidget(data),
+                        Consumer(builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+                          var asyncValue = watch(consumptionDataFutureProvider);
+                          return asyncValue.when(data: (data) {
+                            return Column(children: [Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                      ),
+                                      child: LineChart(
+                                        insidePadding: 50,
+                                        width: MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width * .9,
+                                        // Width size of chart
+                                        height: 180,
+                                        // Height size of chart
+                                        data: [
+                                          LineChartModel(
+                                            amount: 110,
+                                            date: DateTime(2020, 1, 9),
+                                          ),
+                                          LineChartModel(
+                                              amount: 250, date: DateTime(2020, 2, 10)),
+                                          LineChartModel(
+                                              amount: 390, date: DateTime(2020, 3, 11)),
+                                          LineChartModel(
+                                              amount: 1300, date: DateTime(2020, 4, 12)),
+                                          LineChartModel(
+                                              amount: 800, date: DateTime(2020, 5, 5)),
+                                        ],
+                                        // The value to the chart
+                                        linePaint: Paint()
+                                          ..strokeWidth = 3
+                                          ..style = PaintingStyle.stroke
+                                          ..color = Colors.green,
+                                        // Custom paint for the line
+                                        circlePaint: Paint()
+                                          ..color = Colors.green,
+                                        // Custom paint for the line
+                                        showPointer: true,
+                                        // When press or pan update the chart, create a pointer in approximated value (The default is true)
+                                        showCircles: true,
+                                        // Show the circle in every value of chart
+                                        customDraw: (Canvas canvas, Size size) {},
+                                        // You can draw anything in your chart, this callback is called when is generating the chart
+                                        circleRadiusValue: 6,
+                                        // The radius value of circle
+                                        linePointerDecoration: BoxDecoration(
+                                          color: Colors.green,
+                                        ),
+                                        // Your line pointer decoration,
+                                        pointerDecoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.green,
+                                        ),
+                                        // Your decoration of circle pointer,
+                                        insideCirclePaint: Paint()
+                                          ..color = Colors.white,
+                                        // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
+                                        onValuePointer: (value) {
+                                          setState(() {
+                                            consumptionsText =
+                                                value.chart.amount.toString() + "  KWh";
+                                            consumptionsDate =
+                                                DateFormat('MMM').format(value.chart.date);
+                                          });
+                                        },
+                                        // This callback is called when change the pointer,
+                                        onDropPointer:
+                                            () {}, // This callback is called when it is on the pointer and removes your finger from the screen
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        margin: EdgeInsets.all(30),
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              consumptionsText,
+                                              style: TextStyles.largeHintHeaderStyleBold,
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "Consumption " + consumptionsDate,
+                                              style: TextStyles.largeHintHeaderStyle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            LineChartModel(
-                                amount: 250, date: DateTime(2020, 2, 10)),
-                            LineChartModel(
-                                amount: 390, date: DateTime(2020, 3, 11)),
-                            LineChartModel(
-                                amount: 1300, date: DateTime(2020, 4, 12)),
-                            LineChartModel(
-                                amount: 800, date: DateTime(2020, 5, 5)),
-                          ],
-                          // The value to the chart
-                          linePaint: Paint()
-                            ..strokeWidth = 3
-                            ..style = PaintingStyle.stroke
-                            ..color = Colors.green,
-                          // Custom paint for the line
-                          circlePaint: Paint()..color = Colors.green,
-                          // Custom paint for the line
-                          showPointer: true,
-                          // When press or pan update the chart, create a pointer in approximated value (The default is true)
-                          showCircles: true,
-                          // Show the circle in every value of chart
-                          customDraw: (Canvas canvas, Size size) {},
-                          // You can draw anything in your chart, this callback is called when is generating the chart
-                          circleRadiusValue: 6,
-                          // The radius value of circle
-                          linePointerDecoration: BoxDecoration(
-                            color: Colors.green,
-                          ),
-                          // Your line pointer decoration,
-                          pointerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.green,
-                          ),
-                          // Your decoration of circle pointer,
-                          insideCirclePaint: Paint()..color = Colors.white,
-                          // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
-                          onValuePointer: (value) {
-                            setState(() {
-                              consumptionsText =
-                                  value.chart.amount.toString() + "  KWh";
-                              consumptionsDate =
-                                  DateFormat('MMM').format(value.chart.date);
-                            });
-                          },
-                          // This callback is called when change the pointer,
-                          onDropPointer:
-                              () {}, // This callback is called when it is on the pointer and removes your finger from the screen
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          margin: EdgeInsets.all(30),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Column(
-                            children: [
-                              Text(
-                                consumptionsText,
-                                style: TextStyles.largeHintHeaderStyleBold,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "Consumption " + consumptionsDate,
-                                style: TextStyles.largeHintHeaderStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            ),
-                        child: LineChart(
-                          insidePadding: 50,
+                              Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: Colors.white,
+                                        ),
+                                        child: LineChart(
+                                          insidePadding: 50,
 
-                          width: MediaQuery.of(context).size.width * .9,
-                          // Width size of chart
-                          height: 180,
-                          // Height size of chart
-                          data: [
-                            LineChartModel(
-                                amount: 300, date: DateTime(2020, 1, 1)),
-                            LineChartModel(
-                                amount: 200, date: DateTime(2020, 2, 2)),
-                            LineChartModel(
-                                amount: 300, date: DateTime(2020, 3, 3)),
-                            LineChartModel(
-                                amount: 500, date: DateTime(2020, 4, 4)),
-                            LineChartModel(
-                                amount: 800, date: DateTime(2020, 5, 5)),
-                          ],
-                          // The value to the chart
-                          linePaint: Paint()
-                            ..strokeWidth = 3
-                            ..style = PaintingStyle.stroke
-                            ..color = Colors.green,
-                          // Custom paint for the line
-                          circlePaint: Paint()..color = Colors.green,
-                          // Custom paint for the line
-                          showPointer: true,
-                          // When press or pan update the chart, create a pointer in approximated value (The default is true)
-                          showCircles: true,
-                          // Show the circle in every value of chart
-                          customDraw: (Canvas canvas, Size size) {},
-                          // You can draw anything in your chart, this callback is called when is generating the chart
-                          circleRadiusValue: 6,
-                          // The radius value of circle
-                          linePointerDecoration: BoxDecoration(
-                            color: Colors.green,
-                          ),
-                          // Your line pointer decoration,
-                          pointerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.green,
-                          ),
-                          // Your decoration of circle pointer,
-                          insideCirclePaint: Paint()..color = Colors.white,
-                          // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
-                          onValuePointer: (value) {
-                            setState(() {
-                              amountText =
-                                  value.chart.amount.toString() + " Eg";
-                              amountDate =
-                                  DateFormat('MMM').format(value.chart.date);
-                            });
-                          },
-                          // This callback is called when change the pointer,
-                          onDropPointer:
-                              () {}, // This callback is called when it is on the pointer and removes your finger from the screen
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          margin: EdgeInsets.all(30),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: Column(
-                            children: [
-                              Text(
-                                amountText,
-                                style: TextStyles.largeHintHeaderStyleBold,
+                                          width: MediaQuery
+                                              .of(context)
+                                              .size
+                                              .width * .9,
+                                          // Width size of chart
+                                          height: 180,
+                                          // Height size of chart
+                                          data: [
+                                            LineChartModel(
+                                                amount: 300, date: DateTime(2020, 1, 1)),
+                                            LineChartModel(
+                                                amount: 200, date: DateTime(2020, 2, 2)),
+                                            LineChartModel(
+                                                amount: 300, date: DateTime(2020, 3, 3)),
+                                            LineChartModel(
+                                                amount: 500, date: DateTime(2020, 4, 4)),
+                                            LineChartModel(
+                                                amount: 800, date: DateTime(2020, 5, 5)),
+                                          ],
+                                          // The value to the chart
+                                          linePaint: Paint()
+                                            ..strokeWidth = 3
+                                            ..style = PaintingStyle.stroke
+                                            ..color = Colors.green,
+                                          // Custom paint for the line
+                                          circlePaint: Paint()
+                                            ..color = Colors.green,
+                                          // Custom paint for the line
+                                          showPointer: true,
+                                          // When press or pan update the chart, create a pointer in approximated value (The default is true)
+                                          showCircles: true,
+                                          // Show the circle in every value of chart
+                                          customDraw: (Canvas canvas, Size size) {},
+                                          // You can draw anything in your chart, this callback is called when is generating the chart
+                                          circleRadiusValue: 6,
+                                          // The radius value of circle
+                                          linePointerDecoration: BoxDecoration(
+                                            color: Colors.green,
+                                          ),
+                                          // Your line pointer decoration,
+                                          pointerDecoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.green,
+                                          ),
+                                          // Your decoration of circle pointer,
+                                          insideCirclePaint: Paint()
+                                            ..color = Colors.white,
+                                          // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
+                                          onValuePointer: (value) {
+                                            setState(() {
+                                              amountText =
+                                                  value.chart.amount.toString() + " Eg";
+                                              amountDate =
+                                                  DateFormat('MMM').format(value.chart.date);
+                                            });
+                                          },
+                                          // This callback is called when change the pointer,
+                                          onDropPointer:
+                                              () {}, // This callback is called when it is on the pointer and removes your finger from the screen
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Container(
+                                          margin: EdgeInsets.all(30),
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Colors.white),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                amountText,
+                                                style: TextStyles.largeHintHeaderStyleBold,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "Amount " + amountDate,
+                                                style: TextStyles.largeHintHeaderStyle,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 5,
+                              Container(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width,
+                                child: SingleChildScrollView(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  child: DataTable(
+                                    columnSpacing: 15,
+                                    sortColumnIndex: _currentSortColumn,
+                                    sortAscending: _isAscending,
+                                    headingRowColor:
+                                    MaterialStateProperty.all(Colors.white),
+                                    columns: [
+                                      DataColumn(
+                                          label: Text(
+                                            'Month',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          onSort: (columnIndex, _) {
+                                            setState(() {
+                                              _currentSortColumn = columnIndex;
+                                              if (_isAscending == true) {
+                                                _isAscending = false;
+                                                // sort the product list in Ascending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productB['Month']
+                                                        .compareTo(productA['Month']));
+                                              } else {
+                                                _isAscending = true;
+                                                // sort the product list in Descending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productA['Month']
+                                                        .compareTo(productB['Month']));
+                                              }
+                                            });
+                                          }),
+                                      DataColumn(
+                                          label: Text('Reading Date'),
+                                          onSort: (columnIndex, _) {
+                                            setState(() {
+                                              _currentSortColumn = columnIndex;
+                                              if (_isAscending == true) {
+                                                _isAscending = false;
+                                                // sort the product list in Ascending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productB['Date']
+                                                        .compareTo(productA['Date']));
+                                              } else {
+                                                _isAscending = true;
+                                                // sort the product list in Descending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productA['Date']
+                                                        .compareTo(productB['Date']));
+                                              }
+                                            });
+                                          }),
+                                      DataColumn(
+                                          label: Text('KWh'),
+                                          onSort: (columnIndex, _) {
+                                            setState(() {
+                                              _currentSortColumn = columnIndex;
+                                              if (_isAscending == true) {
+                                                _isAscending = false;
+                                                // sort the product list in Ascending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productB['KWh'].compareTo(productA['KWh']));
+                                              } else {
+                                                _isAscending = true;
+                                                // sort the product list in Descending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productA['KWh'].compareTo(productB['KWh']));
+                                              }
+                                            });
+                                          }),
+                                      DataColumn(
+                                          label: Text('Amount EGP'),
+                                          onSort: (columnIndex, _) {
+                                            setState(() {
+                                              _currentSortColumn = columnIndex;
+                                              if (_isAscending == true) {
+                                                _isAscending = false;
+                                                // sort the product list in Ascending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productB['Amount']
+                                                        .compareTo(productA['Amount']));
+                                              } else {
+                                                _isAscending = true;
+                                                // sort the product list in Descending, order by Price
+                                                _products.sort((productA, productB) =>
+                                                    productA['Amount']
+                                                        .compareTo(productB['Amount']));
+                                              }
+                                            });
+                                          }),
+                                      // Sorting function
+                                    ],
+                                    rows: _products.map((item) {
+                                      return DataRow(cells: [
+                                        DataCell(Text(item['Month'].toString())),
+                                        DataCell(Text(item['Date'])),
+                                        DataCell(Text(item['KWh'].toString())),
+                                        DataCell(Text(item['Amount'].toString())),
+                                      ]);
+                                    }).toList(),
+                                  ),
+                                ),
                               ),
-                              Text(
-                                "Amount " + amountDate,
-                                style: TextStyles.largeHintHeaderStyle,
+                            ],);
+                          }, loading: () =>
+                              Center(
+                                child: CircularProgressIndicator(),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  child: DataTable(
-                    columnSpacing: 15,
-                    sortColumnIndex: _currentSortColumn,
-                    sortAscending: _isAscending,
-                    headingRowColor:
-                        MaterialStateProperty.all(Colors.white),
-                    columns: [
-                      DataColumn(
-                          label: Text(
-                            'Month',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onSort: (columnIndex, _) {
-                            setState(() {
-                              _currentSortColumn = columnIndex;
-                              if (_isAscending == true) {
-                                _isAscending = false;
-                                // sort the product list in Ascending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productB['Month']
-                                        .compareTo(productA['Month']));
-                              } else {
-                                _isAscending = true;
-                                // sort the product list in Descending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productA['Month']
-                                        .compareTo(productB['Month']));
-                              }
-                            });
-                          }),
-                      DataColumn(
-                          label: Text('Reading Date'),
-                          onSort: (columnIndex, _) {
-                            setState(() {
-                              _currentSortColumn = columnIndex;
-                              if (_isAscending == true) {
-                                _isAscending = false;
-                                // sort the product list in Ascending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productB['Date']
-                                        .compareTo(productA['Date']));
-                              } else {
-                                _isAscending = true;
-                                // sort the product list in Descending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productA['Date']
-                                        .compareTo(productB['Date']));
-                              }
-                            });
-                          }),
-                      DataColumn(
-                          label: Text('KWh'),
-                          onSort: (columnIndex, _) {
-                            setState(() {
-                              _currentSortColumn = columnIndex;
-                              if (_isAscending == true) {
-                                _isAscending = false;
-                                // sort the product list in Ascending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productB['KWh'].compareTo(productA['KWh']));
-                              } else {
-                                _isAscending = true;
-                                // sort the product list in Descending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productA['KWh'].compareTo(productB['KWh']));
-                              }
-                            });
-                          }),
-                      DataColumn(
-                          label: Text('Amount EGP'),
-                          onSort: (columnIndex, _) {
-                            setState(() {
-                              _currentSortColumn = columnIndex;
-                              if (_isAscending == true) {
-                                _isAscending = false;
-                                // sort the product list in Ascending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productB['Amount']
-                                        .compareTo(productA['Amount']));
-                              } else {
-                                _isAscending = true;
-                                // sort the product list in Descending, order by Price
-                                _products.sort((productA, productB) =>
-                                    productA['Amount']
-                                        .compareTo(productB['Amount']));
-                              }
-                            });
-                          }),
-                      // Sorting function
-                    ],
-                    rows: _products.map((item) {
-                      return DataRow(cells: [
-                        DataCell(Text(item['Month'].toString())),
-                        DataCell(Text(item['Date'])),
-                        DataCell(Text(item['KWh'].toString())),
-                        DataCell(Text(item['Amount'].toString())),
-                      ]);
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ],
-          ),
+                              error: (e, ee) =>
+                                  Center(
+                                    child: Text(e.toString()),
+                                  ));
+                        },),
+
+
+                      ],
+                    ),
+                  );
+                },
+                loading: () =>
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                error: (e, ee) =>
+                    Center(
+                      child: Text(e.toString()),
+                    ));
+          },
         ));
   }
 }

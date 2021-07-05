@@ -121,38 +121,38 @@ class _Login1ScreenState extends State<Login1Screen> {
                         ),
                       ],
                     ),
-                    child: InkWell(onTap: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (c) => MainWidget()));
+                    child: InkWell(
+                      onTap: (){
 
-                      // if (provider.isLoginValidation(email.text, pass.text)) {
-                      //   showLoaderDialog(context);
-                      //
-                      //   provider.login(email.text, pass.text).then((value) {
-                      //     Navigator.pop(context);
-                      //     if (value) {
-                      //       Navigator.push(context, MaterialPageRoute(builder: (c) => MainWidget()));
-                      //     } else {
-                      //       Fluttertoast.showToast(
-                      //           msg: provider.message,
-                      //           toastLength: Toast.LENGTH_SHORT,
-                      //           gravity: ToastGravity.BOTTOM,
-                      //           timeInSecForIosWeb: 1,
-                      //           backgroundColor: Colors.red,
-                      //           textColor: Colors.white,
-                      //           fontSize: 16.0);
-                      //     }
-                      //   });
-                      // } else {
-                      //   Fluttertoast.showToast(
-                      //       msg: provider.message,
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.BOTTOM,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.red,
-                      //       textColor: Colors.white,
-                      //       fontSize: 16.0);
-                      // }
+
+                      if (provider.isLoginValidation(email.text, pass.text)) {
+                        showLoaderDialog(context);
+
+                        provider.login(email.text, pass.text).then((value) {
+                          Navigator.pop(context);
+                          if (value) {
+                            Navigator.push(context, MaterialPageRoute(builder: (c) => MainWidget()));
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: provider.message,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
+                        });
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: provider.message,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
 
 
                     },

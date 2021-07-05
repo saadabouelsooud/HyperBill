@@ -62,174 +62,96 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Consumer(
               builder: (BuildContext context,
                   T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                return Expanded(
-                  child: ListView(
-                    children: [
-                      SliderWidget([MeterModel(unitNo: "1",customerDisplayName: "2,",customerNameAr:"555" , customerNameEn: '50',meterId: 10,serial: "55")]),
-                      GridView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            child: Item(
-                              icon: dashboardItemsIcons[0],
-                              text: dashboardItemsName[0],
-                              text2: "-60200.5",
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            child: Item(
-                              icon: dashboardItemsIcons[1],
-                              text: dashboardItemsName[1],
-                              text2: "true",
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            child: Item(
-                              icon: dashboardItemsIcons[2],
-                              text: dashboardItemsName[2],
-                              text2: "4442285",
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            child: Item(
-                              icon: dashboardItemsIcons[3],
-                              text: dashboardItemsName[3],
-                              text2: "2021-05-26",
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            child: Item(
-                              icon: dashboardItemsIcons[4],
-                              text: dashboardItemsName[4],
-                              text2: "1103349",
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(20),
-                            child: Item(
-                              icon: dashboardItemsIcons[5],
-                              text: dashboardItemsName[5],
-                              text2:"935.04200000",
-                            ),
-                          ),
-                        ],
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
+                var asyncValue = watch(dashboardMeterDataFutureProvider);
+
+                return asyncValue.when(
+                    data: (data) {
+                      int count = watch(counterProvider).state;
+                      return Expanded(
+                        child: ListView(
+                          children: [
+                            SliderWidget(data),
+                            Consumer(
+                              builder:
+                                  (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
+                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
+                                return asyncValue2.when(
+                                    data: (data) {
+                                      return GridView(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[0],
+                                              text: dashboardItemsName[0],
+                                              text2: data.balance,
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[1],
+                                              text: dashboardItemsName[1],
+                                              text2: data.status,
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[2],
+                                              text: dashboardItemsName[2],
+                                              text2: data.totalConsumption,
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[3],
+                                              text: dashboardItemsName[3],
+                                              text2: data.lastReadingDate,
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[4],
+                                              text: dashboardItemsName[4],
+                                              text2: data.thisMonthConsumptionEgp,
+                                            ),
+                                          ),     Container(
+                                            margin: EdgeInsets.all(20),
+                                            child: Item(
+                                              icon: dashboardItemsIcons[5],
+                                              text: dashboardItemsName[5],
+                                              text2: data.thisMonthConsumptionKwh,
+                                            ),
+                                          ),
+                                        ],
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                        ),
+                                      );
+                                    },
+                                    loading: () => Center(child: CircularProgressIndicator()),
+                                    error: (e, ee) {
+                                      print(ee.toString());
+
+                                      return Center(
+                                          child: Text(e.toString()));
+                                    });
+                              },
+                            )
+                          ],
                         ),
-                      ),
-                      // Consumer(
-                      //   builder:
-                      //       (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                      //     var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
-                      //     return asyncValue2.when(
-                      //         data: (data) {
-                      //
-                      //         },
-                      //         loading: () => Center(child: CircularProgressIndicator()),
-                      //         error: (e, ee) {
-                      //           print(ee.toString());
-                      //
-                      //           return Center(
-                      //               child: Text(e.toString()));
-                      //         });
-                      //   },
-                      // )
-                    ],
-                  ),
-                );
-                // var asyncValue = watch(dashboardMeterDataFutureProvider);
-                // int count = watch(counterProvider).state;
-                // return Expanded(
-                //   child: ListView(
-                //     children: [
-                //       SliderWidget(1),
-                //       Consumer(
-                //         builder:
-                //             (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                //           var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
-                //           return asyncValue2.when(
-                //               data: (data) {
-                //                 return GridView(
-                //                   shrinkWrap: true,
-                //                   physics: NeverScrollableScrollPhysics(),
-                //                   children: [
-                //                     Container(
-                //                       margin: EdgeInsets.all(20),
-                //                       child: Item(
-                //                         icon: dashboardItemsIcons[0],
-                //                         text: dashboardItemsName[0],
-                //                         text2: data.balance,
-                //                       ),
-                //                     ),     Container(
-                //                       margin: EdgeInsets.all(20),
-                //                       child: Item(
-                //                         icon: dashboardItemsIcons[1],
-                //                         text: dashboardItemsName[1],
-                //                         text2: data.status,
-                //                       ),
-                //                     ),     Container(
-                //                       margin: EdgeInsets.all(20),
-                //                       child: Item(
-                //                         icon: dashboardItemsIcons[2],
-                //                         text: dashboardItemsName[2],
-                //                         text2: data.totalConsumption,
-                //                       ),
-                //                     ),     Container(
-                //                       margin: EdgeInsets.all(20),
-                //                       child: Item(
-                //                         icon: dashboardItemsIcons[3],
-                //                         text: dashboardItemsName[3],
-                //                         text2: data.lastReadingDate,
-                //                       ),
-                //                     ),     Container(
-                //                       margin: EdgeInsets.all(20),
-                //                       child: Item(
-                //                         icon: dashboardItemsIcons[4],
-                //                         text: dashboardItemsName[4],
-                //                         text2: data.thisMonthConsumptionEgp,
-                //                       ),
-                //                     ),     Container(
-                //                       margin: EdgeInsets.all(20),
-                //                       child: Item(
-                //                         icon: dashboardItemsIcons[5],
-                //                         text: dashboardItemsName[5],
-                //                         text2: data.thisMonthConsumptionKwh,
-                //                       ),
-                //                     ),
-                //                   ],
-                //                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //                     crossAxisCount: 2,
-                //                   ),
-                //                 );
-                //               },
-                //               loading: () => Center(child: CircularProgressIndicator()),
-                //               error: (e, ee) {
-                //                 print(ee.toString());
-                //
-                //                 return Center(
-                //                     child: Text(e.toString()));
-                //               });
-                //         },
-                //       )
-                //     ],
-                //   ),
-                // );
-                // return asyncValue.when(
-                //     data: (data) {
-                //
-                //     },
-                //     loading: () => Center(
-                //           child: CircularProgressIndicator(),
-                //         ),
-                //     error: (e, ee) => Center(
-                //           child: Text(e.toString()),
-                //         ));
+                      );
+                    },
+                    loading: () => Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (e, ee) => Center(
+                      child: Text(e.toString()),
+                    ));
+
+
+
               },
             )
           ],

@@ -27,7 +27,11 @@ class EndPoint {
   static const String consumptions= 'consumptions';
   static const String payments = 'payments';
   static const String tickets  = 'tickets';
+  static const String ticketList  = 'tickets/list';
   static const String pay  = 'pay';
   static const String finalPay  = 'pay/update';
   static const String authenticate  = 'authenticate';
+  static const String profile  = 'profile-info';
+  static const String account  = 'account';
+  static const String tariff  = 'tariff';
 }
