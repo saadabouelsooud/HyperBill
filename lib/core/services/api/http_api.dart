@@ -17,8 +17,8 @@ class HttpApi {
     Response response;
     final dio = Dio(BaseOptions(
       baseUrl: serverPAth,
-      connectTimeout: 5000,
-      receiveTimeout: 5000,
+      connectTimeout: 50000,
+      receiveTimeout: 50000,
     ));
     final options = Options(
       headers: headers,
@@ -32,7 +32,7 @@ class HttpApi {
     //     Logger().v('$endPoint\n sent: $sent total: $total\n');
     //   };
     // }
-    dio.interceptors.add(CustomInterceptors());
+    // dio.interceptors.add(CustomInterceptors());
     Logger().d(body.toString());
     Logger().d(headers);
     Logger().d(headers);

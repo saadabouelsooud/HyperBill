@@ -11,8 +11,8 @@ class ConsumptionRepo implements ConsumptionApi {
   var token = Preference.getString(PrefKeys.token);
 
   @override
-  Future<Response> getConsumptionData() async {
-    var request = await HttpApi.request(EndPoint.consumptions,headers:Header.userAuth(token));
+  Future<Response> getConsumptionData(id) async {
+    var request = await HttpApi.request(EndPoint.consumptions+id,headers:Header.userAuth(token));
     return request;
   }
 

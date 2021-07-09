@@ -66,7 +66,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                 return asyncValue.when(
                     data: (data) {
-                      int count = watch(counterProvider).state;
                       return Expanded(
                         child: ListView(
                           children: [
@@ -74,7 +73,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Consumer(
                               builder:
                                   (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(count + 1));
+                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state ));
+
                                 return asyncValue2.when(
                                     data: (data) {
                                       return GridView(
@@ -130,7 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ),
                                       );
                                     },
-                                    loading: () => Center(child: CircularProgressIndicator()),
+                                    loading: () => SizedBox(),
                                     error: (e, ee) {
                                       print(ee.toString());
 
@@ -143,8 +143,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       );
                     },
-                    loading: () => Center(
-                      child: CircularProgressIndicator(),
+                    loading: () => Expanded(
+                      child: Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
                     ),
                     error: (e, ee) => Center(
                       child: Text(e.toString()),

@@ -42,17 +42,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           var asyncValue = watch(profileFutureProvider);
           return asyncValue.when(
               data: (data) {
-                 nameTextEditingController.text = data.nameAr.toString();
-                 customerTypeTextEditingController.text = data.ctype.toString();
-                 codeTextEditingController.text = data.code.toString();
-                 tenantNameTextEditingController.text = data.tenantName.toString();
-                 subscriberNameTextEditingController.text = data.subscriberName.toString();
-                 commercialNameTextEditingController.text = data.commercialName.toString();
-                 emailTextEditingController.text = data.email.toString();
-                 phoneTextEditingController .text= data.phone.toString();
-                 mobileTextEditingController .text= data.mobile.toString();
-                 commercialRecordTextEditingController.text = data.commercialRecord.toString();
-                 taxRecordTextEditingController.text = data.taxRecord.toString();
+                 nameTextEditingController.text =data.nameAr!=null? data.nameAr.toString():"";
+                 customerTypeTextEditingController.text = data.ctype!=null?data.ctype.toString():"";
+                 codeTextEditingController.text = data.code!=null?data.code.toString():"";
+                 tenantNameTextEditingController.text = data.tenantName!=null?data.tenantName.toString():"";
+                 subscriberNameTextEditingController.text =data.subscriberName!=null? data.subscriberName.toString():"";
+                 commercialNameTextEditingController.text = data.commercialName!=null?data.commercialName.toString():"";
+                 emailTextEditingController.text =data.email!=null? data.email.toString():"";
+                 phoneTextEditingController .text= data.phone!=null?data.phone.toString():"";
+                 mobileTextEditingController .text=data.mobile!=null? data.mobile.toString():"";
+                 commercialRecordTextEditingController.text = data.commercialRecord!=null?data.commercialRecord.toString():"";
+                 taxRecordTextEditingController.text =data.taxRecord!=null? data.taxRecord.toString():"";
                 return Container(
                   margin: EdgeInsets.all(25),
                   child: Center(

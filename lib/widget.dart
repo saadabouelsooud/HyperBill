@@ -16,6 +16,7 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,8 +33,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        if (context.read(counterProvider).state>0)
-                          context.read(counterProvider).state--;
+                        if (context.read(counterProvider).state > 0) context.read(counterProvider).state--;
                       },
                       icon: Icon(Icons.arrow_back_ios))
                 ],
@@ -41,16 +41,23 @@ class _SliderWidgetState extends State<SliderWidget> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(child: SvgPicture.asset("assets/images/Meter.svg"),height: 30,width: 30,),
+                  Container(
+                    child: SvgPicture.asset("assets/images/Meter.svg",color: Colors.green,),
+                    height: 30,
+                    width: 30,
+                  ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text("Meter",style: TextStyles.headerStyle,),
                   Text(
-                    "Unit No : ${widget.number.elementAt(context.read(counterProvider).state).unitNo}",
+                    "Meter",
+                    style: TextStyles.headerStyle,
+                  ),
+                  Text(
+                    "Unit No : ${widget.number.elementAt(context.read(counterProvider).state-1).unitNo}",
                     style: TextStyles.massiveHeaderStyleNormal,
                   ),
-                  Text("Meter serial :${widget.number.elementAt(context.read(counterProvider).state).serial}",style: TextStyles.headerStyle),
+                  Text("Meter serial :${widget.number.elementAt(context.read(counterProvider).state-1).serial}", style: TextStyles.headerStyle),
                 ],
               ),
               Column(
@@ -58,8 +65,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        if (widget.number.length > (context.read(counterProvider).state+1))
-                          context.read(counterProvider).state++;
+                        if (widget.number.length > (context.read(counterProvider).state + 1)) context.read(counterProvider).state++;
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/core/services/theme/styles/colors.dart';
 import 'package:grocery/core/services/theme/styles/text_styles.dart';
 import 'package:grocery/core/utils/size_config.dart';
+import 'package:grocery/support/controller/support_controller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TicketScreen extends StatefulWidget {
   const TicketScreen({Key key}) : super(key: key);
@@ -12,16 +15,19 @@ class TicketScreen extends StatefulWidget {
 
 class _TicketScreenState extends State<TicketScreen> {
   int _radioValue;
-  final issueTextController = TextEditingController();
-
+  final titleTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
+ var type;
   void _handleRadioValueChange(int value) {
     setState(() {
       _radioValue = value;
 
       switch (_radioValue) {
-        case 0:
-          break;
         case 1:
+          type="Help";
+          break;
+        case 2:
+          type="Issue";
           break;
       }
     });
@@ -30,9 +36,10 @@ class _TicketScreenState extends State<TicketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(  iconTheme: IconThemeData(
-        color: AppColors.textColor, //change your color here
-      ),
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: AppColors.textColor, //change your color here
+        ),
         title: Text(
           "Ticket",
           style: TextStyle(color: AppColors.textColor),
@@ -69,10 +76,7 @@ class _TicketScreenState extends State<TicketScreen> {
                 Row(
                   children: [
                     SizedBox(
-                      child: Radio(
-                          value: 2,
-                          groupValue: _radioValue,
-                          onChanged: _handleRadioValueChange),
+                      child: Radio(value: 2, groupValue: _radioValue, onChanged: _handleRadioValueChange),
                       height: 20,
                       width: 40,
                     ),
@@ -97,7 +101,7 @@ class _TicketScreenState extends State<TicketScreen> {
             Container(
               width: MediaQuery.of(context).size.width * .8,
               child: TextFormField(
-                controller: issueTextController,
+                controller: titleTextController,
                 maxLength: 250,
                 maxLines: 3,
                 minLines: 3,
@@ -113,8 +117,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
@@ -122,8 +125,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
@@ -139,7 +141,7 @@ class _TicketScreenState extends State<TicketScreen> {
             Container(
               width: MediaQuery.of(context).size.width * .8,
               child: TextFormField(
-                controller: issueTextController,
+                controller: descriptionTextController,
                 maxLength: 500,
                 maxLines: 6,
                 minLines: 6,
@@ -155,8 +157,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   disabledBorder: OutlineInputBorder(
@@ -164,8 +165,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                    borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
@@ -176,26 +176,30 @@ class _TicketScreenState extends State<TicketScreen> {
             ),
             Row(
               children: [
-                // Container(
-                //   padding: EdgeInsets.all(15),
-                //   child: Text("Back"),
-                //   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
-                // ),
                 SizedBox(
                   width: 20,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    context.read(supportControllerProvider).addTicket(type, descriptionTextController.text, titleTextController.text)
+                        .then((value) => {
+
+                    Fluttertoast.showToast(
+                    msg: context.read(supportControllerProvider).message,
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0)
+
+
+                    });
+                  },
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(25)),
+                    decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(25)),
                     child: Text("Save", style: TextStyles.hintHeaderStyle),
-                    padding: EdgeInsets.only(
-                        left: MySize.size64,
-                        right: MySize.size64,
-                        top: MySize.size15,
-                        bottom: MySize.size15),
+                    padding: EdgeInsets.only(left: MySize.size64, right: MySize.size64, top: MySize.size15, bottom: MySize.size15),
                   ),
                 ),
               ],

@@ -24,7 +24,8 @@ class Header {
 
 class EndPoint {
   static const String meters = 'meters';
-  static const String consumptions= 'consumptions';
+  static const String prices = 'meters';
+  static const String consumptions= 'consumptions/';
   static const String payments = 'payments';
   static const String tickets  = 'tickets';
   static const String ticketList  = 'tickets/list';

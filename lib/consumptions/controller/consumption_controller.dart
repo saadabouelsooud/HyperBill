@@ -4,14 +4,14 @@ import 'package:grocery/consumptions/remote/consumption_repo.dart';
 
 var consumptionControllerProvider = Provider((ref) => ConsumptionController(ref.watch(consumptionRepoProvider)));
 var consumptionDataFutureProvider =
-FutureProvider<List<ConsumptionModel>>((ref) => ref.watch(consumptionControllerProvider).getConsumptionData());
+FutureProvider.family<List<ConsumptionModel>,String>((ref,id) => ref.watch(consumptionControllerProvider).getConsumptionData(id));
 class ConsumptionController {
   ConsumptionController(this.repo);
 
   ConsumptionRepo repo;
 
-  Future<List<ConsumptionModel>> getConsumptionData() async {
-    var response = await repo.getConsumptionData();
+  Future<List<ConsumptionModel>> getConsumptionData(id) async {
+    var response = await repo.getConsumptionData(id);
     var dataList = response.data as List;
 
     return dataList.map((e) => ConsumptionModel.fromJson(e)).toList();
