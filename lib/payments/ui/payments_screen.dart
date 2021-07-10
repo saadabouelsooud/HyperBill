@@ -63,8 +63,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: ListView(
                       children: <Widget>[
                         SliderWidget(data),
                         Consumer(

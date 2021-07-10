@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:grocery/auth/ui/Login1Screen.dart';
+import 'package:grocery/core/utils/size_config.dart';
 
 import 'auth/controller/auth_controller.dart';
 import 'drawer_menu_screen.dart';
@@ -21,7 +22,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-
     animation = AnimationController(
       vsync: this,
       duration: Duration(seconds: 2),
@@ -52,6 +52,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    MySize().init(context);
+
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(

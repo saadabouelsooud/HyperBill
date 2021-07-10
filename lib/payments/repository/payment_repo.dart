@@ -12,7 +12,7 @@ class PaymentRepo implements PaymentApi {
 
   @override
   Future<Response> getPaymentData(id) async {
-    var request = await HttpApi.request(EndPoint.payments + "/" + id.toString(), headers: Header.userAuth(token));
+    var request = await HttpApi.request(EndPoint.pay + "/" + id.toString(), headers: Header.userAuth(token));
     return request;
   }
 }

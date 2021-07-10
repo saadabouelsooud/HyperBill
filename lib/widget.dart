@@ -65,7 +65,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        if (widget.number.length > (context.read(counterProvider).state + 1)) context.read(counterProvider).state++;
+                        if (widget.number.length > (context.read(counterProvider).state )){ context.read(counterProvider).state++;}
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],

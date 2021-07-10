@@ -5,6 +5,7 @@ import 'package:grocery/core/services/theme/styles/text_styles.dart';
 import 'package:grocery/core/utils/size_config.dart';
 import 'package:grocery/support/controller/support_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:grocery/widget.dart';
 
 class TicketScreen extends StatefulWidget {
   const TicketScreen({Key key}) : super(key: key);
@@ -17,17 +18,18 @@ class _TicketScreenState extends State<TicketScreen> {
   int _radioValue;
   final titleTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
- var type;
+  var type;
+
   void _handleRadioValueChange(int value) {
     setState(() {
       _radioValue = value;
 
       switch (_radioValue) {
         case 1:
-          type="Help";
+          type = "Help";
           break;
         case 2:
-          type="Issue";
+          type = "Issue";
           break;
       }
     });
@@ -181,25 +183,24 @@ class _TicketScreenState extends State<TicketScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    context.read(supportControllerProvider).addTicket(type, descriptionTextController.text, titleTextController.text)
-                        .then((value) => {
+                    showLoaderDialog(context);
 
-                    Fluttertoast.showToast(
-                    msg: context.read(supportControllerProvider).message,
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.red,
-                    textColor: Colors.white,
-                    fontSize: 16.0)
-
-
+                    context.read(supportControllerProvider).addTicket(type, descriptionTextController.text, titleTextController.text).then((value) {
+                      Navigator.of(context);
+                      Fluttertoast.showToast(
+                          msg: context.read(supportControllerProvider).message,
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     });
                   },
                   child: Container(
                     decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(25)),
                     child: Text("Save", style: TextStyles.hintHeaderStyle),
-                    padding: EdgeInsets.only(left: MySize.size64, right: MySize.size64, top: MySize.size15, bottom: MySize.size15),
+                    padding: EdgeInsets.only(left: 64, right: 64, top: 15, bottom: 15),
                   ),
                 ),
               ],

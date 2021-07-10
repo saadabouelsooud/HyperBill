@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/core/services/api/api.dart';
@@ -12,6 +13,7 @@ class PricesRepo implements PricesApi {
 
   @override
   Future<Response> getPricesData(id)async {
+
     var request = await HttpApi.request(EndPoint.prices + "/" + id.toString(), headers: Header.userAuth(token));
     return request;
   }
