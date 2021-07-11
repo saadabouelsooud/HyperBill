@@ -98,7 +98,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                         });
 
                                         return DataTable(
-                                          columnSpacing: 20,
+                                          columnSpacing: 5,
                                           sortColumnIndex: _currentSortColumn,
                                           sortAscending: _isAscending,
                                           headingRowColor: MaterialStateProperty.all(Colors.white),
@@ -134,11 +134,11 @@ class _SupportScreenState extends State<SupportScreen> {
                                           ],
                                           rows: _products.map((item) {
                                             return DataRow(cells: [
-                                              DataCell(Text(item['id'].toString())),
-                                              DataCell(Text(item['name'])),
-                                              DataCell(Text(item['price'].toString())),
-                                              DataCell(Text(item['Status'].toString())),
-                                              DataCell(Text(item['View'].toString()))
+                                              DataCell(Text(item['id'].toString(),)),
+                                              DataCell(Text(item['name'],textAlign: TextAlign.center)),
+                                              DataCell(Text(item['price'].toString(),textAlign: TextAlign.center)),
+                                              DataCell(Text(item['Status'].toString(),textAlign: TextAlign.center)),
+                                              DataCell(Text(item['View'].toString(),textAlign: TextAlign.center))
                                             ]);
                                           }).toList(),
                                         );

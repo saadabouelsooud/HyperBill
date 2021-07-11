@@ -83,7 +83,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                     return {
                                       "Month": DateFormat('MMM-yyyy ').format(data.elementAt(i).consumptionMonth) ,
                                       "Date":DateFormat('yyyy-MMM-dd ').format(data.elementAt(i).readingDate) ,
-                                      "KWh": data.elementAt(i).consumption,
+                                      "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
                                       "Amount": data.elementAt(i).amount
                                     };
                                   });

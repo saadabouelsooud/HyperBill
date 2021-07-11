@@ -93,7 +93,7 @@ class _PricesScreenState extends State<PricesScreen> {
                                             };
                                           });
                                           return DataTable(
-                                            columnSpacing: 10,
+                                            columnSpacing: 5,
                                             sortColumnIndex: _currentSortColumn,
                                             sortAscending: _isAscending,
                                             headingRowColor: MaterialStateProperty.all(Colors.white),

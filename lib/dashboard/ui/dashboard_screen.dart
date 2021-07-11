@@ -34,8 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               actions: [
                 InkWell(
                     onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (c) => ProfileScreen()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -60,20 +59,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Consumer(
-              builder: (BuildContext context,
-                  T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
                 var asyncValue = watch(dashboardMeterDataFutureProvider);
 
                 return asyncValue.when(
                     data: (data) {
+                      var size = MediaQuery.of(context).size;
+
+                      final double itemHeight = (size.height) / 2;
+                      final double itemWidth = size.width / 2;
                       return Expanded(
                         child: ListView(
                           children: [
                             SliderWidget(data),
                             Consumer(
-                              builder:
-                                  (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state ));
+                              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
+                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state));
 
                                 return asyncValue2.when(
                                     data: (data) {
@@ -81,51 +82,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
                                         children: [
-                                          Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[0],
-                                              text: dashboardItemsName[0],
-                                              text2: data.balance,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[1],
-                                              text: dashboardItemsName[1],
-                                              text2: data.status,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[2],
-                                              text: dashboardItemsName[2],
-                                              text2: data.totalConsumption,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[3],
-                                              text: dashboardItemsName[3],
-                                              text2: data.lastReadingDate,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[4],
-                                              text: dashboardItemsName[4],
-                                              text2: data.thisMonthConsumptionEgp,
-                                            ),
-                                          ),     Container(
-                                            margin: EdgeInsets.all(20),
-                                            child: Item(
-                                              icon: dashboardItemsIcons[5],
-                                              text: dashboardItemsName[5],
-                                              text2: data.thisMonthConsumptionKwh,
-                                            ),
+                                          Item(
+                                            icon: dashboardItemsIcons[0],
+                                            text: dashboardItemsName[0],
+                                            text2: data.balance,
+                                          ),
+                                          Item(
+                                            icon: dashboardItemsIcons[1],
+                                            text: dashboardItemsName[1],
+                                            text2: data.status,
+                                          ),
+                                          Item(
+                                            icon: dashboardItemsIcons[2],
+                                            text: dashboardItemsName[2],
+                                            text2: data.totalConsumption,
+                                          ),
+                                          Item(
+                                            icon: dashboardItemsIcons[3],
+                                            text: dashboardItemsName[3],
+                                            text2: data.lastReadingDate,
+                                          ),
+                                          Item(
+                                            icon: dashboardItemsIcons[4],
+                                            text: dashboardItemsName[4],
+                                            text2: data.thisMonthConsumptionEgp,
+                                          ),
+                                          Item(
+                                            icon: dashboardItemsIcons[5],
+                                            text: dashboardItemsName[5],
+                                            text2: data.thisMonthConsumptionKwh,
                                           ),
                                         ],
                                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          childAspectRatio: 1 / 1.1,
                                           crossAxisCount: 2,
                                         ),
                                       );
@@ -134,8 +123,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     error: (e, ee) {
                                       print(ee.toString());
 
-                                      return Center(
-                                          child: Text(e.toString()));
+                                      return Center(child: Text(e.toString()));
                                     });
                               },
                             )
@@ -144,18 +132,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       );
                     },
                     loading: () => Expanded(
-                      child: Container(
-                        child: Center(
-                          child: CircularProgressIndicator(),
+                          child: Container(
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
                     error: (e, ee) => Center(
-                      child: Text(e.toString()),
-                    ));
-
-
-
+                          child: Text(e.toString()),
+                        ));
               },
             )
           ],
@@ -201,41 +186,45 @@ class _MainPageState extends State<Item> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _fadeInFadeOut,
-      child: Card(elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 30,
-                width: 30,
-                child: SvgPicture.asset(
-                  widget.icon,
-                  color: Colors.green,
+    return Container(margin: EdgeInsets.all(5),
+      child: FadeTransition(
+        opacity: _fadeInFadeOut,
+        child: Card(
+          elevation: 5,
+          child: Container(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 30,
+                  width: 30,
+                  child: SvgPicture.asset(
+                    widget.icon,
+                    color: Colors.green,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                widget.text,
-                style: TextStyles.headerStyle,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                widget.text2.toString(),
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 20,fontWeight: FontWeight.bold,
-                  fontFamily: "Schyler",
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-            ],
+                Text(
+                  widget.text,
+                  style: TextStyles.headerStyle,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  widget.text2.toString(),textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Schyler",
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

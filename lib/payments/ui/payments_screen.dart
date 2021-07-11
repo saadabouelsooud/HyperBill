@@ -85,7 +85,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: DataTable(
-                                          columnSpacing: 15,
+                                          columnSpacing: 10,
                                           sortColumnIndex: _currentSortColumn,
                                           sortAscending: _isAscending,
                                           headingRowColor: MaterialStateProperty.all(Colors.white),
