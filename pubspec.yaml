@@ -48,7 +48,7 @@ dependencies:
   line_chart:
   intl:
   flutter_svg:
-
+  webview_flutter:
 
 dev_dependencies:
   flutter_test:
