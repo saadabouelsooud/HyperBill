@@ -6,6 +6,7 @@ import 'package:grocery/prices/controller/prices_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/widget.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class PricesScreen extends KFDrawerContent {
   @override
@@ -13,15 +14,7 @@ class PricesScreen extends KFDrawerContent {
 }
 
 class _PricesScreenState extends State<PricesScreen> {
-  final List<Map> _products = [
-    {"From": "0 ", "To": "50 ", "Rate": "0.38 ", "Service": "1 ", "Extra": "0 "},
-    {"From": "50 ", "To": "100 ", "Rate": "0.48 ", "Service": "2 ", "Extra": "0 "},
-    {"From": "100 ", "To": "200 ", "Rate": "0.65 ", "Service": "6 ", "Extra": "22 "},
-    {"From": "200 ", "To": "350 ", "Rate": "0.96 ", "Service": "11 ", "Extra": "0 "},
-    {"From": "350 ", "To": "650 ", "Rate": "0.38 ", "Service": "1.18 ", "Extra": "0 "},
-    {"From": "650 ", "To": "1000 ", "Rate": "1.18 ", "Service": "25 ", "Extra": "139 "},
-    {"From": "1000 ", "To": " ", "Rate": "1.45 ", "Service": "40 ", "Extra": "270 "},
-  ];
+
 
   int _currentSortColumn = 0;
   bool _isAscending = true;
@@ -35,7 +28,7 @@ class _PricesScreenState extends State<PricesScreen> {
             children: [
               AppBar(
                 backgroundColor: Colors.white,
-                title: Text("Prices",
+                title: Text("Prices".tr(),
                     style: TextStyle(
                       color: AppColors.textColor,
                     )),
@@ -100,7 +93,7 @@ class _PricesScreenState extends State<PricesScreen> {
                                             columns: [
                                               DataColumn(
                                                   label: Text(
-                                                    'From',
+                                                    'From'.tr(),
                                                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                   ),
                                                   onSort: (columnIndex, _) {
@@ -118,7 +111,7 @@ class _PricesScreenState extends State<PricesScreen> {
                                                     });
                                                   }),
                                               DataColumn(
-                                                  label: Text('To'),
+                                                  label: Text('To'.tr()),
                                                   onSort: (columnIndex, _) {
                                                     setState(() {
                                                       _currentSortColumn = columnIndex;
@@ -134,7 +127,7 @@ class _PricesScreenState extends State<PricesScreen> {
                                                     });
                                                   }),
                                               DataColumn(
-                                                  label: Text(' Rate'),
+                                                  label: Text('Rate'.tr()),
                                                   onSort: (columnIndex, _) {
                                                     setState(() {
                                                       _currentSortColumn = columnIndex;
@@ -151,7 +144,7 @@ class _PricesScreenState extends State<PricesScreen> {
                                                   }),
                                               DataColumn(
                                                   label: Text(
-                                                    'Service',
+                                                    'Service'.tr(),
                                                   ),
                                                   onSort: (columnIndex, _) {
                                                     setState(() {
@@ -169,7 +162,7 @@ class _PricesScreenState extends State<PricesScreen> {
                                                   }),
                                               DataColumn(
                                                   label: Text(
-                                                    'Extra',
+                                                    'Extra'.tr(),
                                                   ),
                                                   onSort: (columnIndex, _) {
                                                     setState(() {

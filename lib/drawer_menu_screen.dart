@@ -7,11 +7,13 @@ import 'package:grocery/payments/ui/payments_screen.dart';
 import 'package:grocery/prices/ui/prices_screen.dart';
 import 'package:grocery/recharge/ui/recharge.dart';
 import 'package:grocery/support/ui/support_screen.dart';
+import 'package:grocery/widget.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'auth/ui/Login1Screen.dart';
 import 'consumptions/ui/cosumption_screen.dart';
 import 'core/services/preference/preference.dart';
 import 'dashboard/ui/dashboard_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);
@@ -31,13 +33,13 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       initialPage: DashboardScreen(),
       items: [
         KFDrawerItem.initWithPage(
-          text: Text('Dashboard', style: TextStyles.LargeHeaderStyle),
+          text: Text('Dashboard'.tr(), style: TextStyles.LargeHeaderStyle),
           icon: Icon(Icons.dashboard, color: Colors.black),
           page: DashboardScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
-            'Consumptions',
+            'Consumptions'.tr(),
             style: TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.show_chart, color: Colors.black),
@@ -45,20 +47,20 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         ),
         KFDrawerItem.initWithPage(
           text: Text(
-            'Payments',
+            'Payments'.tr(),
             style: TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.payment, color: Colors.black),
           page: PaymentsScreen(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text('Recharge', style: TextStyles.LargeHeaderStyle),
+          text: Text('Recharge'.tr(), style: TextStyles.LargeHeaderStyle),
           icon: Icon(Icons.charging_station, color: Colors.black),
           page: RechargeScreen(),
         ),
         KFDrawerItem.initWithPage(
           text: Text(
-            'Prices',
+            'Prices'.tr(),
             style: TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.price_change, color: Colors.black),
@@ -66,7 +68,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         ),
         KFDrawerItem.initWithPage(
           text: Text(
-            'Support',
+            'Support'.tr(),
             style: TextStyles.LargeHeaderStyle,
           ),
           icon: Icon(Icons.support, color: Colors.black),
@@ -78,44 +80,46 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: KFDrawer(
-        controller: _drawerController,
-        header: Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            padding: EdgeInsets.all(20),
-            width: MediaQuery.of(context).size.width * 0.6,
-            child: Column(
-              children: [
-                Image.asset("assets/images/k.jpg"),
-              ],
+    return CheckInternetConnection(
+      child: Scaffold(
+        body: KFDrawer(
+          controller: _drawerController,
+          header: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Column(
+                children: [
+                  Image.asset("assets/images/k.jpg"),
+                ],
+              ),
             ),
           ),
-        ),
-        footer: KFDrawerItem(
-          text: Text(
-            ' Sign Out',
-            style: TextStyle(color: Colors.black),
+          footer: KFDrawerItem(
+            text: Text(
+              ' Sign Out'.tr(),
+              style: TextStyle(color: Colors.black),
+            ),
+            icon: Icon(
+              Icons.input,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Preference.clear();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
+            },
           ),
-          icon: Icon(
-            Icons.input,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Preference.clear();
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
-          },
-        ),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromRGBO(255, 255, 255, 1.0),
-              Color.fromRGBO(255, 255, 255, 1.0),
-            ],
-            tileMode: TileMode.repeated,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color.fromRGBO(255, 255, 255, 1.0),
+                Color.fromRGBO(255, 255, 255, 1.0),
+              ],
+              tileMode: TileMode.repeated,
+            ),
           ),
         ),
       ),
@@ -125,22 +129,3 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
 
 
 
-var icons = [
-  Icons.dashboard,
-  Icons.show_chart,
-  Icons.payment,
-  Icons.charging_station,
-  Icons.price_change,
-  Icons.support,
-];
-
-var screens = [
-  DashboardScreen(),
-  ConsumptionsScreen(),
-  PaymentsScreen(),
-  RechargeScreen(),
-  PricesScreen(),
-  SupportScreen()
-];
-
-var texts = ["Dashboard", "Consumptions", "Payments", "Recharge", "Prices", "Support"];

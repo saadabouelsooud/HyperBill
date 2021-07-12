@@ -7,7 +7,7 @@ import 'package:grocery/support/controller/support_controller.dart';
 import 'package:grocery/support/ui/ticket_screen.dart';
 import 'package:grocery/widget.dart';
 import 'package:intl/intl.dart';
-import 'dart:math';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:kf_drawer/kf_drawer.dart';
 
@@ -39,7 +39,7 @@ class _SupportScreenState extends State<SupportScreen> {
             children: [
               AppBar(
                 backgroundColor: Colors.white,
-                title: Text("Support",
+                title: Text("Support".tr(),
                     style: TextStyle(
                       color: AppColors.textColor,
                     )),
@@ -105,7 +105,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                           columns: [
                                             DataColumn(
                                                 label: Text(
-                                                  'Date',
+                                                  'Date'.tr(),
                                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                 ),
                                                 onSort: (columnIndex, _) {
@@ -122,12 +122,12 @@ class _SupportScreenState extends State<SupportScreen> {
                                                     }
                                                   });
                                                 }),
-                                            DataColumn(label: Text('Type')),
-                                            DataColumn(label: Text('Description')),
-                                            DataColumn(label: Text('Status')),
+                                            DataColumn(label: Text('Type'.tr())),
+                                            DataColumn(label: Text('Description'.tr())),
+                                            DataColumn(label: Text('Status'.tr())),
                                             DataColumn(
                                               label: Text(
-                                                'Action',
+                                                'Action'.tr(),
                                               ),
                                               // Sorting function
                                             ),

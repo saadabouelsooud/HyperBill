@@ -35,6 +35,7 @@ dependencies:
   shared_preferences:
 
   #utils
+  easy_localization:
   logger:
   fluttertoast:
   carousel_slider:
@@ -49,7 +50,9 @@ dependencies:
   intl:
   flutter_svg:
   webview_flutter:
+  flutter_localizations:
 
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +73,7 @@ flutter:
   - assets/
   - assets/fonts/
   - assets/images/
+  - assets/languages/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

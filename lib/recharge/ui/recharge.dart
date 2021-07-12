@@ -11,6 +11,8 @@ import 'package:grocery/recharge/model/recharge_model.dart';
 import 'package:grocery/recharge/ui/web_view.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
+import 'package:easy_localization/easy_localization.dart';
+
 class RechargeScreen extends KFDrawerContent {
   @override
   _RechargeScreenState createState() => _RechargeScreenState();
@@ -32,7 +34,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
           children: [
             AppBar(
               backgroundColor: Colors.white,
-              title: Text("Recharge",
+              title: Text("Recharge".tr(),
                   style: TextStyle(
                     color: AppColors.textColor,
                   )),
@@ -118,7 +120,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                 contentPadding: EdgeInsets.all(10.0),
                                 counterText: '',
                                 labelStyle: TextStyle(color: AppColors.hintColor),
-                                hintText: "Amount (EGP)",
+                                hintText: "Amount (EGP)".tr(),
                                 hintStyle: TextStyle(color: AppColors.hintColor),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(color: AppColors.hintColor),
@@ -152,7 +154,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                         context.read(amountProvider).state = value.formattedAmt.toString();
                                       } else {
                                         Fluttertoast.showToast(
-                                            msg: "some thing error please try again ",
+                                            msg: "some thing error please try again ".tr(),
                                             toastLength: Toast.LENGTH_SHORT,
                                             gravity: ToastGravity.BOTTOM,
                                             timeInSecForIosWeb: 1,
@@ -177,7 +179,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                       contentPadding: EdgeInsets.all(10.0),
                                       counterText: '',
                                       labelStyle: TextStyle(color: AppColors.hintColor),
-                                      hintText: "You Will Pay",
+                                      hintText: "You Will Pay".tr(),
                                       hintStyle: TextStyle(color: AppColors.hintColor),
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide(color: AppColors.hintColor),

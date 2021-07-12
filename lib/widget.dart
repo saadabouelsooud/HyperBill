@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/model/meter_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/services/connectivity/connectivity_service.dart';
 import 'dashboard/controller/dashboard_controller.dart';
 
 class SliderWidget extends StatefulWidget {
@@ -91,7 +93,78 @@ showLoaderDialog(BuildContext context) {
     barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
-      return alert;
+      return CheckInternetConnectionDialog(child: alert);
     },
   );
 }
+class CheckInternetConnection extends StatelessWidget {
+  final Widget child;
+
+  CheckInternetConnection({this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<bool>(
+        stream: ConnectivityService().connectionChange,
+        builder: (c, s) {
+          if (s.hasData) {
+            if (s.data) {
+              return child;
+            } else {
+              return Scaffold(
+                body: Container(
+                  width: MediaQuery.of(context).size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "لا يوجد انترنت حالبا ",
+                        style: TextStyles.headerStyleNormal,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          } else {
+            return child;
+          }
+        });
+  }
+}
+class CheckInternetConnectionDialog extends StatelessWidget {
+  final Widget child;
+
+
+  CheckInternetConnectionDialog({this.child,});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<bool>(
+        stream: ConnectivityService().connectionChange,
+        builder: (c, s) {
+          if (s.hasData) {
+            if (s.data) {
+
+              return child;
+            } else {
+              Navigator.of(context).pop();
+              return child;
+            }
+          } else {
+            return child;
+          }
+        });
+  }
+}
+void showFlutterToast(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+

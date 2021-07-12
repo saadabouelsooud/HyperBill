@@ -1,16 +1,23 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/core/services/preference/preference.dart';
 import 'package:grocery/splash_screen.dart';
 
+import 'core/services/connectivity/connectivity_service.dart';
+import 'core/services/localization/localization.dart';
 
-import 'auth/ui/Login1Screen.dart';
-
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ConnectivityService().init();
+  await EasyLocalization.ensureInitialized();
 
   await Preference.init();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(EasyLocalization(supportedLocales: [
+    Locale('ar','' ),
+    Locale('en', ''),
+  ], path: 'assets/languages', child: ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,21 +25,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      supportedLocales: EasyLocalization.of(context).supportedLocales,
+      locale: EasyLocalization.of(context).locale,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        EasyLocalization.of(context).delegate,
+      ],
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+
         primarySwatch: Colors.grey,
       ),
       home: SplashScreen(),
     );
   }
 }
-

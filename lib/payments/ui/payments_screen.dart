@@ -6,6 +6,7 @@ import 'package:grocery/payments/controller/payment_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../widget.dart';
 
@@ -23,7 +24,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text("Payments",
+          title: Text("Payments".tr(),
               style: TextStyle(
                 color: AppColors.textColor,
               )),
@@ -92,7 +93,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                           columns: [
                                             DataColumn(
                                                 label: Text(
-                                                  'Date',
+                                                  'Date'.tr(),
                                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                 ),
                                                 onSort: (columnIndex, _) {
@@ -110,7 +111,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                                   });
                                                 }),
                                             DataColumn(
-                                                label: Text('Type'),
+                                                label: Text('Type'.tr()),
                                                 onSort: (columnIndex, _) {
                                                   setState(() {
                                                     _currentSortColumn = columnIndex;
@@ -126,7 +127,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                                   });
                                                 }),
                                             DataColumn(
-                                                label: Text('Receipt No .'),
+                                                label: Text('Receipt No .'.tr()),
                                                 onSort: (columnIndex, _) {
                                                   setState(() {
                                                     _currentSortColumn = columnIndex;
@@ -142,7 +143,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                                   });
                                                 }),
                                             DataColumn(
-                                                label: Text('Amount'),
+                                                label: Text('Amount'.tr()),
                                                 onSort: (columnIndex, _) {
                                                   setState(() {
                                                     _currentSortColumn = columnIndex;

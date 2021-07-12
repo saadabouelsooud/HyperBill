@@ -9,6 +9,7 @@ import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
 import '../../widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DashboardScreen extends KFDrawerContent {
   @override
@@ -16,6 +17,19 @@ class DashboardScreen extends KFDrawerContent {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  _itemChoice( choice) {
+    if (choice == 1) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+    }
+    if (choice == 2) {
+      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
+        EasyLocalization.of(context).setLocale(Locale('en', "US"));
+
+      } else {
+        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,22 +40,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
               backgroundColor: AppColors.primaryBackground,
               foregroundColor: AppColors.primaryBackground,
               title: Text(
-                "Dashboard",
+                "Dashboard".tr(),
                 style: TextStyle(
                   color: AppColors.textColor,
                 ),
               ),
               actions: [
-                InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-                    },
+                PopupMenuButton(
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.asset(
-                        "assets/images/profile.png",
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 20
                       ),
-                    ))
+                      child:Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.asset(
+                          "assets/images/profile.png",
+                        ),
+                      ),
+                    ),onSelected: _itemChoice,
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text("profile".tr()),
+                        value: 1,
+                      ),
+                      PopupMenuItem(
+                        child: Text("language".tr()),
+                        value: 2,
+                      ),
+                    ],
+                )
+                // InkWell(
+                //     onTap: () {
+                //
+                //       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+                //     },
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(10.0),
+                //       child: Image.asset(
+                //         "assets/images/profile.png",
+                //       ),
+                //     ))
               ],
               leading: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -64,10 +103,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                 return asyncValue.when(
                     data: (data) {
-                      var size = MediaQuery.of(context).size;
-
-                      final double itemHeight = (size.height) / 2;
-                      final double itemWidth = size.width / 2;
                       return Expanded(
                         child: ListView(
                           children: [
@@ -208,7 +243,7 @@ class _MainPageState extends State<Item> with TickerProviderStateMixin {
                   height: 20,
                 ),
                 Text(
-                  widget.text,
+                  widget.text.tr(),
                   style: TextStyles.headerStyle,
                 ),
                 SizedBox(

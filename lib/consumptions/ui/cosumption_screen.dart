@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:line_chart/charts/line-chart.widget.dart';
 import 'package:line_chart/model/line-chart.model.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ConsumptionsScreen extends KFDrawerContent {
   @override
@@ -32,7 +33,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            "Consumptions",
+            "Consumptions".tr(),
             style: TextStyle(color: AppColors.textColor),
           ),
           actions: [
@@ -137,7 +138,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      consumptionsText = value.chart.amount.toString() + "  KWh";
+                                                      consumptionsText = value.chart.amount.toString() +"  "+ "KWh".tr();
                                                       consumptionsDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -162,7 +163,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                        "Consumption " + consumptionsDate,
+                                                        "Consumption ".tr() + consumptionsDate,
                                                         style: TextStyles.largeHintHeaderStyle,
                                                       ),
                                                     ],
@@ -223,7 +224,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      amountText = value.chart.amount.toString() + " Eg";
+                                                      amountText = value.chart.amount.toString() + "  "+"EGP";
                                                       amountDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -272,7 +273,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                             columns: [
                                               DataColumn(
                                                   label: Text(
-                                                    'Month',
+                                                    'Month'.tr(),
                                                     style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                   ),
                                                   onSort: (columnIndex, _) {
@@ -292,8 +293,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                               DataColumn(
                                                   label: Column(mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      Text('Reading '),
-                                                      Text(' Date'),
+                                                      Text('Reading '.tr()),
+                                                      Text('Date'.tr()),
                                                     ],
                                                   ),
                                                   onSort: (columnIndex, _) {
@@ -311,7 +312,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                     });
                                                   }),
                                               DataColumn(
-                                                  label: Text('KWh'),
+                                                  label: Text('KWh'.tr()),
                                                   onSort: (columnIndex, _) {
                                                     setState(() {
                                                       _currentSortColumn = columnIndex;
@@ -329,8 +330,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                               DataColumn(
                                                   label: Column(mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      Text('Amount'),
-                                                      Text(' EGP'),
+                                                      Text('Amount'.tr()),
+                                                      Text('EGP'.tr()),
                                                     ],
                                                   ),
                                                   onSort: (columnIndex, _) {
