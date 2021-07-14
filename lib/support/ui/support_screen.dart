@@ -5,6 +5,7 @@ import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/support/controller/support_controller.dart';
 import 'package:grocery/support/ui/ticket_screen.dart';
+import 'package:grocery/support/ui/ticket_view.dart';
 import 'package:grocery/widget.dart';
 import 'package:intl/intl.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -115,7 +116,8 @@ class _SupportScreenState extends State<SupportScreen> {
                                         "name": data.elementAt(i).type,
                                         "price": data.elementAt(i).description,
                                         "View": "Action",
-                                        "Status": data.elementAt(i).status
+                                        "Status": data.elementAt(i).status,
+                                        "title": data.elementAt(i).title
                                       };
                                     });
 
@@ -135,11 +137,9 @@ class _SupportScreenState extends State<SupportScreen> {
                                                 _currentSortColumn = columnIndex;
                                                 if (_isAscending == true) {
                                                   _isAscending = false;
-                                                  // sort the product list in Ascending, order by Price
                                                   _products.sort((productA, productB) => productB['price'].compareTo(productA['price']));
                                                 } else {
                                                   _isAscending = true;
-                                                  // sort the product list in Descending, order by Price
                                                   _products.sort((productA, productB) => productA['price'].compareTo(productB['price']));
                                                 }
                                               });
@@ -162,7 +162,12 @@ class _SupportScreenState extends State<SupportScreen> {
                                           DataCell(Text(item['name'], textAlign: TextAlign.center)),
                                           DataCell(Text(item['price'].toString(), textAlign: TextAlign.center)),
                                           DataCell(Text(item['Status'].toString(), textAlign: TextAlign.center)),
-                                          DataCell(Text(item['View'].toString(), textAlign: TextAlign.center))
+                                          DataCell(InkWell(
+                                            child: Text(item['View'].toString(), textAlign: TextAlign.center),
+                                            onTap: () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (c) => TicketView(item["name"],item["title"],item["Status"])));
+                                            },
+                                          ))
                                         ]);
                                       }).toList(),
                                     );
