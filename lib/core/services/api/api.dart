@@ -35,4 +35,5 @@ class EndPoint {
   static const String profile  = 'profile-info';
   static const String account  = 'account';
   static const String tariff  = 'tariff';
+  static const String forget  = 'account/reset-password/init';
 }

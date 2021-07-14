@@ -4,7 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/model/meter_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:easy_localization/easy_localization.dart';
+import 'package:grocery/profile/ui/profile_screen.dart';
 import 'core/services/connectivity/connectivity_service.dart';
 import 'dashboard/controller/dashboard_controller.dart';
 
@@ -52,14 +53,14 @@ class _SliderWidgetState extends State<SliderWidget> {
                     height: 10,
                   ),
                   Text(
-                    "Meter",
+                    "Meter".tr(),
                     style: TextStyles.headerStyle,
                   ),
                   Text(
-                    "Unit No : ${widget.number.elementAt(context.read(counterProvider).state-1).unitNo}",
+                    "Unit No :".tr()+" : "+ "${widget.number.elementAt(context.read(counterProvider).state-1).unitNo}",
                     style: TextStyles.massiveHeaderStyleNormal,
                   ),
-                  Text("Meter serial :${widget.number.elementAt(context.read(counterProvider).state-1).serial}", style: TextStyles.headerStyle),
+                  Text("Meter serial :".tr()+" : "+"${widget.number.elementAt(context.read(counterProvider).state-1).serial}", style: TextStyles.headerStyle),
                 ],
               ),
               Column(
@@ -85,7 +86,8 @@ showLoaderDialog(BuildContext context) {
     content: new Row(
       children: [
         CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        SizedBox(width: 10,),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...".tr())),
       ],
     ),
   );

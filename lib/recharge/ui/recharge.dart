@@ -25,46 +25,63 @@ class _RechargeScreenState extends State<RechargeScreen> {
   var id;
   var value;
   RechargeModel rechargeModel;
+  _itemChoice( choice) {
+    if (choice == 1) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+    }
+    if (choice == 2) {
+      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
+        EasyLocalization.of(context).setLocale(Locale('en', "US"));
 
+      } else {
+        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(appBar: AppBar(
+      backgroundColor: Colors.white,
+      title: Text("Recharge".tr(),
+          style: TextStyle(
+            color: AppColors.textColor,
+          )),
+      actions: [
+        PopupMenuButton(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset("assets/images/profile.png",),
+          ),onSelected: _itemChoice,
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              child: Text("Profile".tr()),
+              value: 1,
+            ),
+            PopupMenuItem(
+              child: Text("language".tr()),
+              value: 2,
+            ),
+          ],
+        )
+      ],
+      leading: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        child: Material(
+          shadowColor: Colors.transparent,
+          color: Colors.transparent,
+          child: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: AppColors.textColor,
+            ),
+            onPressed: widget.onMenuPressed,
+          ),
+        ),
+      ),
+    ),
       body: Center(
         child: ListView(
           children: [
-            AppBar(
-              backgroundColor: Colors.white,
-              title: Text("Recharge".tr(),
-                  style: TextStyle(
-                    color: AppColors.textColor,
-                  )),
-              actions: [
-                InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Image.asset(
-                        "assets/images/profile.png",
-                      ),
-                    ))
-              ],
-              leading: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                child: Material(
-                  shadowColor: Colors.transparent,
-                  color: Colors.transparent,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: AppColors.textColor,
-                    ),
-                    onPressed: widget.onMenuPressed,
-                  ),
-                ),
-              ),
-            ),
             Consumer(
               builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
                 var asyncValue = watch(dashboardMeterDataFutureProvider);

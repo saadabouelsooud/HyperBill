@@ -9,7 +9,7 @@ var authRepProvider = Provider((ref) => AuthRepo());
 class AuthRepo implements AuthApi {
   @override
   Future<Response> forgetPassword(String email) async {
-    var request = await HttpApi.request(EndPoint.authenticate, type: RequestType.Post, body: {"username": email});
+    var request = await HttpApi.request(EndPoint.forget, type: RequestType.Post, body: email);
     return request;
   }
 

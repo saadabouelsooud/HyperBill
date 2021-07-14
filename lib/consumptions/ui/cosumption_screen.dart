@@ -21,6 +21,20 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentSortColumn = 0;
   bool _isAscending = true;
+
+  _itemChoice(choice) {
+    if (choice == 1) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+    }
+    if (choice == 2) {
+      if (EasyLocalization.of(context).locale == Locale('ar', "")) {
+        EasyLocalization.of(context).setLocale(Locale('ar', ''));
+      } else {
+        EasyLocalization.of(context).setLocale(Locale('en', ''));
+      }
+    }
+  }
+
   String amountText = "300 Eg";
   String amountDate = "jan";
   String consumptionsText = "1300 KWh";
@@ -37,16 +51,25 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
             style: TextStyle(color: AppColors.textColor),
           ),
           actions: [
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Image.asset(
-                    "assets/images/profile.png",
-                  ),
-                ))
+            PopupMenuButton(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  "assets/images/profile.png",
+                ),
+              ),
+              onSelected: _itemChoice,
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text("Profile".tr()),
+                  value: 1,
+                ),
+                PopupMenuItem(
+                  child: Text("language".tr()),
+                  value: 2,
+                ),
+              ],
+            )
           ],
           leading: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -80,14 +103,21 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
 
                             return asyncValue.when(
                                 data: (data) {
+                                  if (amountText == null) {
+                                    amountText = data.first.amount.toString() + "  " + "EGP".tr();
+                                    amountDate = DateFormat('MMM').format(data.first.readingDate);
+                                    consumptionsText = data.first.amount.toString() + "  " + "KWh".tr();
+                                    consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
+                                  }
                                   final List<Map> _products = List.generate(data.length, (i) {
                                     return {
-                                      "Month": DateFormat('MMM-yyyy ').format(data.elementAt(i).consumptionMonth) ,
-                                      "Date":DateFormat('yyyy-MMM-dd ').format(data.elementAt(i).readingDate) ,
+                                      "Month": DateFormat('MMM-yyyy ').format(data.elementAt(i).consumptionMonth),
+                                      "Date": DateFormat('yyyy-MMM-dd ').format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
                                       "Amount": data.elementAt(i).amount
                                     };
                                   });
+
                                   return Column(
                                     children: [
                                       Column(
@@ -138,7 +168,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      consumptionsText = value.chart.amount.toString() +"  "+ "KWh".tr();
+                                                      consumptionsText = value.chart.amount.toString() + "  " + "KWh".tr();
                                                       consumptionsDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -163,7 +193,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                        "Consumption ".tr() + consumptionsDate,
+                                                        "Consumptions".tr() + " " + consumptionsDate,
                                                         style: TextStyles.largeHintHeaderStyle,
                                                       ),
                                                     ],
@@ -224,7 +254,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      amountText = value.chart.amount.toString() + "  "+"EGP";
+                                                      amountText = value.chart.amount.toString() + "  " + "EGP".tr();
                                                       amountDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -249,7 +279,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                        "Amount " + amountDate,
+                                                        "Amount".tr() + " " + amountDate,
                                                         style: TextStyles.largeHintHeaderStyle,
                                                       ),
                                                     ],
@@ -265,7 +295,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                         child: SingleChildScrollView(
                                           physics: NeverScrollableScrollPhysics(),
                                           scrollDirection: Axis.vertical,
-                                          child: DataTable(headingRowHeight: 60,
+                                          child: DataTable(
+                                            headingRowHeight: 60,
                                             columnSpacing: 17,
                                             sortColumnIndex: _currentSortColumn,
                                             sortAscending: _isAscending,
@@ -291,9 +322,10 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                     });
                                                   }),
                                               DataColumn(
-                                                  label: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                                  label: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      Text('Reading '.tr()),
+                                                      Text('Reading'.tr()),
                                                       Text('Date'.tr()),
                                                     ],
                                                   ),
@@ -328,7 +360,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                     });
                                                   }),
                                               DataColumn(
-                                                  label: Column(mainAxisAlignment: MainAxisAlignment.center,
+                                                  label: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
                                                       Text('Amount'.tr()),
                                                       Text('EGP'.tr()),

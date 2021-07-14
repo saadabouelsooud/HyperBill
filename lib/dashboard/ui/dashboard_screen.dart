@@ -22,12 +22,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
-      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
-        EasyLocalization.of(context).setLocale(Locale('en', "US"));
+      setState(() {
+        if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
 
-      } else {
-        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
-      }
+          EasyLocalization.of(context).setLocale(Locale('en', "US"));
+
+        } else {
+          EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
+        }
+      });
+
     }
   }
   @override
@@ -48,20 +52,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               actions: [
                 PopupMenuButton(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 20
-                      ),
-                      child:Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          "assets/images/profile.png",
-                        ),
-                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset("assets/images/profile.png",),
                     ),onSelected: _itemChoice,
                     itemBuilder: (context) => [
                       PopupMenuItem(
-                        child: Text("profile".tr()),
+                        child: Text("Profile".tr()),
                         value: 1,
                       ),
                       PopupMenuItem(
@@ -70,17 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ],
                 )
-                // InkWell(
-                //     onTap: () {
-                //
-                //       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-                //     },
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(10.0),
-                //       child: Image.asset(
-                //         "assets/images/profile.png",
-                //       ),
-                //     ))
+
               ],
               leading: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -243,9 +229,9 @@ class _MainPageState extends State<Item> with TickerProviderStateMixin {
                   height: 20,
                 ),
                 Text(
-                  widget.text.tr(),
+                  widget.text,
                   style: TextStyles.headerStyle,
-                ),
+                ).tr(),
                 SizedBox(
                   height: 10,
                 ),

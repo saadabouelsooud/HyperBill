@@ -2,6 +2,7 @@
   "LOGIN": "LOGIN",
   "Password": "Password",
   "E-mail": "E-mail",
+  "Email": "E-mail",
   "Forgot Password ?": "Forgot Password ?",
   "FORGOT PASSWORD": "FORGOT PASSWORD",
   "RESET PASSWORD": "RESET PASSWORD",
@@ -15,6 +16,9 @@
   "Customer Type": "Customer Type",
   "Code": "Code",
   "Mobile": "Mobile",
+  "Meter": "Meter",
+  "Unit No :": "Unit No :",
+  "Meter serial :": "Meter serial :",
   "Name": "Name",
   "Type": "Type",
   "Month": "Month",
@@ -28,8 +32,10 @@
   "Issue": "Issue",
   "Action": "Action",
   "language": "language",
-  "profile": "profile",
+  "Profile": "profile",
   "Help": "Help",
+  "Loading...": "Loading...",
+
   "Rate": "Rate",
   "Status": "Status",
   "Description": "Description",
@@ -53,6 +59,4 @@
   "Total Consumption": "Total Consumption",
   "Last Reading Date": "Last Reading Date",
   "This Month Consumption": "This Month Consumption"
-
-
 }

@@ -18,7 +18,19 @@ class PaymentsScreen extends KFDrawerContent {
 class _PaymentsScreenState extends State<PaymentsScreen> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
+  _itemChoice( choice) {
+    if (choice == 1) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+    }
+    if (choice == 2) {
+      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
+        EasyLocalization.of(context).setLocale(Locale('en', "US"));
 
+      } else {
+        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +41,22 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                 color: AppColors.textColor,
               )),
           actions: [
-            InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Image.asset(
-                    "assets/images/profile.png",
-                  ),
-                ))
+            PopupMenuButton(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset("assets/images/profile.png",),
+              ),onSelected: _itemChoice,
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text("Profile".tr()),
+                  value: 1,
+                ),
+                PopupMenuItem(
+                  child: Text("language".tr()),
+                  value: 2,
+                ),
+              ],
+            )
           ],
           leading: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(32.0)),

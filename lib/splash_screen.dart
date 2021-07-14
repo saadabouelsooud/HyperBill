@@ -38,15 +38,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
 
     Future.delayed(Duration(seconds: 4),(){
-      var provider = context.read(authControllerProvider);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
 
-      if(provider.isUserLogged!=null &&provider.isUserLogged){
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => MainWidget()), (route) => false);
-      }else{
-
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
-
-      }
     });
   }
 

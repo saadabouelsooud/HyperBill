@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/auth/repository/auth_repo.dart';
 import 'package:grocery/core/services/preference/preference.dart';
@@ -33,7 +30,7 @@ class AuthController {
   }
 
   Future<void> forgetPassword(email) async {
-    var response = await repo.forgetPassword(email);
+    await repo.forgetPassword(email);
   }
 
   bool isLoginValidation(String email, String password) {

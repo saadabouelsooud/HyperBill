@@ -21,7 +21,7 @@ class Ticket {
     title: json["title"],
     description: json["description"],
     status: json["status"],
-    createdDate: DateTime.parse(json["createdDate"]),
+    createdDate:json["createdDate"]!=null? DateTime.parse(json["createdDate"]):null,
   );
 
   Map<String, dynamic> toJson() => {
