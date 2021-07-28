@@ -26,11 +26,15 @@ class _SupportScreenState extends State<SupportScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
-      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
-        EasyLocalization.of(context).setLocale(Locale('en', "US"));
-      } else {
-        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
-      }
+      setState(() {
+        if (EasyLocalization.of(context).locale == Locale('ar', "")) {
+
+          EasyLocalization.of(context).setLocale(Locale('en', ""));
+
+        } else {
+          EasyLocalization.of(context).setLocale(Locale('ar', ""));
+        }
+      });
     }
   }
 

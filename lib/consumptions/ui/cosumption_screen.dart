@@ -27,11 +27,15 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
-      if (EasyLocalization.of(context).locale == Locale('ar', "")) {
-        EasyLocalization.of(context).setLocale(Locale('ar', ''));
-      } else {
-        EasyLocalization.of(context).setLocale(Locale('en', ''));
-      }
+      setState(() {
+        if (EasyLocalization.of(context).locale == Locale('ar', "")) {
+
+          EasyLocalization.of(context).setLocale(Locale('en', ""));
+
+        } else {
+          EasyLocalization.of(context).setLocale(Locale('ar', ""));
+        }
+      });
     }
   }
 

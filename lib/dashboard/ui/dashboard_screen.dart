@@ -23,12 +23,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
     if (choice == 2) {
       setState(() {
-        if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
+        if (EasyLocalization.of(context).locale == Locale('ar', "")) {
 
-          EasyLocalization.of(context).setLocale(Locale('en', "US"));
+          EasyLocalization.of(context).setLocale(Locale('en', ""));
 
         } else {
-          EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
+          EasyLocalization.of(context).setLocale(Locale('ar', ""));
         }
       });
 
@@ -94,6 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: [
                             SliderWidget(data),
                             Consumer(
+
                               builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
                                 var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state));
 

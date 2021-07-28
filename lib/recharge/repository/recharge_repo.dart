@@ -11,11 +11,16 @@ var rechargeRepoProvider = Provider((ref) => RechargeRepo());
 class RechargeRepo implements RechargeApi {
   var token = Preference.getString(PrefKeys.token);
 
-
+  @override
+  Future<Response> getRechargeData(MyParameter model) async {
+    var request =
+        await HttpApi.request(EndPoint.pay + "/" + model.id, headers: Header.userAuth(token), body: {"amount": model.amout}, type: RequestType.Post);
+    return request;
+  }
 
   @override
-  Future<Response> getRechargeData(MyParameter model) async{
-    var request = await HttpApi.request(EndPoint.pay + "/" + model.id, headers: Header.userAuth(token),body: {"amount":model.amout},type: RequestType.Post);
+  Future<Response> addSuccessRecharge( model) async {
+    var request = await HttpApi.request(EndPoint.finalPay, headers: Header.userAuth(token), body: model, type: RequestType.Post);
     return request;
   }
 }

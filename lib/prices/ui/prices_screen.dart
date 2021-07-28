@@ -23,12 +23,15 @@ class _PricesScreenState extends State<PricesScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
-      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
-        EasyLocalization.of(context).setLocale(Locale('en', "US"));
+      setState(() {
+        if (EasyLocalization.of(context).locale == Locale('ar', "")) {
 
-      } else {
-        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
-      }
+          EasyLocalization.of(context).setLocale(Locale('en', ""));
+
+        } else {
+          EasyLocalization.of(context).setLocale(Locale('ar', ""));
+        }
+      });
     }
   }
   @override

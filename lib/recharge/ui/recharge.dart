@@ -25,60 +25,65 @@ class _RechargeScreenState extends State<RechargeScreen> {
   var id;
   var value;
   RechargeModel rechargeModel;
-  _itemChoice( choice) {
+
+  _itemChoice(choice) {
     if (choice == 1) {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
       if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
         EasyLocalization.of(context).setLocale(Locale('en', "US"));
-
       } else {
         EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
-      backgroundColor: Colors.white,
-      title: Text("Recharge".tr(),
-          style: TextStyle(
-            color: AppColors.textColor,
-          )),
-      actions: [
-        PopupMenuButton(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset("assets/images/profile.png",),
-          ),onSelected: _itemChoice,
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              child: Text("Profile".tr()),
-              value: 1,
-            ),
-            PopupMenuItem(
-              child: Text("language".tr()),
-              value: 2,
-            ),
-          ],
-        )
-      ],
-      leading: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-        child: Material(
-          shadowColor: Colors.transparent,
-          color: Colors.transparent,
-          child: IconButton(
-            icon: Icon(
-              Icons.menu,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Recharge".tr(),
+            style: TextStyle(
               color: AppColors.textColor,
+            )),
+        actions: [
+          PopupMenuButton(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                "assets/images/profile.png",
+              ),
             ),
-            onPressed: widget.onMenuPressed,
+            onSelected: _itemChoice,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text("Profile".tr()),
+                value: 1,
+              ),
+              PopupMenuItem(
+                child: Text("language".tr()),
+                value: 2,
+              ),
+            ],
+          )
+        ],
+        leading: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+          child: Material(
+            shadowColor: Colors.transparent,
+            color: Colors.transparent,
+            child: IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: AppColors.textColor,
+              ),
+              onPressed: widget.onMenuPressed,
+            ),
           ),
         ),
       ),
-    ),
       body: Center(
         child: ListView(
           children: [
@@ -162,92 +167,128 @@ class _RechargeScreenState extends State<RechargeScreen> {
                             builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
                               payTextEditingController.text = watch(amountProvider).state;
 
-                              return InkWell(
-                                onTap: () {
-                                  if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
-                                    context.read(rechargeControllerProvider).getPaymentData(MyParameter(id: id, amout: amountTextEditingController.text)).then((value) {
-                                      if (value != null) {
-                                        rechargeModel = value;
-                                        context.read(amountProvider).state = value.formattedAmt.toString();
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg: "some thing error please try again ".tr(),
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      }
-                                    });
-                                  }
-                                },
-                                child: Container(
-                                  height: 60,
-                                  width: MediaQuery.of(context).size.width * .7,
-                                  child: TextFormField(
+                              return Column(
+                                children: [
+                                  InkWell(
                                     onTap: () {
-                                      FocusScope.of(context).unfocus();
+                                      if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
+                                        context
+                                            .read(rechargeControllerProvider)
+                                            .getPaymentData(MyParameter(id: id, amout: amountTextEditingController.text))
+                                            .then((value) {
+                                          if (value != null) {
+                                            WidgetsBinding.instance.addPostFrameCallback((_) {
+
+                                              rechargeModel = value;
+                                              context.read(amountProvider).state = value.formattedAmt.toString();
+                                            });
+
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg: "some thing error please try again ".tr(),
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          }
+                                        });
+                                      }
                                     },
-                                    enabled: false,
-                                    controller: payTextEditingController,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.all(10.0),
-                                      counterText: '',
-                                      labelStyle: TextStyle(color: AppColors.hintColor),
-                                      hintText: "You Will Pay".tr(),
-                                      hintStyle: TextStyle(color: AppColors.hintColor),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(color: AppColors.hintColor),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: AppColors.hintColor),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                                        borderRadius: BorderRadius.circular(5),
+                                    child: Container(
+                                      height: 60,
+                                      width: MediaQuery.of(context).size.width * .7,
+                                      child: TextFormField(
+                                        onTap: () {
+                                          FocusScope.of(context).unfocus();
+                                        },
+                                        enabled: false,
+                                        controller: payTextEditingController,
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.all(10.0),
+                                          counterText: '',
+                                          labelStyle: TextStyle(color: AppColors.hintColor),
+                                          hintText: "You Will Pay".tr(),
+                                          hintStyle: TextStyle(color: AppColors.hintColor),
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(color: AppColors.hintColor),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          disabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(color: AppColors.hintColor),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      WidgetsBinding.instance.addPostFrameCallback((_) {
+
+                                        if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
+                                          context
+                                              .read(rechargeControllerProvider)
+                                              .getPaymentData(MyParameter(id: id, amout: amountTextEditingController.text))
+                                              .then((value) {
+                                            if (value != null) {
+                                              rechargeModel = value;
+                                              context.read(amountProvider).state = value.formattedAmt.toString();
+                                              if (rechargeModel != null) {
+
+                                                String url = "https://test-iframe.kashier.io/payment?" +
+                                                    "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (c) => WebViewExample(url,rechargeModel)));
+                                              }
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg: "some thing error please try again ".tr(),
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            }
+                                          });
+                                        }
+                                      });
+
+
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(25)),
+                                      child: Text("Pay Now !", style: TextStyles.hintHeaderStyle),
+                                      padding: EdgeInsets.only(left: MySize.size64, right: MySize.size64, top: MySize.size15, bottom: MySize.size15),
+                                    ),
+                                  ),
+                                ],
                               );
                             },
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (rechargeModel != null) {
-                                print(rechargeModel.toJson());
-
-                                String url ="https://test-iframe.kashier.io/payment?"+"mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.amount}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
-                                Navigator.of(context).push(MaterialPageRoute(builder: (c)=>WebViewExample(url)));
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(25)),
-                              child: Text("Pay Now !", style: TextStyles.hintHeaderStyle),
-                              padding: EdgeInsets.only(left: MySize.size64, right: MySize.size64, top: MySize.size15, bottom: MySize.size15),
-                            ),
                           ),
                         ],
                       );
                     },
                     loading: () => Expanded(
-                      child: Container(
-                        child: Center(
+                          child: Container(
+                            child: Center(
                               child: CircularProgressIndicator(),
                             ),
-                      ),
-                    ),
+                          ),
+                        ),
                     error: (e, ee) {
                       print(e.toString());
                       print(ee.toString());
