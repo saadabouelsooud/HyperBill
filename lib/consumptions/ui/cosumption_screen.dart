@@ -39,10 +39,10 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
     }
   }
 
-  String amountText = "300 Eg";
-  String amountDate = "jan";
-  String consumptionsText = "1300 KWh";
-  String consumptionsDate = "jan";
+  String amountText ;
+  String amountDate ;
+  String consumptionsText ;
+  String consumptionsDate ;
 
   @override
   Widget build(BuildContext context) {

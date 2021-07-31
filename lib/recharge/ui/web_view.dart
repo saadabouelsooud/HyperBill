@@ -42,7 +42,7 @@ class WebViewExampleState extends State<WebViewExample> {
                 mode:"",
                 orderId:widget.model.orderId,
                 orderReference:"",
-                paymentStatus:"",
+                paymentStatus:"SUCCESS",
                 signature:"",
                 transactionId:"").toJson());
             Navigator.pop(context);

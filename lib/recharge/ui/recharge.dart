@@ -31,10 +31,10 @@ class _RechargeScreenState extends State<RechargeScreen> {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
-      if (EasyLocalization.of(context).locale == Locale('ar', "DZ")) {
-        EasyLocalization.of(context).setLocale(Locale('en', "US"));
+      if (EasyLocalization.of(context).locale == Locale('ar', "")) {
+        EasyLocalization.of(context).setLocale(Locale('en', ""));
       } else {
-        EasyLocalization.of(context).setLocale(Locale('ar', "DZ"));
+        EasyLocalization.of(context).setLocale(Locale('ar', ""));
       }
     }
   }
@@ -171,17 +171,17 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
+                                      FocusScope.of(context).unfocus();
+
                                       if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
                                         context
                                             .read(rechargeControllerProvider)
                                             .getPaymentData(MyParameter(id: id, amout: amountTextEditingController.text))
                                             .then((value) {
                                           if (value != null) {
-                                            WidgetsBinding.instance.addPostFrameCallback((_) {
 
                                               rechargeModel = value;
                                               context.read(amountProvider).state = value.formattedAmt.toString();
-                                            });
 
                                           } else {
                                             Fluttertoast.showToast(
@@ -234,10 +234,9 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                   ),
                                   SizedBox(
                                     height: 30,
-                                  ),
-                                  InkWell(
+                                  ), InkWell(
                                     onTap: () {
-                                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                                      FocusScope.of(context).unfocus();
 
                                         if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
                                           context
@@ -265,7 +264,6 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                             }
                                           });
                                         }
-                                      });
 
 
                                     },
@@ -302,14 +300,16 @@ class _RechargeScreenState extends State<RechargeScreen> {
     );
   }
 
-  @override
-  void deactivate() {
-    payTextEditingController.clear();
-    context.read(amountProvider).state = "0.0";
-    id = null;
-    value = null;
-    rechargeModel = null;
-    // TODO: implement deactivate
-    super.deactivate();
+ @override
+  void dispose() {
+   context.read(amountProvider).state = "0.0";
+
+   payTextEditingController.dispose();
+   amountTextEditingController.dispose();
+   meterTextEditingController.dispose();
+   id = null;
+   value = null;
+   rechargeModel = null;
+    super.dispose();
   }
 }

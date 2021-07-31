@@ -17,156 +17,151 @@ class DashboardScreen extends KFDrawerContent {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  _itemChoice( choice) {
+  _itemChoice(choice) {
     if (choice == 1) {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
       setState(() {
         if (EasyLocalization.of(context).locale == Locale('ar', "")) {
-
           EasyLocalization.of(context).setLocale(Locale('en', ""));
-
         } else {
           EasyLocalization.of(context).setLocale(Locale('ar', ""));
         }
       });
-
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Column(
-          children: [
-            AppBar(
-              backgroundColor: AppColors.primaryBackground,
-              foregroundColor: AppColors.primaryBackground,
-              title: Text(
-                "Dashboard".tr(),
-                style: TextStyle(
-                  color: AppColors.textColor,
-                ),
-              ),
-              actions: [
-                PopupMenuButton(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset("assets/images/profile.png",),
-                    ),onSelected: _itemChoice,
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        child: Text("Profile".tr()),
-                        value: 1,
-                      ),
-                      PopupMenuItem(
-                        child: Text("language".tr()),
-                        value: 2,
-                      ),
-                    ],
-                )
-
-              ],
-              leading: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                child: Material(
-                  shadowColor: Colors.transparent,
-                  color: Colors.transparent,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: AppColors.textColor,
-                    ),
-                    onPressed: widget.onMenuPressed,
-                  ),
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryBackground,
+        foregroundColor: AppColors.primaryBackground,
+        title: Text(
+          "Dashboard".tr(),
+          style: TextStyle(
+            color: AppColors.textColor,
+          ),
+        ),
+        actions: [
+          PopupMenuButton(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                "assets/images/profile.png",
               ),
             ),
-            Consumer(
-              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                var asyncValue = watch(dashboardMeterDataFutureProvider);
-
-                return asyncValue.when(
-                    data: (data) {
-                      return Expanded(
-                        child: ListView(
-                          children: [
-                            SliderWidget(data),
-                            Consumer(
-
-                              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                                var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state));
-
-                                return asyncValue2.when(
-                                    data: (data) {
-                                      return GridView(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        children: [
-                                          Item(
-                                            icon: dashboardItemsIcons[0],
-                                            text: dashboardItemsName[0],
-                                            text2: data.balance,
-                                          ),
-                                          Item(
-                                            icon: dashboardItemsIcons[1],
-                                            text: dashboardItemsName[1],
-                                            text2: data.status,
-                                          ),
-                                          Item(
-                                            icon: dashboardItemsIcons[2],
-                                            text: dashboardItemsName[2],
-                                            text2: data.totalConsumption,
-                                          ),
-                                          Item(
-                                            icon: dashboardItemsIcons[3],
-                                            text: dashboardItemsName[3],
-                                            text2: data.lastReadingDate,
-                                          ),
-                                          Item(
-                                            icon: dashboardItemsIcons[4],
-                                            text: dashboardItemsName[4],
-                                            text2: data.thisMonthConsumptionEgp,
-                                          ),
-                                          Item(
-                                            icon: dashboardItemsIcons[5],
-                                            text: dashboardItemsName[5],
-                                            text2: data.thisMonthConsumptionKwh,
-                                          ),
-                                        ],
-                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 1 / 1.1,
-                                          crossAxisCount: 2,
-                                        ),
-                                      );
-                                    },
-                                    loading: () => SizedBox(),
-                                    error: (e, ee) {
-                                      print(ee.toString());
-
-                                      return Center(child: Text(e.toString()));
-                                    });
-                              },
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                    loading: () => Expanded(
-                          child: Container(
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        ),
-                    error: (e, ee) => Center(
-                          child: Text(e.toString()),
-                        ));
-              },
-            )
-          ],
+            onSelected: _itemChoice,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text("Profile".tr()),
+                value: 1,
+              ),
+              PopupMenuItem(
+                child: Text("language".tr()),
+                value: 2,
+              ),
+            ],
+          )
+        ],
+        leading: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+          child: Material(
+            shadowColor: Colors.transparent,
+            color: Colors.transparent,
+            child: IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: AppColors.textColor,
+              ),
+              onPressed: widget.onMenuPressed,
+            ),
+          ),
         ),
+      ),
+      body: Consumer(
+        builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+          var asyncValue = watch(dashboardMeterDataFutureProvider);
+
+          return asyncValue.when(
+              data: (data) {
+                return Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView(
+                    children: [
+                      SliderWidget(data),
+                      Consumer(
+                        builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
+                          var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state));
+
+                          return asyncValue2.when(
+                              data: (data) {
+                                return GridView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: [
+                                    Item(
+                                      icon: dashboardItemsIcons[0],
+                                      text: dashboardItemsName[0],
+                                      text2: data.balance,
+                                    ),
+                                    Item(
+                                      icon: dashboardItemsIcons[1],
+                                      text: dashboardItemsName[1],
+                                      text2: data.status,
+                                    ),
+                                    Item(
+                                      icon: dashboardItemsIcons[2],
+                                      text: dashboardItemsName[2],
+                                      text2: data.totalConsumption,
+                                    ),
+                                    Item(
+                                      icon: dashboardItemsIcons[3],
+                                      text: dashboardItemsName[3],
+                                      text2: data.lastReadingDate,
+                                    ),
+                                    Item(
+                                      icon: dashboardItemsIcons[4],
+                                      text: dashboardItemsName[4],
+                                      text2: data.thisMonthConsumptionEgp,
+                                    ),
+                                    Item(
+                                      icon: dashboardItemsIcons[5],
+                                      text: dashboardItemsName[5],
+                                      text2: data.thisMonthConsumptionKwh,
+                                    ),
+                                  ],
+                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 1 / 1.1,
+                                    crossAxisCount: 2,
+                                  ),
+                                );
+                              },
+                              loading: () => SizedBox(),
+                              error: (e, ee) {
+                                print(ee.toString());
+
+                                return Center(child: Text(e.toString()));
+                              });
+                        },
+                      )
+                    ],
+                  ),
+                );
+              },
+              loading: () => Expanded(
+                    child: Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+              error: (e, ee) => Center(
+                    child: Text(e.toString()),
+                  ));
+        },
       ),
     );
   }
@@ -208,7 +203,8 @@ class _MainPageState extends State<Item> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(margin: EdgeInsets.all(5),
+    return Container(
+      margin: EdgeInsets.all(5),
       child: FadeTransition(
         opacity: _fadeInFadeOut,
         child: Card(
@@ -237,7 +233,8 @@ class _MainPageState extends State<Item> with TickerProviderStateMixin {
                   height: 10,
                 ),
                 Text(
-                  widget.text2.toString(),textAlign: TextAlign.center,
+                  widget.text2.toString(),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 20,

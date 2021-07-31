@@ -28,7 +28,6 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    super.initState();
     _drawerController = KFDrawerController(
       initialPage: DashboardScreen(),
       items: [
@@ -76,6 +75,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         ),
       ],
     );
+
+    super.initState();
   }
 
   @override

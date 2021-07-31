@@ -125,12 +125,7 @@ class HttpApis {
           return status >= 200 && status <= 300;
         });
 
-    // if (onSendProgress == null) {
-    //   onSendProgress = (int sent, int total) {
-    //     Logger().v('$endPoint\n sent: $sent total: $total\n');
-    //   };
-    // }
-    // dio.interceptors.add(CustomInterceptors());
+
     Logger().d(body.toString());
     Logger().d(headers);
     try {
