@@ -34,17 +34,11 @@ class WebViewExampleState extends State<WebViewExample> {
           if (request.url.contains('app/pay/status')) {
             context.read(rechargeControllerProvider).addSuccessRecharge(PaymentSuccessModel(
                 amount:widget.model.formattedAmt,
-                cardBrand:"",
-                cardDataToken:"",
                 currency:widget.model.currency,
-                maskedCard:"",
-                merchantOrderId:"",
-                mode:"",
+                merchantOrderId:widget.model.orderId,
                 orderId:widget.model.orderId,
-                orderReference:"",
-                paymentStatus:"SUCCESS",
-                signature:"",
-                transactionId:"").toJson());
+                paymentStatus:"SUCCESS").toJson());
+
             Navigator.pop(context);
             return NavigationDecision.prevent;
           } else {

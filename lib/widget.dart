@@ -57,7 +57,7 @@ class _SliderWidgetState extends State<SliderWidget> {
                     style: TextStyles.headerStyle,
                   ),
                   Text(
-                    "Unit No :".tr()+" : "+ "${widget.number.elementAt(context.read(counterProvider).state-1).unitNo}",
+                    "Unit No :".tr()+ "${widget.number.elementAt(context.read(counterProvider).state-1).unitNo}",
                     style: TextStyles.massiveHeaderStyleNormal,
                   ),
                   Text("Meter serial :".tr()+" : "+"${widget.number.elementAt(context.read(counterProvider).state-1).serial}", style: TextStyles.headerStyle),

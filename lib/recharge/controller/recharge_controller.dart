@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/recharge/model/recharge_model.dart';
 import 'package:grocery/recharge/repository/recharge_repo.dart';
@@ -18,7 +20,11 @@ class RechargeController {
     return RechargeModel.fromJson(response.data);
   }
 
-  Future<void> addSuccessRecharge( model) async {
-    await repo.addSuccessRecharge(model);
+  Future<void> addSuccessRecharge(model) async {
+
+    var response = await repo.addSuccessRecharge(model);
+    if(response.statusCode==200){
+      message="Payment Success";
+    }
   }
 }

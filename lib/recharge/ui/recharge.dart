@@ -28,7 +28,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
 
   _itemChoice(choice) {
     if (choice == 1) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
       if (EasyLocalization.of(context).locale == Locale('ar', "")) {
@@ -38,6 +39,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +90,16 @@ class _RechargeScreenState extends State<RechargeScreen> {
         child: ListView(
           children: [
             Consumer(
-              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+              builder: (BuildContext context,
+                  T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
                 var asyncValue = watch(dashboardMeterDataFutureProvider);
                 return asyncValue.when(
                     data: (data) {
                       if (value != null) {
-                        value = "Unit No:" + data.elementAt(0).unitNo + " Serial: " + data.elementAt(0).serial.toString();
+                        value = "Unit No:" +
+                            data.elementAt(0).unitNo +
+                            " Serial: " +
+                            data.elementAt(0).serial.toString();
                       }
                       return Column(
                         children: [
@@ -103,16 +109,25 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           Container(
                             width: MediaQuery.of(context).size.width * .7,
                             child: Container(
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(color: Colors.grey)),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: Colors.grey)),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
                                   items: data
                                       .map((e) => DropdownMenuItem(
                                             child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
-                                              child: Text("Unit No:" + e.unitNo + " Serial: " + e.serial),
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text("Unit No:" +
+                                                  e.unitNo +
+                                                  " Serial: " +
+                                                  e.serial),
                                             ),
-                                            value: "Unit No:" + e.unitNo + " Serial: " + e.serial,
+                                            value: "Unit No:" +
+                                                e.unitNo +
+                                                " Serial: " +
+                                                e.serial,
                                           ))
                                       .toList(),
                                   onChanged: (c) {
@@ -141,31 +156,42 @@ class _RechargeScreenState extends State<RechargeScreen> {
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(10.0),
                                 counterText: '',
-                                labelStyle: TextStyle(color: AppColors.hintColor),
+                                labelStyle:
+                                    TextStyle(color: AppColors.hintColor),
                                 hintText: "Amount (EGP)".tr(),
-                                hintStyle: TextStyle(color: AppColors.hintColor),
+                                hintStyle:
+                                    TextStyle(color: AppColors.hintColor),
                                 border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColors.hintColor),
+                                  borderSide:
+                                      BorderSide(color: AppColors.hintColor),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                                  borderSide: BorderSide(
+                                      color:
+                                          AppColors.hintColor.withOpacity(.2)),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 disabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColors.hintColor),
+                                  borderSide:
+                                      BorderSide(color: AppColors.hintColor),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                                  borderSide: BorderSide(
+                                      color:
+                                          AppColors.hintColor.withOpacity(.2)),
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
                             ),
                           ),
                           Consumer(
-                            builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                              payTextEditingController.text = watch(amountProvider).state;
+                            builder: (BuildContext context,
+                                T Function<T>(ProviderBase<Object, T>) watch,
+                                Widget child) {
+                              payTextEditingController.text =
+                                  watch(amountProvider).state;
 
                               return Column(
                                 children: [
@@ -173,19 +199,27 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
 
-                                      if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
+                                      if (amountTextEditingController.text
+                                              .trim()
+                                              .isNotEmpty &&
+                                          id != null) {
                                         context
                                             .read(rechargeControllerProvider)
-                                            .getPaymentData(MyParameter(id: id, amout: amountTextEditingController.text))
+                                            .getPaymentData(MyParameter(
+                                                id: id,
+                                                amout:
+                                                    amountTextEditingController
+                                                        .text))
                                             .then((value) {
                                           if (value != null) {
-
-                                              rechargeModel = value;
-                                              context.read(amountProvider).state = value.formattedAmt.toString();
-
+                                            rechargeModel = value;
+                                            context.read(amountProvider).state =
+                                                value.formattedAmt.toString();
                                           } else {
                                             Fluttertoast.showToast(
-                                                msg: "some thing error please try again ".tr(),
+                                                msg:
+                                                    "some thing error please try again "
+                                                        .tr(),
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 gravity: ToastGravity.BOTTOM,
                                                 timeInSecForIosWeb: 1,
@@ -198,7 +232,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                     },
                                     child: Container(
                                       height: 60,
-                                      width: MediaQuery.of(context).size.width * .7,
+                                      width: MediaQuery.of(context).size.width *
+                                          .7,
                                       child: TextFormField(
                                         onTap: () {
                                           FocusScope.of(context).unfocus();
@@ -209,24 +244,36 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.all(10.0),
                                           counterText: '',
-                                          labelStyle: TextStyle(color: AppColors.hintColor),
+                                          labelStyle: TextStyle(
+                                              color: AppColors.hintColor),
                                           hintText: "You Will Pay".tr(),
-                                          hintStyle: TextStyle(color: AppColors.hintColor),
+                                          hintStyle: TextStyle(
+                                              color: AppColors.hintColor),
                                           border: OutlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.hintColor),
-                                            borderRadius: BorderRadius.circular(5),
+                                            borderSide: BorderSide(
+                                                color: AppColors.hintColor),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                                            borderRadius: BorderRadius.circular(5),
+                                            borderSide: BorderSide(
+                                                color: AppColors.hintColor
+                                                    .withOpacity(.2)),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                           disabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.hintColor),
-                                            borderRadius: BorderRadius.circular(5),
+                                            borderSide: BorderSide(
+                                                color: AppColors.hintColor),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
-                                            borderRadius: BorderRadius.circular(5),
+                                            borderSide: BorderSide(
+                                                color: AppColors.hintColor
+                                                    .withOpacity(.2)),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                         ),
                                       ),
@@ -234,43 +281,82 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                   ),
                                   SizedBox(
                                     height: 30,
-                                  ), InkWell(
+                                  ),
+                                  InkWell(
                                     onTap: () {
                                       FocusScope.of(context).unfocus();
 
-                                        if (amountTextEditingController.text.trim().isNotEmpty && id != null) {
-                                          context
-                                              .read(rechargeControllerProvider)
-                                              .getPaymentData(MyParameter(id: id, amout: amountTextEditingController.text))
-                                              .then((value) {
-                                            if (value != null) {
-                                              rechargeModel = value;
-                                              context.read(amountProvider).state = value.formattedAmt.toString();
-                                              if (rechargeModel != null) {
+                                      if (amountTextEditingController.text
+                                              .trim()
+                                              .isNotEmpty &&
+                                          id != null) {
+                                        context
+                                            .read(rechargeControllerProvider)
+                                            .getPaymentData(MyParameter(
+                                                id: id,
+                                                amout:
+                                                    amountTextEditingController
+                                                        .text))
+                                            .then((value) {
+                                          if (value != null) {
+                                            rechargeModel = value;
+                                            context.read(amountProvider).state =
+                                                value.formattedAmt.toString();
+                                            if (rechargeModel != null) {
+                                              String url =
+                                                  "https://test-iframe.kashier.io/payment?" +
+                                                      "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (c) =>
+                                                          WebViewExample(url,
+                                                              rechargeModel))).then((value) {
 
-                                                String url = "https://test-iframe.kashier.io/payment?" +
-                                                    "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (c) => WebViewExample(url,rechargeModel)));
-                                              }
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg: "some thing error please try again ".tr(),
-                                                  toastLength: Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.BOTTOM,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.red,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0);
+                                                if (context.read(rechargeControllerProvider).message.isNotEmpty) {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (c) => Dialog(
+                                                        child: Container(
+                                                          height: 100,
+                                                          width: 100,
+                                                          child: Center(
+                                                            child:
+                                                            Text(context.read(rechargeControllerProvider).message.tr(),style: TextStyles.hintTextStyles,),
+                                                          ),
+                                                        ),
+                                                      ));
+                                                  context.read(rechargeControllerProvider).message="";
+                                                }
+
+                                              });
                                             }
-                                          });
-                                        }
-
-
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "some thing error please try again "
+                                                        .tr(),
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          }
+                                        });
+                                      }
                                     },
                                     child: Container(
-                                      decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(25)),
-                                      child: Text("Pay Now !", style: TextStyles.hintHeaderStyle),
-                                      padding: EdgeInsets.only(left: MySize.size64, right: MySize.size64, top: MySize.size15, bottom: MySize.size15),
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(25)),
+                                      child: Text("Pay Now !".tr(),
+                                          style: TextStyles.hintHeaderStyle),
+                                      padding: EdgeInsets.only(
+                                          left: MySize.size64,
+                                          right: MySize.size64,
+                                          top: MySize.size15,
+                                          bottom: MySize.size15),
                                     ),
                                   ),
                                 ],
@@ -300,16 +386,16 @@ class _RechargeScreenState extends State<RechargeScreen> {
     );
   }
 
- @override
+  @override
   void dispose() {
-   context.read(amountProvider).state = "0.0";
+    context.read(amountProvider).state = "0.0";
 
-   payTextEditingController.dispose();
-   amountTextEditingController.dispose();
-   meterTextEditingController.dispose();
-   id = null;
-   value = null;
-   rechargeModel = null;
+    payTextEditingController.dispose();
+    amountTextEditingController.dispose();
+    meterTextEditingController.dispose();
+    id = null;
+    value = null;
+    rechargeModel = null;
     super.dispose();
   }
 }
