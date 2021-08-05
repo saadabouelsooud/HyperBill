@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery/core/services/api/wrapper_model.dart';
@@ -39,6 +41,8 @@ class HttpApi {
     //   };
     // }
     // dio.interceptors.add(CustomInterceptors());
+    log(body.toString());
+    log(headers.toString());
     Logger().d(body.toString());
     Logger().d(headers);
     try {
@@ -66,11 +70,15 @@ class HttpApi {
         default:
           break;
       }
+      log('$type $endPoint\n$headers\nstatusCode:${response.statusCode}\n');
+      log(response.toString());
 
       Logger().d('$type $endPoint\n$headers\nstatusCode:${response.statusCode}\n');
       Logger().d(response);
       return response;
     } catch (e) {
+   log('🌐🌐ERROR in http $type for $endPoint:🌐🌐\n' + e.toString());
+
       Logger().e('🌐🌐ERROR in http $type for $endPoint:🌐🌐\n' + e.toString());
       return null;
     }
@@ -97,71 +105,3 @@ class CustomInterceptors extends Interceptor {
   }
 }
 
-class HttpApis {
-  static String serverPAth = 'https://tvexs.com:9092/api/selfservice/';
-
-  static Future<Response> request(String endPoint,
-      {body,
-      Function onSendProgress,
-      Map<String, dynamic> headers,
-      String type = RequestType.Get,
-      Map<String, dynamic> queryParameters,
-      String contentType = Headers.jsonContentType,
-      ResponseType responseType = ResponseType.json}) async {
-    Response response;
-
-    final dio = Dio(BaseOptions(
-      baseUrl: serverPAth,
-      connectTimeout: 50000,
-      receiveTimeout: 50000,
-    ));
-
-    final options = Options(
-        headers: headers,
-        contentType: contentType,
-        responseType: responseType,
-        followRedirects: false,
-        validateStatus: (status) {
-          return status >= 200 && status <= 300;
-        });
-
-
-    Logger().d(body.toString());
-    Logger().d(headers);
-    try {
-      switch (type) {
-        case RequestType.Get:
-          {
-            response = await dio.get(endPoint, queryParameters: queryParameters, options: options);
-          }
-          break;
-        case RequestType.Post:
-          {
-            response = await dio.post(endPoint, queryParameters: queryParameters, onSendProgress: onSendProgress, data: body, options: options);
-          }
-          break;
-        case RequestType.Put:
-          {
-            response = await dio.put(endPoint, queryParameters: queryParameters, data: body, options: options);
-          }
-          break;
-        case RequestType.Delete:
-          {
-            response = await dio.delete(endPoint, queryParameters: queryParameters, data: body, options: options);
-          }
-          break;
-        default:
-          break;
-      }
-
-      Logger().d('$type $endPoint\n$headers\nstatusCode:${response.statusCode}\n');
-      Logger().d(response);
-      return response.data;
-    } catch (e) {
-
-
-      Logger().e('🌐🌐ERROR in http $type for $endPoint:🌐🌐\n' + e.toString());
-      return null;
-    }
-  }
-}

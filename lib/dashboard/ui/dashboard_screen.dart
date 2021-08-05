@@ -151,13 +151,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 );
               },
-              loading: () => Expanded(
-                    child: Container(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
+              loading: () => Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
               error: (e, ee) => Center(
                     child: Text(e.toString()),
                   ));

@@ -14,13 +14,9 @@ class AuthRepo implements AuthApi {
   }
 
   @override
-  Future<Response> login(String email, String password) async {
-    var request = await HttpApi.request(EndPoint.authenticate,
+  Future<Response> login(String email, String password){
+
+    return HttpApi.request(EndPoint.authenticate,
         type: RequestType.Post, body: {"username": email, "password": password});
-
-
-
-
-    return request;
   }
 }

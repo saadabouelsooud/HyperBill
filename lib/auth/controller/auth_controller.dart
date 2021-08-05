@@ -15,6 +15,7 @@ class AuthController {
   var isUserLogged = Preference.getBool(PrefKeys.userLogged);
 
   Future<bool> login(email, pass) async {
+
     var response = await repo.login(email, pass);
     var json = response.data;
     if (json is Map<String, dynamic>) {
