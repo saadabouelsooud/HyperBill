@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery/auth/controller/auth_controller.dart';
 import 'package:grocery/core/services/theme/styles/text_styles.dart';
 import 'package:grocery/core/utils/size_config.dart';
@@ -23,6 +24,8 @@ class _ForgotPassword2ScreenState extends State<ForgotPassword2Screen> {
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
+    var provider = context.read(authControllerProvider);
+
     return  CheckInternetConnection(
       child: Scaffold(appBar: AppBar(backgroundColor: Colors.white,elevation: 0,),
           body: Container(margin: EdgeInsets.all(20),
@@ -90,11 +93,34 @@ class _ForgotPassword2ScreenState extends State<ForgotPassword2Screen> {
                                     splashColor:
                                     Colors.white.withAlpha(100),
                                     onPressed: () {
-                                      showLoaderDialog(context);
-                                      context.read(authControllerProvider).forgetPassword(email.text).then((value) {
+                                      FocusScope.of(context).unfocus();
 
-                                        Navigator.of(context).pop();
-                                      });
+                                      if( provider.isForgetValidation(email.text)){
+                                       showLoaderDialog(context);
+                                       context.read(authControllerProvider).forgetPassword(email.text).then((value) {
+
+                                         Navigator.of(context).pop();
+                                         Fluttertoast.showToast(
+                                             msg: provider.message.tr(),
+                                             toastLength: Toast.LENGTH_SHORT,
+                                             gravity: ToastGravity.BOTTOM,
+                                             timeInSecForIosWeb: 1,
+                                             backgroundColor: Colors.red,
+                                             textColor: Colors.white,
+                                             fontSize: 16.0);
+                                       });
+                                     }else{
+                                       Fluttertoast.showToast(
+                                           msg: provider.message.tr(),
+                                           toastLength: Toast.LENGTH_SHORT,
+                                           gravity: ToastGravity.BOTTOM,
+                                           timeInSecForIosWeb: 1,
+                                           backgroundColor: Colors.red,
+                                           textColor: Colors.white,
+                                           fontSize: 16.0);
+
+                                     }
+
                                     },
                                     child: Text("RESET PASSWORD".tr(),
                                         style:TextStyle(

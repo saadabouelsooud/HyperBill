@@ -79,7 +79,10 @@ class _TicketScreenState extends State<TicketScreen> {
                   Row(
                     children: [
                       SizedBox(
-                        child: Radio(value: 2, groupValue: _radioValue, onChanged: _handleRadioValueChange),
+                        child: Radio(
+                            value: 2,
+                            groupValue: _radioValue,
+                            onChanged: _handleRadioValueChange),
                         height: 20,
                         width: 40,
                       ),
@@ -114,7 +117,8 @@ class _TicketScreenState extends State<TicketScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -122,7 +126,8 @@ class _TicketScreenState extends State<TicketScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
@@ -154,7 +159,8 @@ class _TicketScreenState extends State<TicketScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     disabledBorder: OutlineInputBorder(
@@ -162,7 +168,8 @@ class _TicketScreenState extends State<TicketScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.hintColor.withOpacity(.2)),
+                      borderSide: BorderSide(
+                          color: AppColors.hintColor.withOpacity(.2)),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
@@ -178,16 +185,37 @@ class _TicketScreenState extends State<TicketScreen> {
                   ),
                   InkWell(
                     onTap: () {
+                      FocusScope.of(context).unfocus();
+
                       showLoaderDialog(context);
 
-                      context.read(supportControllerProvider).addTicket(type, descriptionTextController.text, titleTextController.text).then((value) {
+                      context
+                          .read(supportControllerProvider)
+                          .addTicket(type, descriptionTextController.text,
+                              titleTextController.text)
+                          .then((value) {
                         Navigator.of(context).pop();
+                        Fluttertoast.showToast(
+                            msg: context
+                                .read(supportControllerProvider)
+                                .message
+                                .tr(),
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
                       });
                     },
                     child: Container(
-                      decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(25)),
-                      child: Text("Save".tr(), style: TextStyles.hintHeaderStyle),
-                      padding: EdgeInsets.only(left: 64, right: 64, top: 15, bottom: 15),
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(25)),
+                      child:
+                          Text("Save".tr(), style: TextStyles.hintHeaderStyle),
+                      padding: EdgeInsets.only(
+                          left: 64, right: 64, top: 15, bottom: 15),
                     ),
                   ),
                 ],

@@ -4,7 +4,8 @@ import 'package:grocery/auth/repository/auth_repo.dart';
 import 'package:grocery/core/services/preference/preference.dart';
 import 'package:grocery/core/utils/extensions/string_methods.dart';
 
-var authControllerProvider = Provider((ref) => AuthController(ref.watch(authRepProvider)));
+var authControllerProvider =
+    Provider((ref) => AuthController(ref.watch(authRepProvider)));
 
 class AuthController {
   String message;
@@ -15,7 +16,6 @@ class AuthController {
   var isUserLogged = Preference.getBool(PrefKeys.userLogged);
 
   Future<bool> login(email, pass) async {
-
     var response = await repo.login(email, pass);
     var json = response.data;
     if (json is Map<String, dynamic>) {
@@ -31,7 +31,12 @@ class AuthController {
   }
 
   Future<void> forgetPassword(email) async {
-    await repo.forgetPassword(email);
+    var response = await repo.forgetPassword(email);
+    if (response.statusCode == 200) {
+      message = "An email has been sent to you";
+    } else {
+      message = "Operation Failed";
+    }
   }
 
   bool isLoginValidation(String email, String password) {
@@ -48,6 +53,20 @@ class AuthController {
       message = "please write your password";
       return false;
     }
+    message = "";
+    return true;
+  }
+  bool isForgetValidation(String email) {
+    if (email == null || email.isEmpty) {
+      message = "please write your Email";
+      return false;
+    }
+    if (!StringMethods(email).isEmail()) {
+      message = "please write correct Email";
+      return false;
+    }
+
+
     message = "";
     return true;
   }

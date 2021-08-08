@@ -5,8 +5,9 @@ import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/prices/controller/prices_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/widget.dart';
-import 'package:kf_drawer/kf_drawer.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import '../../drawer_lib.dart';
 
 class PricesScreen extends KFDrawerContent {
   @override

@@ -10,7 +10,8 @@ import 'package:grocery/widget.dart';
 import 'package:intl/intl.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:kf_drawer/kf_drawer.dart';
+import '../../drawer_lib.dart';
+
 
 class SupportScreen extends KFDrawerContent {
   @override
@@ -116,7 +117,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                   data: (data) {
                                     final List<Map> _products = List.generate(data.length, (i) {
                                       return {
-                                        "id": DateFormat('dd-MMM-yyyy hh:mm').format(data.elementAt(i).createdDate),
+                                        "id": DateFormat('d MMMM yyy').format(data.elementAt(i).createdDate),
                                         "name": data.elementAt(i).type,
                                         "price": data.elementAt(i).description,
                                         "View": "Action",

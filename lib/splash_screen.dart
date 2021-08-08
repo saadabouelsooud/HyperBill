@@ -15,52 +15,34 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  AnimationController animation;
-  Animation<double> _fadeInFadeOut;
-  bool showAnimate = false;
 
   @override
   void initState() {
     super.initState();
-    animation = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(animation);
-
-
-    animation.forward();
-    Future.delayed(Duration(seconds: 3), () {
-      setState(() {
-        showAnimate = true;
-      });
-    });
-
-
     Future.delayed(Duration(seconds: 4),(){
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
+      var provider = context.read(authControllerProvider);
 
-    });
+      if(provider.isUserLogged!=null &&provider.isUserLogged){
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => MainWidget()), (route) => false);
+      }
+      else{
+
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c) => Login1Screen()), (route) => false);
+
+    }});
   }
 
   @override
   Widget build(BuildContext context) {
     MySize().init(context);
 
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Center(child: Text("Hyper Bill"),),
+        child: Center(child: Image.asset("assets/images/logo.png"),),
       ),
     );
   }
 
-  @override
-  void deactivate() {
-    animation.dispose();    // TODO: implement dispose
 
-    // TODO: implement deactivate
-    super.deactivate();
-  }
 }

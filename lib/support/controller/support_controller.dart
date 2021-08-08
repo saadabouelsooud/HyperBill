@@ -2,8 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/support/model/ticket_model.dart';
 import 'package:grocery/support/repository/support_repo.dart';
 
-var supportControllerProvider = Provider((ref) => SupportController(ref.watch(supportRepoProvider)));
-var supportDataFutureProvider = FutureProvider<List<Ticket>>((ref) => ref.watch(supportControllerProvider).getSupportData());
+var supportControllerProvider =
+    Provider((ref) => SupportController(ref.watch(supportRepoProvider)));
+var supportDataFutureProvider = FutureProvider<List<Ticket>>(
+    (ref) => ref.watch(supportControllerProvider).getSupportData());
 
 class SupportController {
   SupportController(this.repo);
@@ -20,7 +22,11 @@ class SupportController {
 
   Future<Ticket> addTicket(type, description, title) async {
     var response = await repo.addTicket(type, description, title);
-
+    if (response.statusCode == 200) {
+      message = "success";
+    } else {
+      message = "fail";
+    }
     return Ticket.fromJson(response.data);
   }
 }

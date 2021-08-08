@@ -5,9 +5,9 @@ import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/payments/controller/payment_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:intl/intl.dart';
-import 'package:kf_drawer/kf_drawer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../drawer_lib.dart';
 import '../../widget.dart';
 
 class PaymentsScreen extends KFDrawerContent {
@@ -95,7 +95,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                 data: (data) {
                                   final List<Map> _products = List.generate(data.length, (i) {
                                     return {
-                                      "Date": DateFormat('dd-MMM-yyyy hh:mm').format(data.elementAt(i).paymentDate),
+                                      "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).paymentDate),
                                       "Type": data.elementAt(i).type,
                                       "Receipt": data.elementAt(i).receiptNo,
                                       "Amount": data.elementAt(i).amount

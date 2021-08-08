@@ -9,9 +9,10 @@ import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/recharge/controller/recharge_controller.dart';
 import 'package:grocery/recharge/model/recharge_model.dart';
 import 'package:grocery/recharge/ui/web_view.dart';
-import 'package:kf_drawer/kf_drawer.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+
+import '../../drawer_lib.dart';
 
 class RechargeScreen extends KFDrawerContent {
   @override

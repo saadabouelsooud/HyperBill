@@ -41,7 +41,6 @@ dependencies:
   carousel_slider:
   equatable:
   url_launcher:
-  kf_drawer:
   animated_text_kit:
   flutter_staggered_animations:
   material_design_icons_flutter:
@@ -50,8 +49,9 @@ dependencies:
   intl:
   flutter_svg:
   webview_flutter:
-  flutter_localizations:
+  collapsible_sidebar:
 
+  flutter_localizations:
     sdk: flutter
 dev_dependencies:
   flutter_test:

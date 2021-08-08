@@ -7,10 +7,11 @@ import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/widget.dart';
 import 'package:intl/intl.dart';
-import 'package:kf_drawer/kf_drawer.dart';
 import 'package:line_chart/charts/line-chart.widget.dart';
 import 'package:line_chart/model/line-chart.model.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import '../../drawer_lib.dart';
 
 class ConsumptionsScreen extends KFDrawerContent {
   @override
@@ -110,13 +111,13 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                   if (amountText == null) {
                                     amountText = data.first.amount.toString() + "  " + "EGP".tr();
                                     amountDate = DateFormat('MMM').format(data.first.readingDate);
-                                    consumptionsText = data.first.amount.toString() + "  " + "KWh".tr();
+                                    consumptionsText = data.first.consumption.toString() + "  " + "KWh".tr();
                                     consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
                                   }
                                   final List<Map> _products = List.generate(data.length, (i) {
                                     return {
-                                      "Month": DateFormat('MMM-yyyy ').format(data.elementAt(i).consumptionMonth),
-                                      "Date": DateFormat('yyyy-MMM-dd ').format(data.elementAt(i).readingDate),
+                                      "Month": DateFormat('MMM-yyyy').format(data.elementAt(i).consumptionMonth),
+                                      "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
                                       "Amount": data.elementAt(i).amount
                                     };

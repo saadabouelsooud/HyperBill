@@ -112,8 +112,9 @@ class _Login1ScreenState extends State<Login1Screen> {
                           ],
                         ),
                         child: InkWell(
-                          onTap: () {
-                            if (provider.isLoginValidation(email.text, pass.text)) {
+                          onTap: () {                                      FocusScope.of(context).unfocus();
+
+                          if (provider.isLoginValidation(email.text, pass.text)) {
                               showLoaderDialog(context);
 
                               provider.login(email.text, pass.text).then((value) {
@@ -122,7 +123,7 @@ class _Login1ScreenState extends State<Login1Screen> {
                                   Navigator.push(context, MaterialPageRoute(builder: (c) => MainWidget()));
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: provider.message,
+                                      msg: provider.message.tr(),
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1,
@@ -133,7 +134,7 @@ class _Login1ScreenState extends State<Login1Screen> {
                               });
                             } else {
                               Fluttertoast.showToast(
-                                  msg: provider.message,
+                                  msg: provider.message.tr(),
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
