@@ -105,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[0],
                                       text: dashboardItemsName[0],
-                                      text2: data.balance,
+                                      text2: data.balance.toStringAsExponential(2),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[1],
@@ -125,7 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[4],
                                       text: dashboardItemsName[4],
-                                      text2: data.thisMonthConsumptionEgp,
+                                      text2: data.thisMonthConsumptionEgp.toStringAsExponential(2),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[5],

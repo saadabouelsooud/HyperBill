@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class KFDrawerController {
   KFDrawerController({this.items, @required KFDrawerContent initialPage}) {
@@ -174,7 +175,18 @@ class _KFDrawerState extends State<KFDrawer> with TickerProviderStateMixin {
     widget.controller.page.onMenuPressed = _onMenuPressed;
     widget.controller.close = _close;
     widget.controller.open = _open;
-
+    var animationTransition;
+    if(EasyLocalization.of(context).locale == Locale('ar', "")){
+    animationTransition =-(MediaQuery
+        .of(context)
+        .size
+        .width * _drawerWidth) * animation.value;
+    }else{
+      animationTransition =(MediaQuery
+          .of(context)
+          .size
+          .width * _drawerWidth) * animation.value;
+    }
     return Listener(
       onPointerDown: (PointerDownEvent event) {
         if (_disableContentTap) {
@@ -225,10 +237,7 @@ class _KFDrawerState extends State<KFDrawer> with TickerProviderStateMixin {
           Transform.scale(
             scale: scaleAnimation.value,
             child: Transform.translate(
-              offset: Offset((MediaQuery
-                  .of(context)
-                  .size
-                  .width * _drawerWidth) * animation.value, 0.0),
+              offset: Offset(animationTransition, 0.0),
               child: AbsorbPointer(
                 absorbing: _menuOpened && _disableContentTap,
                 child: Stack(

@@ -50,6 +50,7 @@ dependencies:
   flutter_svg:
   webview_flutter:
   collapsible_sidebar:
+  animator:
 
   flutter_localizations:
     sdk: flutter

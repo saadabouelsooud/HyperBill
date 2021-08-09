@@ -109,7 +109,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             return asyncValue.when(
                                 data: (data) {
                                   if (amountText == null) {
-                                    amountText = data.first.amount.toString() + "  " + "EGP".tr();
+                                    amountText = data.first.amount.toStringAsExponential(2) + "  " + "EGP".tr();
                                     amountDate = DateFormat('MMM').format(data.first.readingDate);
                                     consumptionsText = data.first.consumption.toString() + "  " + "KWh".tr();
                                     consumptionsDate = DateFormat('MMM').format(data.first.readingDate);

@@ -98,7 +98,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                       "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).paymentDate),
                                       "Type": data.elementAt(i).type,
                                       "Receipt": data.elementAt(i).receiptNo,
-                                      "Amount": data.elementAt(i).amount
+                                      "Amount": data.elementAt(i).amount.toStringAsExponential(2)
                                     };
                                   });
                                   return Container(
