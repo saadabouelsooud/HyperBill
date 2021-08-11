@@ -18,22 +18,22 @@ class PaymentsScreen extends KFDrawerContent {
 class _PaymentsScreenState extends State<PaymentsScreen> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
-  _itemChoice( choice) {
+
+  _itemChoice(choice) {
     if (choice == 1) {
       Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
       setState(() {
         if (EasyLocalization.of(context).locale == Locale('ar', "")) {
-
           EasyLocalization.of(context).setLocale(Locale('en', ""));
-
         } else {
           EasyLocalization.of(context).setLocale(Locale('ar', ""));
         }
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +47,11 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
             PopupMenuButton(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/images/profile.png",),
-              ),onSelected: _itemChoice,
+                child: Image.asset(
+                  "assets/images/profile.png",
+                ),
+              ),
+              onSelected: _itemChoice,
               itemBuilder: (context) => [
                 PopupMenuItem(
                   child: Text("Profile".tr()),
@@ -98,99 +101,98 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                       "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).paymentDate),
                                       "Type": data.elementAt(i).type,
                                       "Receipt": data.elementAt(i).receiptNo,
-                                      "Amount": data.elementAt(i).amount.toStringAsExponential(2)
+                                      "Amount": data.elementAt(i).amount.toStringAsFixed(2)
                                     };
                                   });
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: DataTable(
-                                        columnSpacing: 10,
-                                        sortColumnIndex: _currentSortColumn,
-                                        sortAscending: _isAscending,
-                                        headingRowColor: MaterialStateProperty.all(Colors.white),
-                                        columns: [
-                                          DataColumn(
-                                              label: Text(
-                                                'Date'.tr(),
-                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                              ),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn = columnIndex;
-                                                  if (_isAscending == true) {
-                                                    _isAscending = false;
-                                                    // sort the product list in Ascending, order by Price
-                                                    _products.sort((productA, productB) => productB['Date'].compareTo(productA['Date']));
-                                                  } else {
-                                                    _isAscending = true;
-                                                    // sort the product list in Descending, order by Price
-                                                    _products.sort((productA, productB) => productA['Date'].compareTo(productB['Date']));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(
-                                              label: Text('Type'.tr()),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn = columnIndex;
-                                                  if (_isAscending == true) {
-                                                    _isAscending = false;
-                                                    // sort the product list in Ascending, order by Price
-                                                    _products.sort((productA, productB) => productB['Type'].compareTo(productA['Type']));
-                                                  } else {
-                                                    _isAscending = true;
-                                                    // sort the product list in Descending, order by Price
-                                                    _products.sort((productA, productB) => productA['Type'].compareTo(productB['Type']));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(
-                                              label: Text('Receipt No .'.tr()),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn = columnIndex;
-                                                  if (_isAscending == true) {
-                                                    _isAscending = false;
-                                                    // sort the product list in Ascending, order by Price
-                                                    _products.sort((productA, productB) => productB['Receipt'].compareTo(productA['Receipt']));
-                                                  } else {
-                                                    _isAscending = true;
-                                                    // sort the product list in Descending, order by Price
-                                                    _products.sort((productA, productB) => productA['Receipt'].compareTo(productB['Receipt']));
-                                                  }
-                                                });
-                                              }),
-                                          DataColumn(
-                                              label: Text('Amount'.tr()),
-                                              onSort: (columnIndex, _) {
-                                                setState(() {
-                                                  _currentSortColumn = columnIndex;
-                                                  if (_isAscending == true) {
-                                                    _isAscending = false;
-                                                    // sort the product list in Ascending, order by Price
-                                                    _products.sort((productA, productB) => productB['Amount'].compareTo(productA['Amount']));
-                                                  } else {
-                                                    _isAscending = true;
-                                                    // sort the product list in Descending, order by Price
-                                                    _products.sort((productA, productB) => productA['Amount'].compareTo(productB['Amount']));
-                                                  }
-                                                });
-                                              }),
-                                          // Sorting function
-                                        ],
-                                        rows: _products.map((item) {
-                                          return DataRow(cells: [
-                                            DataCell(Text(item['Date'].toString())),
-                                            DataCell(Text(item['Type'])),
-                                            DataCell(Text(item['Receipt'].toString())),
-                                            DataCell(Text(item['Amount'].toString())),
-                                          ]);
-                                        }).toList(),
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 5,
                                       ),
-                                    ),
+                                      Text(
+                                        'Date'.tr(),
+                                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: ListView.builder(
+                                            itemCount: _products.length,
+                                            shrinkWrap: true,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (c, index) {
+                                              return Card(
+                                                child: ExpansionTile(
+                                                  title: Text(_products.elementAt(index)["Date"],
+                                                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(15.0),
+                                                      child: Column(children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Date'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["Date"]),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              "Type".tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["Type"]),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Receipt No .'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["Receipt"]),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Amount'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["Amount"]),
+                                                          ],
+                                                        ),
+                                                      ]),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            }),
+                                      ),
+                                    ],
                                   );
+
                                 },
                                 loading: () => Container(
                                       child: Center(child: CircularProgressIndicator()),
@@ -199,7 +201,6 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                   print(e.toString());
                                   print(ee.toString());
                                   return SizedBox();
-
                                 });
                           },
                         )
@@ -214,7 +215,8 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                 error: (e, ee) {
                   print(e.toString());
                   print(ee.toString());
-                  return SizedBox();});
+                  return SizedBox();
+                });
           },
         ));
   }

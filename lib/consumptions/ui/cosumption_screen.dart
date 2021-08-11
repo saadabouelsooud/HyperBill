@@ -30,9 +30,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
     if (choice == 2) {
       setState(() {
         if (EasyLocalization.of(context).locale == Locale('ar', "")) {
-
           EasyLocalization.of(context).setLocale(Locale('en', ""));
-
         } else {
           EasyLocalization.of(context).setLocale(Locale('ar', ""));
         }
@@ -40,10 +38,13 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
     }
   }
 
-  String amountText ;
-  String amountDate ;
-  String consumptionsText ;
-  String consumptionsDate ;
+  String amountText;
+
+  String amountDate;
+
+  String consumptionsText;
+
+  String consumptionsDate;
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +110,9 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             return asyncValue.when(
                                 data: (data) {
                                   if (amountText == null) {
-                                    amountText = data.first.amount.toStringAsExponential(2) + "  " + "EGP".tr();
+                                    amountText = data.first.amount.toStringAsFixed(2) + "  " + "EGP".tr();
                                     amountDate = DateFormat('MMM').format(data.first.readingDate);
-                                    consumptionsText = data.first.consumption.toString() + "  " + "KWh".tr();
+                                    consumptionsText = data.first.consumption.toStringAsFixed(2) + "  " + "KWh".tr();
                                     consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
                                   }
                                   final List<Map> _products = List.generate(data.length, (i) {
@@ -119,7 +120,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                       "Month": DateFormat('MMM-yyyy').format(data.elementAt(i).consumptionMonth),
                                       "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
-                                      "Amount": data.elementAt(i).amount
+                                      "Amount": data.elementAt(i).amount.toStringAsFixed(2)
                                     };
                                   });
 
@@ -173,7 +174,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      consumptionsText = value.chart.amount.toString() + "  " + "KWh".tr();
+                                                      consumptionsText = value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
                                                       consumptionsDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -259,7 +260,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      amountText = value.chart.amount.toString() + "  " + "EGP".tr();
+                                                      amountText = value.chart.amount.toStringAsFixed(2) + "  " + "EGP".tr();
                                                       amountDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -295,110 +296,92 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                           ),
                                         ],
                                       ),
-                                      Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        child: SingleChildScrollView(
-                                          physics: NeverScrollableScrollPhysics(),
-                                          scrollDirection: Axis.vertical,
-                                          child: DataTable(
-                                            headingRowHeight: 60,
-                                            columnSpacing: 17,
-                                            sortColumnIndex: _currentSortColumn,
-                                            sortAscending: _isAscending,
-                                            headingRowColor: MaterialStateProperty.all(Colors.white),
-                                            columns: [
-                                              DataColumn(
-                                                  label: Text(
-                                                    'Month'.tr(),
-                                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  onSort: (columnIndex, _) {
-                                                    setState(() {
-                                                      _currentSortColumn = columnIndex;
-                                                      if (_isAscending == true) {
-                                                        _isAscending = false;
-                                                        // sort the product list in Ascending, order by Price
-                                                        _products.sort((productA, productB) => productB['Month'].compareTo(productA['Month']));
-                                                      } else {
-                                                        _isAscending = true;
-                                                        // sort the product list in Descending, order by Price
-                                                        _products.sort((productA, productB) => productA['Month'].compareTo(productB['Month']));
-                                                      }
-                                                    });
-                                                  }),
-                                              DataColumn(
-                                                  label: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Text('Reading'.tr()),
-                                                      Text('Date'.tr()),
-                                                    ],
-                                                  ),
-                                                  onSort: (columnIndex, _) {
-                                                    setState(() {
-                                                      _currentSortColumn = columnIndex;
-                                                      if (_isAscending == true) {
-                                                        _isAscending = false;
-                                                        // sort the product list in Ascending, order by Price
-                                                        _products.sort((productA, productB) => productB['Date'].compareTo(productA['Date']));
-                                                      } else {
-                                                        _isAscending = true;
-                                                        // sort the product list in Descending, order by Price
-                                                        _products.sort((productA, productB) => productA['Date'].compareTo(productB['Date']));
-                                                      }
-                                                    });
-                                                  }),
-                                              DataColumn(
-                                                  label: Text('KWh'.tr()),
-                                                  onSort: (columnIndex, _) {
-                                                    setState(() {
-                                                      _currentSortColumn = columnIndex;
-                                                      if (_isAscending == true) {
-                                                        _isAscending = false;
-                                                        // sort the product list in Ascending, order by Price
-                                                        _products.sort((productA, productB) => productB['KWh'].compareTo(productA['KWh']));
-                                                      } else {
-                                                        _isAscending = true;
-                                                        // sort the product list in Descending, order by Price
-                                                        _products.sort((productA, productB) => productA['KWh'].compareTo(productB['KWh']));
-                                                      }
-                                                    });
-                                                  }),
-                                              DataColumn(
-                                                  label: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Text('Amount'.tr()),
-                                                      Text('EGP'.tr()),
-                                                    ],
-                                                  ),
-                                                  onSort: (columnIndex, _) {
-                                                    setState(() {
-                                                      _currentSortColumn = columnIndex;
-                                                      if (_isAscending == true) {
-                                                        _isAscending = false;
-                                                        // sort the product list in Ascending, order by Price
-                                                        _products.sort((productA, productB) => productB['Amount'].compareTo(productA['Amount']));
-                                                      } else {
-                                                        _isAscending = true;
-                                                        // sort the product list in Descending, order by Price
-                                                        _products.sort((productA, productB) => productA['Amount'].compareTo(productB['Amount']));
-                                                      }
-                                                    });
-                                                  }),
-                                              // Sorting function
-                                            ],
-                                            rows: _products.map((item) {
-                                              return DataRow(cells: [
-                                                DataCell(Text(item['Month'].toString())),
-                                                DataCell(Text(item['Date'])),
-                                                DataCell(Text(item['KWh'].toString())),
-                                                DataCell(Text(item['Amount'].toString())),
-                                              ]);
-                                            }).toList(),
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 5,
                                           ),
-                                        ),
+                                          Text(
+                                            'Reading'.tr() + " " + "Date".tr(),
+                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(20),
+                                            child: ListView.builder(
+                                                itemCount: _products.length,
+                                                shrinkWrap: true,
+                                                physics: const NeverScrollableScrollPhysics(),
+                                                itemBuilder: (c, index) {
+                                                  return Card(
+                                                    child: ExpansionTile(
+                                                      title: Text(_products.elementAt(index)["Date"],
+                                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                                                      children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(15.0),
+                                                          child: Column(children: [
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  'Month'.tr(),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                ),
+                                                               Padding(
+                                                                 padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                 child: Text(":"),
+                                                               ),
+                                                                Text(_products.elementAt(index)["Month"]),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [     Text(
+                                                                'Reading'.tr() + " " + "Date".tr(),
+                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                              ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                  child: Text(":"),
+                                                                ),
+                                                                Text(_products.elementAt(index)["Date"]),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [     Text(
+                                                                'KWh'.tr(),
+                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                              ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                  child: Text(":"),
+                                                                ),
+                                                                Text(_products.elementAt(index)["KWh"]),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [     Text(
+                                                                'Amount'.tr(),
+                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                              ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                  child: Text(":"),
+                                                                ),
+                                                                Text(_products.elementAt(index)["Amount"]),
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                }),
+                                          ),
+                                        ],
                                       ),
+
                                     ],
                                   );
                                 },

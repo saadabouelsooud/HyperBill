@@ -389,10 +389,12 @@ class KFDrawerItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
               children: <Widget>[
+                SizedBox(width: 20,),
                 Container(
                   padding: EdgeInsets.only(left: 16.0, right: 8.0),
                   child: icon,
                 ),
+
                 text,
               ],
             ),

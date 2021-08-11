@@ -41,7 +41,6 @@ class _RechargeScreenState extends State<RechargeScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,8 +190,10 @@ class _RechargeScreenState extends State<RechargeScreen> {
                             builder: (BuildContext context,
                                 T Function<T>(ProviderBase<Object, T>) watch,
                                 Widget child) {
-                              payTextEditingController.text =
-                                  watch(amountProvider).state;
+                              if (amountTextEditingController.text.isNotEmpty) {
+                                payTextEditingController.text =
+                                    watch(amountProvider).state;
+                              }
 
                               return Column(
                                 children: [
@@ -307,28 +308,41 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                               String url =
                                                   "https://test-iframe.kashier.io/payment?" +
                                                       "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
+                                              Navigator.of(context)
+                                                  .push(MaterialPageRoute(
                                                       builder: (c) =>
                                                           WebViewExample(url,
-                                                              rechargeModel))).then((value) {
-
-                                                if (context.read(rechargeControllerProvider).message.isNotEmpty) {
+                                                              rechargeModel)))
+                                                  .then((value) {
+                                                if (context
+                                                    .read(
+                                                        rechargeControllerProvider)
+                                                    .message
+                                                    .isNotEmpty) {
                                                   showDialog(
                                                       context: context,
                                                       builder: (c) => Dialog(
-                                                        child: Container(
-                                                          height: 100,
-                                                          width: 100,
-                                                          child: Center(
-                                                            child:
-                                                            Text(context.read(rechargeControllerProvider).message.tr(),style: TextStyles.hintTextStyles,),
-                                                          ),
-                                                        ),
-                                                      ));
-                                                  context.read(rechargeControllerProvider).message="";
+                                                            child: Container(
+                                                              height: 100,
+                                                              width: 100,
+                                                              child: Center(
+                                                                child: Text(
+                                                                  context
+                                                                      .read(
+                                                                          rechargeControllerProvider)
+                                                                      .message
+                                                                      .tr(),
+                                                                  style: TextStyles
+                                                                      .hintTextStyles,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ));
+                                                  context
+                                                      .read(
+                                                          rechargeControllerProvider)
+                                                      .message = "";
                                                 }
-
                                               });
                                             }
                                           } else {

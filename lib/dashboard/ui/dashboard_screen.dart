@@ -105,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[0],
                                       text: dashboardItemsName[0],
-                                      text2: data.balance.toStringAsExponential(2),
+                                      text2: data.balance.toStringAsFixed(2),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[1],
@@ -125,12 +125,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[4],
                                       text: dashboardItemsName[4],
-                                      text2: data.thisMonthConsumptionEgp.toStringAsExponential(2),
+                                      text2: data.thisMonthConsumptionEgp.ceilToDouble().toString(),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[5],
                                       text: dashboardItemsName[5],
-                                      text2: data.thisMonthConsumptionKwh,
+                                      text2: data.thisMonthConsumptionKwh.toStringAsFixed(2),
                                     ),
                                   ],
                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -94,106 +94,202 @@ class _SupportScreenState extends State<SupportScreen> {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Consumer(
-              builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                var asyncValue = watch(dashboardMeterDataFutureProvider);
-                return asyncValue.when(
-                    data: (data) {
-                      return ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        children: [
-                          SliderWidget(data),
-                          Consumer(
-                            builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                              var asyncValue2 = watch(supportDataFutureProvider);
-                              return asyncValue2.when(
-                                  data: (data) {
-                                    final List<Map> _products = List.generate(data.length, (i) {
-                                      return {
-                                        "id": DateFormat('d MMMM yyy').format(data.elementAt(i).createdDate),
-                                        "name": data.elementAt(i).type,
-                                        "price": data.elementAt(i).description,
-                                        "View": "Action",
-                                        "Status": data.elementAt(i).status,
-                                        "title": data.elementAt(i).title
-                                      };
-                                    });
+      body:Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Consumer(
+          builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+            var asyncValue = watch(dashboardMeterDataFutureProvider);
+            return asyncValue.when(
+                data: (data) {
+                  return ListView(
 
-                                    return DataTable(
-                                      columnSpacing: 5,
-                                      sortColumnIndex: _currentSortColumn,
-                                      sortAscending: _isAscending,
-                                      headingRowColor: MaterialStateProperty.all(Colors.white),
-                                      columns: [
-                                        DataColumn(
-                                            label: Text(
-                                              'Date'.tr(),
-                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                            ),
-                                            onSort: (columnIndex, _) {
-                                              setState(() {
-                                                _currentSortColumn = columnIndex;
-                                                if (_isAscending == true) {
-                                                  _isAscending = false;
-                                                  _products.sort((productA, productB) => productB['price'].compareTo(productA['price']));
-                                                } else {
-                                                  _isAscending = true;
-                                                  _products.sort((productA, productB) => productA['price'].compareTo(productB['price']));
-                                                }
-                                              });
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      SliderWidget(data),
+                      Consumer(
+                        builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+                          var asyncValue2 = watch(supportDataFutureProvider);
+                          return asyncValue2.when(
+                              data: (data) {
+                                final List<Map> _products = List.generate(data.length, (i) {
+                                  return {
+                                    "id": DateFormat('d MMMM yyy').format(data.elementAt(i).createdDate),
+                                    "name": data.elementAt(i).type,
+                                    "price": data.elementAt(i).description,
+                                    "View": "Action",
+                                    "Status": data.elementAt(i).status,
+                                    "title": data.elementAt(i).title
+                                  };
+                                });
+                                return Expanded(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        'Date'.tr(),
+                                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: ListView.builder(
+                                            itemCount: _products.length,
+                                            shrinkWrap: true,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            itemBuilder: (c, index) {
+                                              return Card(
+                                                child: ExpansionTile(
+                                                  title: Text(_products.elementAt(index)["id"],
+                                                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(15.0),
+                                                      child: Column(children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Date'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["id"]),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              "Type".tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["name"]),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Description'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["price"]),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Status'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["Status"]),
+                                                          ],
+                                                        ),  Row(
+                                                          children: [
+                                                            Text(
+                                                              'Action'.tr(),
+                                                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 10, right: 10),
+                                                              child: Text(":"),
+                                                            ),
+                                                            Text(_products.elementAt(index)["View"]),
+                                                          ],
+                                                        ),
+                                                      ]),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
                                             }),
-                                        DataColumn(label: Text('Type'.tr())),
-                                        DataColumn(label: Text('Description'.tr())),
-                                        DataColumn(label: Text('Status'.tr())),
-                                        DataColumn(
-                                          label: Text(
-                                            'Action'.tr(),
-                                          ),
-                                          // Sorting function
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                return DataTable(
+                                  columnSpacing: 5,
+                                  sortColumnIndex: _currentSortColumn,
+                                  sortAscending: _isAscending,
+                                  headingRowColor: MaterialStateProperty.all(Colors.white),
+                                  columns: [
+                                    DataColumn(
+                                        label: Text(
+                                          'Date'.tr(),
+                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                         ),
-                                      ],
-                                      rows: _products.map((item) {
-                                        return DataRow(cells: [
-                                          DataCell(Text(
-                                            item['id'].toString(),
-                                          )),
-                                          DataCell(Text(item['name'], textAlign: TextAlign.center)),
-                                          DataCell(Text(item['price'].toString(), textAlign: TextAlign.center)),
-                                          DataCell(Text(item['Status'].toString(), textAlign: TextAlign.center)),
-                                          DataCell(InkWell(
-                                            child: Text(item['View'].toString(), textAlign: TextAlign.center),
-                                            onTap: () {
-                                              Navigator.push(context, MaterialPageRoute(builder: (c) => TicketView(item["name"],item["title"],item["Status"])));
-                                            },
-                                          ))
-                                        ]);
-                                      }).toList(),
-                                    );
-                                  },
-                                  loading: () => Center(child: CircularProgressIndicator()),
-                                  error: (e, ee) {
-                                    print(e.toString());
-                                    print(ee.toString());
-                                    return SizedBox();
-                                  });
-                            },
-                          )
-                        ],
-                      );
-                    },
-                    loading: () => Center(child: CircularProgressIndicator()),
-                    error: (e, ee) => Text(e.toString()));
-              },
-            ),
-          ),
-        ],
+                                        onSort: (columnIndex, _) {
+                                          setState(() {
+                                            _currentSortColumn = columnIndex;
+                                            if (_isAscending == true) {
+                                              _isAscending = false;
+                                              _products.sort((productA, productB) => productB['price'].compareTo(productA['price']));
+                                            } else {
+                                              _isAscending = true;
+                                              _products.sort((productA, productB) => productA['price'].compareTo(productB['price']));
+                                            }
+                                          });
+                                        }),
+                                    DataColumn(label: Text('Type'.tr())),
+                                    DataColumn(label: Text('Description'.tr())),
+                                    DataColumn(label: Text('Status'.tr())),
+                                    DataColumn(
+                                      label: Text(
+                                        'Action'.tr(),
+                                      ),
+                                      // Sorting function
+                                    ),
+                                  ],
+                                  rows: _products.map((item) {
+                                    return DataRow(cells: [
+                                      DataCell(Text(
+                                        item['id'].toString(),
+                                      )),
+                                      DataCell(Text(item['name'], textAlign: TextAlign.center)),
+                                      DataCell(Text(item['price'].toString(), textAlign: TextAlign.center)),
+                                      DataCell(Text(item['Status'].toString(), textAlign: TextAlign.center)),
+                                      DataCell(InkWell(
+                                        child: Text(item['View'].toString(), textAlign: TextAlign.center),
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (c) => TicketView(item["name"],item["title"],item["Status"])));
+                                        },
+                                      ))
+                                    ]);
+                                  }).toList(),
+                                );
+                              },
+                              loading: () => Center(child: CircularProgressIndicator()),
+                              error: (e, ee) {
+                                print(e.toString());
+                                print(ee.toString());
+                                return SizedBox();
+                              });
+                        },
+                      )
+                    ],
+                  );
+                },
+                loading: () => Center(child: CircularProgressIndicator()),
+                error: (e, ee) => Text(e.toString()));
+          },
+        ),
       ),
     );
   }
