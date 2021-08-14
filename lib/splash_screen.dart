@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Center(child: Image.asset("assets/images/logo.png"),),
+        child: Center(child: Image.asset("assets/images/icon.jpg",height: 140,width: 140,),),
       ),
     );
   }

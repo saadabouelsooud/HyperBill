@@ -18,6 +18,7 @@ class PaymentsScreen extends KFDrawerContent {
 class _PaymentsScreenState extends State<PaymentsScreen> {
   int _currentSortColumn = 0;
   bool _isAscending = true;
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   _itemChoice(choice) {
     if (choice == 1) {
@@ -101,7 +102,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                                       "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).paymentDate),
                                       "Type": data.elementAt(i).type,
                                       "Receipt": data.elementAt(i).receiptNo,
-                                      "Amount": data.elementAt(i).amount.toStringAsFixed(2)
+                                      "Amount":oCcy.format( double.parse(data.elementAt(i).amount.toStringAsFixed(2)))
                                     };
                                   });
                                   return Column(

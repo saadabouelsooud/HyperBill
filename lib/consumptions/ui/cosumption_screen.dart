@@ -22,6 +22,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentSortColumn = 0;
   bool _isAscending = true;
+  final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   _itemChoice(choice) {
     if (choice == 1) {
@@ -110,7 +111,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             return asyncValue.when(
                                 data: (data) {
                                   if (amountText == null) {
-                                    amountText = data.first.amount.toStringAsFixed(2) + "  " + "EGP".tr();
+                                    amountText = oCcy.format(double.parse(data.first.amount.toStringAsFixed(2))) + "  " + "EGP".tr();
                                     amountDate = DateFormat('MMM').format(data.first.readingDate);
                                     consumptionsText = data.first.consumption.toStringAsFixed(2) + "  " + "KWh".tr();
                                     consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
@@ -120,7 +121,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                       "Month": DateFormat('MMM-yyyy').format(data.elementAt(i).consumptionMonth),
                                       "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
-                                      "Amount": data.elementAt(i).amount.toStringAsFixed(2)
+                                      "Amount": oCcy.format(double.parse(data.elementAt(i).amount.toStringAsFixed(2)))
                                     };
                                   });
 
@@ -174,7 +175,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      consumptionsText = value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
+                                                      consumptionsText = oCcy.format(value.chart.amount.toStringAsFixed(2)) + "  " + "KWh".tr();
                                                       consumptionsDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -260,7 +261,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      amountText = value.chart.amount.toStringAsFixed(2) + "  " + "EGP".tr();
+                                                      amountText = oCcy.format(value.chart.amount.toStringAsFixed(2)) + "  " + "EGP".tr();
                                                       amountDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -302,7 +303,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                             height: 5,
                                           ),
                                           Text(
-                                            'Reading'.tr() + " " + "Date".tr(),
+                                            "Reading Date".tr(),
                                             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                           ),
                                           SizedBox(
@@ -329,44 +330,47 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                                   'Month'.tr(),
                                                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
-                                                               Padding(
-                                                                 padding: const EdgeInsets.only(left: 10,right: 10),
-                                                                 child: Text(":"),
-                                                               ),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(left: 10, right: 10),
+                                                                  child: Text(":"),
+                                                                ),
                                                                 Text(_products.elementAt(index)["Month"]),
                                                               ],
                                                             ),
                                                             Row(
-                                                              children: [     Text(
-                                                                'Reading'.tr() + " " + "Date".tr(),
-                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                              ),
+                                                              children: [
+                                                                Text(
+                                                                "Reading Date".tr(),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                ),
                                                                 Padding(
-                                                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                  padding: const EdgeInsets.only(left: 10, right: 10),
                                                                   child: Text(":"),
                                                                 ),
                                                                 Text(_products.elementAt(index)["Date"]),
                                                               ],
                                                             ),
                                                             Row(
-                                                              children: [     Text(
-                                                                'KWh'.tr(),
-                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                              ),
+                                                              children: [
+                                                                Text(
+                                                                  'KWh'.tr(),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                ),
                                                                 Padding(
-                                                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                  padding: const EdgeInsets.only(left: 10, right: 10),
                                                                   child: Text(":"),
                                                                 ),
                                                                 Text(_products.elementAt(index)["KWh"]),
                                                               ],
                                                             ),
                                                             Row(
-                                                              children: [     Text(
-                                                                'Amount'.tr(),
-                                                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                              ),
+                                                              children: [
+                                                                Text(
+                                                                  'Amount'.tr(),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                ),
                                                                 Padding(
-                                                                  padding: const EdgeInsets.only(left: 10,right: 10),
+                                                                  padding: const EdgeInsets.only(left: 10, right: 10),
                                                                   child: Text(":"),
                                                                 ),
                                                                 Text(_products.elementAt(index)["Amount"]),
@@ -381,7 +385,6 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                           ),
                                         ],
                                       ),
-
                                     ],
                                   );
                                 },
