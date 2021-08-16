@@ -31,6 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       });
     }
   }
+
   final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   @override
@@ -106,12 +107,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[0],
                                       text: dashboardItemsName[0],
-                                      text2:oCcy.format( double.parse(data.balance.toStringAsFixed(2))) ,
+                                      text2: oCcy.format(double.parse(data.balance.toStringAsFixed(2))),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[1],
                                       text: dashboardItemsName[1],
-                                      text2: data.status?"ON":"OFF",
+                                      text2: data.status ? "ON" : "OFF",
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[2],
@@ -126,7 +127,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[4],
                                       text: dashboardItemsName[4],
-                                      text2:oCcy.format( double.parse(data.thisMonthConsumptionEgp.toStringAsFixed(2))),
+                                      text2: oCcy.format(double.parse(data.thisMonthConsumptionEgp.toStringAsFixed(2))),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[5],
@@ -143,7 +144,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               loading: () => SizedBox(),
                               error: (e, ee) {
                                 print(ee.toString());
-
+                                Navigator.of(context).pop();
                                 return Center(child: Text(e.toString()));
                               });
                         },
@@ -153,10 +154,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 );
               },
               loading: () => Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
               error: (e, ee) => Center(
                     child: Text(e.toString()),
                   ));
