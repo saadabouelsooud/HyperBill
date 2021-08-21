@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:grocery/core/services/preference/preference.dart';
@@ -14,10 +17,13 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   await Preference.init();
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(EasyLocalization(supportedLocales: [
     Locale('ar', ''),
     Locale('en', ''),
-  ], path: 'assets/languages', child: ProviderScope(child: MyApp())));
+  ], path: 'assets/languages',
+      child: ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -35,8 +41,8 @@ class MyApp extends StatelessWidget {
       ],
       theme: ThemeData(
         primarySwatch: Colors.grey,
-      ),home:SplashScreen() ,
-
+      ),
+      home: SplashScreen(),
     );
   }
 }

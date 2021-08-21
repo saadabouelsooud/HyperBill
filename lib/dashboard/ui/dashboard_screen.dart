@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grocery/auth/ui/Login1Screen.dart';
+import 'package:grocery/core/services/preference/preference.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/dashboard/model/meter_model.dart';
@@ -19,7 +21,8 @@ class DashboardScreen extends KFDrawerContent {
 class _DashboardScreenState extends State<DashboardScreen> {
   _itemChoice(choice) {
     if (choice == 1) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (c) => ProfileScreen()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (c) => ProfileScreen()));
     }
     if (choice == 2) {
       setState(() {
@@ -83,7 +86,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       body: Consumer(
-        builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
+        builder: (BuildContext context,
+            T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
           var asyncValue = watch(dashboardMeterDataFutureProvider);
 
           return asyncValue.when(
@@ -95,8 +99,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       SliderWidget(data),
                       Consumer(
-                        builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                          var asyncValue2 = watc(dashboardMeterDetailsDataFutureProvider(context.read(counterProvider).state));
+                        builder: (BuildContext context,
+                            T Function<T>(ProviderBase<Object, T>) watc,
+                            Widget child) {
+                          var asyncValue2 = watc(
+                              dashboardMeterDetailsDataFutureProvider(
+                                  context.read(counterProvider).state));
 
                           return asyncValue2.when(
                               data: (data) {
@@ -107,7 +115,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[0],
                                       text: dashboardItemsName[0],
-                                      text2: oCcy.format(double.parse(data.balance.toStringAsFixed(2))),
+                                      text2: oCcy.format(double.parse(
+                                          data.balance.toStringAsFixed(2))),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[1],
@@ -127,15 +136,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[4],
                                       text: dashboardItemsName[4],
-                                      text2: oCcy.format(double.parse(data.thisMonthConsumptionEgp.toStringAsFixed(2))),
+                                      text2: oCcy.format(double.parse(data
+                                          .thisMonthConsumptionEgp
+                                          .toStringAsFixed(2))),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[5],
                                       text: dashboardItemsName[5],
-                                      text2: data.thisMonthConsumptionKwh.toStringAsFixed(2),
+                                      text2: data.thisMonthConsumptionKwh
+                                          .toStringAsFixed(2),
                                     ),
                                   ],
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                     childAspectRatio: 1 / 1.1,
                                     crossAxisCount: 2,
                                   ),
@@ -144,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               loading: () => SizedBox(),
                               error: (e, ee) {
                                 print(ee.toString());
-                                Navigator.of(context).pop();
+
                                 return Center(child: Text(e.toString()));
                               });
                         },
@@ -158,9 +171,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: CircularProgressIndicator(),
                     ),
                   ),
-              error: (e, ee) => Center(
-                    child: Text(e.toString()),
-                  ));
+              error: (e, ee) {
+                WidgetsBinding.instance.addPostFrameCallback((_){
+                  Preference.clear();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => Login1Screen()),
+                          (Route<dynamic> route) => false);
+
+                });
+
+                return Center(
+                  child: Text(e.toString()),
+                );
+              });
         },
       ),
     );

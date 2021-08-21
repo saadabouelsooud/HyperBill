@@ -107,7 +107,12 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         Consumer(
                           builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
                             var asyncValue = watch(consumptionDataFutureProvider(context.read(counterProvider).state.toString()));
-
+                            var lang;
+                            if (EasyLocalization.of(context).locale == Locale('ar', "")) {
+                              lang = "ar";
+                            } else {
+                              lang = "en";
+                            }
                             return asyncValue.when(
                                 data: (data) {
                                   if (amountText == null) {
@@ -119,7 +124,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                   final List<Map> _products = List.generate(data.length, (i) {
                                     return {
                                       "Month": DateFormat('MMM-yyyy').format(data.elementAt(i).consumptionMonth),
-                                      "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).readingDate),
+                                      "Date": DateFormat('d MMMM yyy', lang).format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
                                       "Amount": oCcy.format(double.parse(data.elementAt(i).amount.toStringAsFixed(2)))
                                     };
@@ -175,7 +180,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      consumptionsText = oCcy.format(value.chart.amount.toStringAsFixed(2)) + "  " + "KWh".tr();
+                                                      consumptionsText = value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
                                                       consumptionsDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -261,7 +266,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      amountText = oCcy.format(value.chart.amount.toStringAsFixed(2)) + "  " + "EGP".tr();
+                                                      amountText = oCcy.format(double.parse(value.chart.amount.toStringAsFixed(2))) + "  " + "EGP".tr();
                                                       amountDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },
@@ -340,7 +345,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                "Reading Date".tr(),
+                                                                  "Reading Date".tr(),
                                                                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(

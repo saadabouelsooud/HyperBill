@@ -2,8 +2,8 @@
     package="com.example.grocery">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Hyper Bill "
-        android:icon="@mipmap/icon">
+        android:label="Hyperbill"
+        android:icon="@mipmap/i">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

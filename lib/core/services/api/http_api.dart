@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class HttpApi {
       String contentType = Headers.jsonContentType,
       ResponseType responseType = ResponseType.json}) async {
     Response response;
+    HttpOverrides.global =  MyHttpOverrides();
 
     final dio = Dio(BaseOptions(
       baseUrl: serverPAth,
@@ -105,3 +107,10 @@ class CustomInterceptors extends Interceptor {
   }
 }
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
