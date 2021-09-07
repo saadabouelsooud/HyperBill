@@ -306,7 +306,8 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                 value.formattedAmt.toString();
                                             if (rechargeModel != null) {
                                               String url =
-                                                  "https://test-iframe.kashier.io/payment?" +
+                                                  //"https://test-iframe.kashier.io/payment?" +
+                                                   "'https://iframe.kashier.io/payment'"+
                                                       "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(

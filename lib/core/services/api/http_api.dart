@@ -9,7 +9,9 @@ import 'package:logger/logger.dart';
 import 'api.dart';
 
 class HttpApi {
-  static String serverPAth = 'https://tvexs.com:9092/api/selfservice/';
+  static String serverPAth = 'https://45.240.88.13/api/selfservice/';
+
+  // static String serverPAth = 'https://45.240.88.13/api/selfservice/';
 
   static Future<Response> request(String endPoint,
       {body,
