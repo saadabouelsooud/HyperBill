@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       supportedLocales: EasyLocalization.of(context).supportedLocales,
       locale: EasyLocalization.of(context).locale,
       localizationsDelegates: [
