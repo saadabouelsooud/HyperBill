@@ -7,7 +7,7 @@ var dashboardMeterDataFutureProvider = FutureProvider<List<MeterModel>>((ref) =>
 var dashboardMeterDetailsDataFutureProvider =
     FutureProvider.family<MeterDetailModel, int>((ref, id) => ref.watch(dashboardControllerProvider).getMeterDetailData(id));
 
-var counterProvider = StateProvider<int>((ref) => 1);
+var counterProvider = StateProvider<MeterModel>((ref) => null);
 
 class DashboardController {
   DashboardController(this.repo);

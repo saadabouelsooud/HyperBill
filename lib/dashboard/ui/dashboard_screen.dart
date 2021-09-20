@@ -92,7 +92,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           return asyncValue.when(
               data: (data) {
-                context.read(counterProvider).state = data.first.meterId;
                 return Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -105,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Widget child) {
                           var asyncValue2 = watc(
                               dashboardMeterDetailsDataFutureProvider(
-                                  context.read(counterProvider).state));
+                                  context.read(counterProvider).state.meterId));
 
                           return asyncValue2.when(
                               data: (data) {

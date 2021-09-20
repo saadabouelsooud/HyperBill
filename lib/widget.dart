@@ -19,10 +19,16 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
+  @override
+  void initState() {
+    if (context.read(counterProvider).state == null){
+      context.read(counterProvider).state =widget.number.first;
+    }
+      super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       margin: EdgeInsets.all(10),
       child: Card(
@@ -36,7 +42,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        if (context.read(counterProvider).state > 1) context.read(counterProvider).state--;
+                        var currentUnitId = int.parse(context.read(counterProvider).state.unitNo);
+                            if (widget.number.length > currentUnitId) {
+                          context.read(counterProvider).state=widget.number.elementAt((currentUnitId+1));
+                        }
                       },
                       icon: Icon(Icons.arrow_back_ios))
                 ],
@@ -45,7 +54,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: SvgPicture.asset("assets/images/Meter.svg",color: Colors.green,),
+                    child: SvgPicture.asset(
+                      "assets/images/Meter.svg",
+                      color: Colors.green,
+                    ),
                     height: 30,
                     width: 30,
                   ),
@@ -57,10 +69,14 @@ class _SliderWidgetState extends State<SliderWidget> {
                     style: TextStyles.headerStyle,
                   ),
                   Text(
-                    "Unit No :".tr()+ "${widget.number.elementAt(context.read(counterProvider).state-1).unitNo}",
+                    "Unit No :".tr() + "${context.read(counterProvider).state.unitNo}",
                     style: TextStyles.massiveHeaderStyleNormal,
                   ),
-                  Text("Meter serial :".tr()+" : "+"${widget.number.elementAt(context.read(counterProvider).state-1).serial}", style: TextStyles.headerStyle),
+                  Text(
+                      "Meter serial :".tr() +
+                          " : " +
+                          "${context.read(counterProvider).state.serial.toString()}",
+                      style: TextStyles.headerStyle),
                 ],
               ),
               Column(
@@ -68,7 +84,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        if (widget.number.length > (context.read(counterProvider).state )){ context.read(counterProvider).state++;}
+                        var currentUnitId = int.parse(context.read(counterProvider).state.unitNo);
+                        if (currentUnitId >1) {
+                          context.read(counterProvider).state=widget.number.elementAt((currentUnitId-1));
+                        }
                       },
                       icon: Icon(Icons.arrow_forward_ios))
                 ],
@@ -86,7 +105,9 @@ showLoaderDialog(BuildContext context) {
     content: new Row(
       children: [
         CircularProgressIndicator(),
-        SizedBox(width: 10,),
+        SizedBox(
+          width: 10,
+        ),
         Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...".tr())),
       ],
     ),
@@ -99,6 +120,7 @@ showLoaderDialog(BuildContext context) {
     },
   );
 }
+
 class CheckInternetConnection extends StatelessWidget {
   final Widget child;
 
@@ -134,11 +156,13 @@ class CheckInternetConnection extends StatelessWidget {
         });
   }
 }
+
 class CheckInternetConnectionDialog extends StatelessWidget {
   final Widget child;
 
-
-  CheckInternetConnectionDialog({this.child,});
+  CheckInternetConnectionDialog({
+    this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +171,6 @@ class CheckInternetConnectionDialog extends StatelessWidget {
         builder: (c, s) {
           if (s.hasData) {
             if (s.data) {
-
               return child;
             } else {
               Navigator.of(context).pop();
@@ -159,6 +182,7 @@ class CheckInternetConnectionDialog extends StatelessWidget {
         });
   }
 }
+
 void showFlutterToast(String message) {
   Fluttertoast.showToast(
       msg: message,
@@ -169,4 +193,3 @@ void showFlutterToast(String message) {
       textColor: Colors.white,
       fontSize: 16.0);
 }
-

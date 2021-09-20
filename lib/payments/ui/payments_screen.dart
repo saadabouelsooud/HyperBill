@@ -94,7 +94,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                         SliderWidget(data),
                         Consumer(
                           builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
-                            var paymentController = watch(paymentDataFutureProvider(context.read(counterProvider).state));
+                            var paymentController = watch(paymentDataFutureProvider(context.read(counterProvider).state.meterId));
                             return paymentController.when(
                                 data: (data) {
                                   final List<Map> _products = List.generate(data.length, (i) {
