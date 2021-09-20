@@ -15,15 +15,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ConnectivityService().init();
   await EasyLocalization.ensureInitialized();
-
   await Preference.init();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(EasyLocalization(supportedLocales: [
     Locale('ar', ''),
     Locale('en', ''),
-  ], path: 'assets/languages',
-      child: ProviderScope(child: MyApp())));
+  ], path: 'assets/languages', child: ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {

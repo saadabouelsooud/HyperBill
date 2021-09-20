@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Hyperbill"
-        android:icon="@mipmap/i">
+        android:icon="@mipmap/icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
