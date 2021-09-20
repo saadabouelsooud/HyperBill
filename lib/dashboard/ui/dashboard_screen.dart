@@ -92,6 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           return asyncValue.when(
               data: (data) {
+                context.read(counterProvider).state = data.first.meterId;
                 return Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
