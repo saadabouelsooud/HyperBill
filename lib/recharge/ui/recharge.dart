@@ -135,7 +135,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                       value = c;
                                       data.forEach((element) {
                                         c.toString().contains(element.unitNo);
-                                        id = element.unitNo;
+                                        id = element.meterId.toString();
                                       });
                                     });
                                   },
@@ -307,7 +307,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                             if (rechargeModel != null) {
                                               String url =
                                                   //"https://test-iframe.kashier.io/payment?" +
-                                                   "'https://iframe.kashier.io/payment'"+
+                                                   "https://iframe.kashier.io/payment?"+
                                                       "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
                                               Navigator.of(context)
                                                   .push(MaterialPageRoute(

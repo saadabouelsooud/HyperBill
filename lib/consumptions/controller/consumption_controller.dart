@@ -4,7 +4,7 @@ import 'package:grocery/consumptions/remote/consumption_repo.dart';
 
 var consumptionControllerProvider = Provider((ref) => ConsumptionController(ref.watch(consumptionRepoProvider)));
 var consumptionDataFutureProvider =
-FutureProvider.family<List<ConsumptionModel>,String>((ref,id) => ref.watch(consumptionControllerProvider).getConsumptionData(id));
+FutureProvider.family.autoDispose<List<ConsumptionModel>,String>((ref,id) => ref.watch(consumptionControllerProvider).getConsumptionData(id));
 class ConsumptionController {
   ConsumptionController(this.repo);
 

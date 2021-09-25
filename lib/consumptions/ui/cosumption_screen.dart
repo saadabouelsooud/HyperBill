@@ -106,7 +106,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         SliderWidget(data),
                         Consumer(
                           builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                            var asyncValue = watch(consumptionDataFutureProvider(context.read(counterProvider).state.toString()));
+                            var asyncValue = watch(consumptionDataFutureProvider(context.read(counterProvider).state.meterId.toString()));
                             var lang;
                             if (EasyLocalization.of(context).locale == Locale('ar', "")) {
                               lang = "ar";
@@ -116,17 +116,19 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             return asyncValue.when(
                                 data: (data) {
                                   if (amountText == null) {
-                                    amountText = oCcy.format(double.parse(data.first.amount.toStringAsFixed(2))) + "  " + "EGP".tr();
+                                    var d = data.first.amount /1000;
+                                    amountText = oCcy.format(double.parse(d.toStringAsFixed(2))) + "  " + "EGP".tr();
                                     amountDate = DateFormat('MMM').format(data.first.readingDate);
                                     consumptionsText = data.first.consumption.toStringAsFixed(2) + "  " + "KWh".tr();
                                     consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
                                   }
                                   final List<Map> _products = List.generate(data.length, (i) {
+                                    var amount = data.elementAt(i).amount/1000;
                                     return {
                                       "Month": DateFormat('MMM-yyyy').format(data.elementAt(i).consumptionMonth),
                                       "Date": DateFormat('d MMMM yyy', lang).format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
-                                      "Amount": oCcy.format(double.parse(data.elementAt(i).amount.toStringAsFixed(2)))
+                                      "Amount": oCcy.format(double.parse(amount.toStringAsFixed(2)))
                                     };
                                   });
 
@@ -149,7 +151,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   height: 180,
                                                   // Height size of chart
                                                   data: data
-                                                      .map((e) => LineChartModel(amount: double.parse(e.amount.toString()), date: e.readingDate))
+                                                      .map((e) => LineChartModel(amount: double.parse(e.consumption.toString()), date: e.readingDate))
                                                       .toList(),
                                                   // The value to the chart
                                                   linePaint: Paint()
@@ -234,7 +236,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   height: 180,
                                                   // Height size of chart
                                                   data: data
-                                                      .map((e) => LineChartModel(amount: double.parse(e.consumption.toString()), date: e.readingDate))
+                                                      .map((e) => LineChartModel(amount: double.parse(e.amount.toString()), date: e.readingDate))
                                                       .toList(),
 
                                                   // The value to the chart
@@ -266,7 +268,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                   onValuePointer: (value) {
                                                     setState(() {
-                                                      amountText = oCcy.format(double.parse(value.chart.amount.toStringAsFixed(2))) + "  " + "EGP".tr();
+                                                      var amount = value.chart.amount/1000;
+                                                      amountText = oCcy.format(double.parse(amount.toStringAsFixed(2))) + "  " + "EGP".tr();
                                                       amountDate = DateFormat('MMM').format(value.chart.date);
                                                     });
                                                   },

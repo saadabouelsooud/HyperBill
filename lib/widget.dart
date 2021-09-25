@@ -10,25 +10,27 @@ import 'core/services/connectivity/connectivity_service.dart';
 import 'dashboard/controller/dashboard_controller.dart';
 
 class SliderWidget extends StatefulWidget {
-  final List<MeterModel> number;
+  final List<MeterModel> meterList;
 
-  SliderWidget(this.number, {Key key}) : super(key: key);
+  SliderWidget(this.meterList, {Key key}) : super(key: key);
 
   @override
   _SliderWidgetState createState() => _SliderWidgetState();
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
+
   @override
   void initState() {
-    if (context.read(counterProvider).state == null){
-      context.read(counterProvider).state =widget.number.first;
-    }
-      super.initState();
+      if (counterProvider== null) {
+        counterProvider=StateProvider<MeterModel>((ref) => widget.meterList.first) ;
+      }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.all(10),
       child: Card(
@@ -42,9 +44,13 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        var currentUnitId = int.parse(context.read(counterProvider).state.unitNo);
-                            if (widget.number.length > currentUnitId) {
-                          context.read(counterProvider).state=widget.number.elementAt((currentUnitId+1));
+                        var currentUnitId = context.read(counterProvider).state;
+
+                        for (int i = 0; i < widget.meterList.length; i++) {
+                          if (widget.meterList.elementAt(i) == currentUnitId &&
+                              widget.meterList.elementAt(i) != widget.meterList.last) {
+                            context.read(counterProvider).state = widget.meterList.elementAt(i+1);
+                          }
                         }
                       },
                       icon: Icon(Icons.arrow_back_ios))
@@ -69,13 +75,10 @@ class _SliderWidgetState extends State<SliderWidget> {
                     style: TextStyles.headerStyle,
                   ),
                   Text(
-                    "Unit No :".tr() + "${context.read(counterProvider).state.unitNo}",
+                    "Unit No :".tr() + "${context.read(counterProvider).state.unitNo.toString()}",
                     style: TextStyles.massiveHeaderStyleNormal,
                   ),
-                  Text(
-                      "Meter serial :".tr() +
-                          " : " +
-                          "${context.read(counterProvider).state.serial.toString()}",
+                  Text("Meter serial :".tr() + " : " + "${context.read(counterProvider).state.serial.toString()}",
                       style: TextStyles.headerStyle),
                 ],
               ),
@@ -84,9 +87,13 @@ class _SliderWidgetState extends State<SliderWidget> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        var currentUnitId = int.parse(context.read(counterProvider).state.unitNo);
-                        if (currentUnitId >1) {
-                          context.read(counterProvider).state=widget.number.elementAt((currentUnitId-1));
+                        var currentUnitId = context.read(counterProvider).state;
+
+                        for (int i = 0; i < widget.meterList.length; i++) {
+                          if (widget.meterList.elementAt(i) == currentUnitId &&
+                              widget.meterList.elementAt(i) != widget.meterList.first) {
+                            context.read(counterProvider).state = widget.meterList.elementAt(i-1);
+                          }
                         }
                       },
                       icon: Icon(Icons.arrow_forward_ios))

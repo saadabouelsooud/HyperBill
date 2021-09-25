@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery/auth/ui/Login1Screen.dart';
 import 'package:grocery/core/services/preference/preference.dart';
 import 'package:grocery/core/services/theme/styles/styles.dart';
 import 'package:grocery/dashboard/controller/dashboard_controller.dart';
-import 'package:grocery/dashboard/model/meter_model.dart';
 import 'package:grocery/drawer_lib.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 
@@ -92,6 +90,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
           return asyncValue.when(
               data: (data) {
+
                 return Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,

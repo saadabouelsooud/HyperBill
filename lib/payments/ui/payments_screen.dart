@@ -98,11 +98,12 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
                             return paymentController.when(
                                 data: (data) {
                                   final List<Map> _products = List.generate(data.length, (i) {
+                                    var amount = data.elementAt(i).amount/1000;
                                     return {
                                       "Date": DateFormat('d MMMM yyy').format(data.elementAt(i).paymentDate),
                                       "Type": data.elementAt(i).type,
                                       "Receipt": data.elementAt(i).receiptNo,
-                                      "Amount":oCcy.format( double.parse(data.elementAt(i).amount.toStringAsFixed(2)))
+                                      "Amount":oCcy.format( double.parse(amount.toStringAsFixed(2)))
                                     };
                                   });
                                   return Column(
