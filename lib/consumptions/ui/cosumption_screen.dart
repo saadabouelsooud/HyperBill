@@ -196,19 +196,19 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                 child: Container(
                                                   margin: EdgeInsets.all(30),
                                                   padding: EdgeInsets.all(10),
-                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+                                                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
                                                   child: Column(
                                                     children: [
                                                       Text(
                                                         consumptionsText,
-                                                        style: TextStyles.largeHintHeaderStyleBold,
+                                                        style: TextStyles.smallHeaderStyle,
                                                       ),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
                                                         "Consumptions".tr() + " " + consumptionsDate,
-                                                        style: TextStyles.largeHintHeaderStyle,
+                                                        style: TextStyles.smallHeaderStyle,
                                                       ),
                                                     ],
                                                   ),
@@ -283,19 +283,19 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                 child: Container(
                                                   margin: EdgeInsets.all(30),
                                                   padding: EdgeInsets.all(10),
-                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+                                                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
                                                   child: Column(
                                                     children: [
                                                       Text(
                                                         amountText,
-                                                        style: TextStyles.largeHintHeaderStyleBold,
+                                                        style: TextStyles.smallHeaderStyle,
                                                       ),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
                                                         "Amount".tr() + " " + amountDate,
-                                                        style: TextStyles.largeHintHeaderStyle,
+                                                        style: TextStyles.smallHeaderStyle,
                                                       ),
                                                     ],
                                                   ),
