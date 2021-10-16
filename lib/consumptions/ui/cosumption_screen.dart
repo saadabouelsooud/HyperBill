@@ -106,8 +106,9 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         SliderWidget(data),
                         Consumer(
                           builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                            var asyncValue = watch(consumptionDataFutureProvider(context.read(counterProvider).state.meterId.toString()));
-                            var lang;
+                            var asyncValue = watch(
+                                consumptionDataFutureProvider(context.read(counterProvider).state.meterId.toString()));
+                            String lang;
                             if (EasyLocalization.of(context).locale == Locale('ar', "")) {
                               lang = "ar";
                             } else {
@@ -116,16 +117,16 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                             return asyncValue.when(
                                 data: (data) {
                                   if (amountText == null) {
-                                    var d = data.first.amount /1000;
+                                    var d = data.first.amount / 1000;
                                     amountText = oCcy.format(double.parse(d.toStringAsFixed(2))) + "  " + "EGP".tr();
                                     amountDate = DateFormat('MMM').format(data.first.readingDate);
                                     consumptionsText = data.first.consumption.toStringAsFixed(2) + "  " + "KWh".tr();
                                     consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
                                   }
                                   final List<Map> _products = List.generate(data.length, (i) {
-                                    var amount = data.elementAt(i).amount/1000;
+                                    var amount = data.elementAt(i).amount / 1000;
                                     return {
-                                      "Month": DateFormat('MMM-yyyy').format(data.elementAt(i).consumptionMonth),
+                                      "Month": DateFormat('MMM-yyyy',lang).format(data.elementAt(i).consumptionMonth),
                                       "Date": DateFormat('d MMMM yyy', lang).format(data.elementAt(i).readingDate),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
                                       "Amount": oCcy.format(double.parse(amount.toStringAsFixed(2)))
@@ -134,176 +135,195 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
 
                                   return Column(
                                     children: [
-                                      Column(
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.all(10),
+                                      Card(
+                                        elevation: 5,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 15, right: 15),                                              child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Container(
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  color: Colors.white,
-                                                ),
-                                                child: LineChart(
-                                                  insidePadding: 50,
-                                                  width: MediaQuery.of(context).size.width * .9,
-                                                  // Width size of chart
-                                                  height: 180,
-                                                  // Height size of chart
-                                                  data: data
-                                                      .map((e) => LineChartModel(amount: double.parse(e.consumption.toString()), date: e.readingDate))
-                                                      .toList(),
-                                                  // The value to the chart
-                                                  linePaint: Paint()
-                                                    ..strokeWidth = 3
-                                                    ..style = PaintingStyle.stroke
-                                                    ..color = Colors.green,
-                                                  // Custom paint for the line
-                                                  circlePaint: Paint()..color = Colors.green,
-                                                  // Custom paint for the line
-                                                  showPointer: true,
-                                                  // When press or pan update the chart, create a pointer in approximated value (The default is true)
-                                                  showCircles: true,
-                                                  // Show the circle in every value of chart
-                                                  customDraw: (Canvas canvas, Size size) {},
-                                                  // You can draw anything in your chart, this callback is called when is generating the chart
-                                                  circleRadiusValue: 6,
-                                                  // The radius value of circle
-                                                  linePointerDecoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                  ),
-                                                  // Your line pointer decoration,
-                                                  pointerDecoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.green,
-                                                  ),
-                                                  // Your decoration of circle pointer,
-                                                  insideCirclePaint: Paint()..color = Colors.white,
-                                                  // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
-                                                  onValuePointer: (value) {
-                                                    setState(() {
-                                                      consumptionsText = value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
-                                                      consumptionsDate = DateFormat('MMM').format(value.chart.date);
-                                                    });
-                                                  },
-                                                  // This callback is called when change the pointer,
-                                                  onDropPointer:
-                                                      () {}, // This callback is called when it is on the pointer and removes your finger from the screen
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    color: Colors.transparent),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      consumptionsText,
+                                                      style: TextStyle(
+                                                        color: Colors.green,
+                                                        fontSize: 20,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: "Schyler",
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                      "Consumptions".tr() + " " + consumptionsDate,
+                                                      style: TextStyles.largeHintHeaderStyle,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Container(
-                                                  margin: EdgeInsets.all(30),
-                                                  padding: EdgeInsets.all(10),
-                                                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        consumptionsText,
-                                                        style: TextStyles.smallHeaderStyle,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        "Consumptions".tr() + " " + consumptionsDate,
-                                                        style: TextStyles.smallHeaderStyle,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.all(10),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                  color: Colors.white,
-                                                ),
-                                                child: LineChart(
-                                                  insidePadding: 50,
-
-                                                  width: MediaQuery.of(context).size.width * .9,
-                                                  // Width size of chart
-                                                  height: 180,
-                                                  // Height size of chart
-                                                  data: data
-                                                      .map((e) => LineChartModel(amount: double.parse(e.amount.toString()), date: e.readingDate))
-                                                      .toList(),
-
-                                                  // The value to the chart
-                                                  linePaint: Paint()
-                                                    ..strokeWidth = 3
-                                                    ..style = PaintingStyle.stroke
-                                                    ..color = Colors.green,
-                                                  // Custom paint for the line
-                                                  circlePaint: Paint()..color = Colors.green,
-                                                  // Custom paint for the line
-                                                  showPointer: true,
-                                                  // When press or pan update the chart, create a pointer in approximated value (The default is true)
-                                                  showCircles: true,
-                                                  // Show the circle in every value of chart
-                                                  customDraw: (Canvas canvas, Size size) {},
-                                                  // You can draw anything in your chart, this callback is called when is generating the chart
-                                                  circleRadiusValue: 6,
-                                                  // The radius value of circle
-                                                  linePointerDecoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                  ),
-                                                  // Your line pointer decoration,
-                                                  pointerDecoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.green,
-                                                  ),
-                                                  // Your decoration of circle pointer,
-                                                  insideCirclePaint: Paint()..color = Colors.white,
-                                                  // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
-                                                  onValuePointer: (value) {
-                                                    setState(() {
-                                                      var amount = value.chart.amount/1000;
-                                                      amountText = oCcy.format(double.parse(amount.toStringAsFixed(2))) + "  " + "EGP".tr();
-                                                      amountDate = DateFormat('MMM').format(value.chart.date);
-                                                    });
-                                                  },
-                                                  // This callback is called when change the pointer,
-                                                  onDropPointer:
-                                                      () {}, // This callback is called when it is on the pointer and removes your finger from the screen
-                                                ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Colors.white,
                                               ),
-                                              Align(
-                                                alignment: Alignment.topLeft,
+                                              child: LineChart(
+                                                insidePadding: 50,
+                                                width: MediaQuery.of(context).size.width * .9,
+                                                // Width size of chart
+                                                height: 100,
+                                                // Height size of chart
+                                                data: data
+                                                    .map((e) => LineChartModel(
+                                                        amount: double.parse(e.consumption.toString()),
+                                                        date: e.readingDate))
+                                                    .toList(),
+                                                // The value to the chart
+                                                linePaint: Paint()
+                                                  ..strokeWidth = 3
+                                                  ..style = PaintingStyle.stroke
+                                                  ..color = Colors.green,
+                                                // Custom paint for the line
+                                                circlePaint: Paint()..color = Colors.green,
+                                                // Custom paint for the line
+                                                showPointer: true,
+                                                // When press or pan update the chart, create a pointer in approximated value (The default is true)
+                                                showCircles: true,
+                                                // Show the circle in every value of chart
+                                                customDraw: (Canvas canvas, Size size) {},
+                                                // You can draw anything in your chart, this callback is called when is generating the chart
+                                                circleRadiusValue: 6,
+                                                // The radius value of circle
+                                                linePointerDecoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                ),
+                                                // Your line pointer decoration,
+                                                pointerDecoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.green,
+                                                ),
+                                                // Your decoration of circle pointer,
+                                                insideCirclePaint: Paint()..color = Colors.white,
+                                                // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
+                                                onValuePointer: (value) {
+                                                  setState(() {
+                                                    consumptionsText =
+                                                        value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
+                                                    consumptionsDate = DateFormat('MMM').format(value.chart.date);
+                                                  });
+                                                },
+                                                // This callback is called when change the pointer,
+                                                onDropPointer:
+                                                    () {}, // This callback is called when it is on the pointer and removes your finger from the screen
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      ),
+                                      Card(
+                                        elevation: 5,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 15, right: 15),
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
                                                 child: Container(
-                                                  margin: EdgeInsets.all(30),
-                                                  padding: EdgeInsets.all(10),
-                                                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      color: Colors.transparent),
                                                   child: Column(
                                                     children: [
                                                       Text(
                                                         amountText,
-                                                        style: TextStyles.smallHeaderStyle,
+                                                        style: TextStyle(
+                                                          color: Colors.green,
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Schyler",
+                                                        ),
                                                       ),
                                                       SizedBox(
                                                         height: 5,
                                                       ),
                                                       Text(
                                                         "Amount".tr() + " " + amountDate,
-                                                        style: TextStyles.smallHeaderStyle,
+                                                        style: TextStyles.largeHintHeaderStyle,
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ],
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: Colors.white,
+                                              ),
+                                              child: LineChart(
+                                                insidePadding: 50,
+                                                width: MediaQuery.of(context).size.width * .9,
+                                                // Width size of chart
+                                                height: 100,
+                                                // Height size of chart
+                                                data: data
+                                                    .map((e) => LineChartModel(
+                                                        amount: double.parse(e.amount.toString()), date: e.readingDate))
+                                                    .toList(),
+
+                                                // The value to the chart
+                                                linePaint: Paint()
+                                                  ..strokeWidth = 3
+                                                  ..style = PaintingStyle.stroke
+                                                  ..color = Colors.green,
+                                                // Custom paint for the line
+                                                circlePaint: Paint()..color = Colors.green,
+                                                // Custom paint for the line
+                                                showPointer: true,
+                                                // When press or pan update the chart, create a pointer in approximated value (The default is true)
+                                                showCircles: true,
+                                                // Show the circle in every value of chart
+                                                customDraw: (Canvas canvas, Size size) {},
+                                                // You can draw anything in your chart, this callback is called when is generating the chart
+                                                circleRadiusValue: 6,
+                                                // The radius value of circle
+                                                linePointerDecoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                ),
+                                                // Your line pointer decoration,
+                                                pointerDecoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.green,
+                                                ),
+                                                // Your decoration of circle pointer,
+                                                insideCirclePaint: Paint()..color = Colors.white,
+                                                // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
+                                                onValuePointer: (value) {
+                                                  setState(() {
+                                                    var amount = value.chart.amount / 1000;
+                                                    amountText = oCcy.format(double.parse(amount.toStringAsFixed(2))) +
+                                                        "  " +
+                                                        "EGP".tr();
+                                                    amountDate = DateFormat('MMM').format(value.chart.date);
+                                                  });
+                                                },
+                                                // This callback is called when change the pointer,
+                                                onDropPointer:
+                                                    () {}, // This callback is called when it is on the pointer and removes your finger from the screen
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       Column(
                                         children: [
@@ -327,7 +347,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   return Card(
                                                     child: ExpansionTile(
                                                       title: Text(_products.elementAt(index)["Date"],
-                                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                                                          style: TextStyle(
+                                                              color: Colors.black, fontWeight: FontWeight.bold)),
                                                       children: [
                                                         Padding(
                                                           padding: const EdgeInsets.all(15.0),
@@ -336,7 +357,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   'Month'.tr(),
-                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(
+                                                                      color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -349,7 +371,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   "Reading Date".tr(),
-                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(
+                                                                      color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -362,7 +385,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   'KWh'.tr(),
-                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(
+                                                                      color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -375,7 +399,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   'Amount'.tr(),
-                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(
+                                                                      color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),

@@ -44,10 +44,10 @@ class AuthController {
       message = "please write your Email";
       return false;
     }
-    if (!StringMethods(email).isEmail()) {
-      message = "please write correct Email";
-      return false;
-    }
+    // if (!StringMethods(email).isEmail()) {
+    //   message = "please write correct Email";
+    //   return false;
+    // }
 
     if (password == null || password.isEmpty) {
       message = "please write your password";

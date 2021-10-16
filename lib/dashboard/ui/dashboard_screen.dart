@@ -125,7 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[2],
                                       text: dashboardItemsName[2],
-                                      text2: data.totalConsumption,
+                                      text2:oCcy.format(double.parse(data.totalConsumption.toStringAsFixed(2))),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[3],
