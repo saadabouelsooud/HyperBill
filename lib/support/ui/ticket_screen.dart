@@ -187,15 +187,12 @@ class _TicketScreenState extends State<TicketScreen> {
                               context.read(supportControllerProvider).descriptionTextController.text,
                               context.read(supportControllerProvider).titleTextController.text)
                           .then((value) {
+
                         Navigator.of(context).pop();
-                        Fluttertoast.showToast(
-                            msg: context.read(supportControllerProvider).message,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
+                        Navigator.of(context).pop();
+
+
+
                       });
                     },
                     child: Container(

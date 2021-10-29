@@ -5,7 +5,7 @@ import 'package:grocery/dashboard/repository/dashboad_repo.dart';
 var dashboardControllerProvider = Provider((ref) => DashboardController(ref.watch(dashBoardRepoProvider)));
 var dashboardMeterDataFutureProvider = FutureProvider<List<MeterModel>>((ref) => ref.watch(dashboardControllerProvider).getDashboardData());
 var dashboardMeterDetailsDataFutureProvider =
-    FutureProvider.family<MeterDetailModel, int>((ref, id) => ref.watch(dashboardControllerProvider).getMeterDetailData(id));
+    FutureProvider.autoDispose.family<MeterDetailModel, int>((ref, id) => ref.watch(dashboardControllerProvider).getMeterDetailData(id));
 
 var counterProvider ;
 

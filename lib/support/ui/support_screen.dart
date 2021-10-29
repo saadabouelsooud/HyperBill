@@ -4,6 +4,7 @@ import 'package:grocery/core/services/theme/styles/colors.dart';
 import 'package:grocery/dashboard/controller/dashboard_controller.dart';
 import 'package:grocery/profile/ui/profile_screen.dart';
 import 'package:grocery/support/controller/support_controller.dart';
+import 'package:grocery/support/model/ticket_model.dart';
 import 'package:grocery/support/ui/ticket_screen.dart';
 import 'package:grocery/support/ui/ticket_view.dart';
 import 'package:grocery/widget.dart';
@@ -11,7 +12,6 @@ import 'package:intl/intl.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../drawer_lib.dart';
-
 
 class SupportScreen extends KFDrawerContent {
   @override
@@ -28,9 +28,7 @@ class _SupportScreenState extends State<SupportScreen> {
     }
     if (choice == 2) {
       setState(() {
-        if (EasyLocalization
-            .of(context)
-            .locale == Locale('ar', "")) {
+        if (EasyLocalization.of(context).locale == Locale('ar', "")) {
           EasyLocalization.of(context).setLocale(Locale('en', ""));
         } else {
           EasyLocalization.of(context).setLocale(Locale('ar', ""));
@@ -45,7 +43,12 @@ class _SupportScreenState extends State<SupportScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => TicketScreen()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => TicketScreen())).then((value) {
+            setState(() {
+              supportDataFutureProvider =
+                  FutureProvider.autoDispose<List<Ticket>>((ref) => ref.watch(supportControllerProvider).getSupportData());
+            });
+          });
         },
         child: Icon(
           Icons.add,
@@ -67,8 +70,7 @@ class _SupportScreenState extends State<SupportScreen> {
               ),
             ),
             onSelected: _itemChoice,
-            itemBuilder: (context) =>
-            [
+            itemBuilder: (context) => [
               PopupMenuItem(
                 child: Text("Profile".tr()),
                 value: 1,
@@ -96,21 +98,14 @@ class _SupportScreenState extends State<SupportScreen> {
         ),
       ),
       body: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Consumer(
           builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watch, Widget child) {
             var asyncValue = watch(dashboardMeterDataFutureProvider);
             return asyncValue.when(
                 data: (data) {
                   return ListView(
-
                     scrollDirection: Axis.vertical,
                     children: [
                       SliderWidget(data),
@@ -121,22 +116,12 @@ class _SupportScreenState extends State<SupportScreen> {
                               data: (data) {
                                 final List<Map> _products = List.generate(data.length, (i) {
                                   return {
-                                    "id": DateFormat('d MMMM yyy').format(data
-                                        .elementAt(i)
-                                        .createdDate),
-                                    "name": data
-                                        .elementAt(i)
-                                        .type,
-                                    "price": data
-                                        .elementAt(i)
-                                        .description,
+                                    "id": DateFormat('d MMMM yyy').format(data.elementAt(i).createdDate),
+                                    "name": data.elementAt(i).type,
+                                    "price": data.elementAt(i).description,
                                     "View": "Action",
-                                    "Status": data
-                                        .elementAt(i)
-                                        .status,
-                                    "title": data
-                                        .elementAt(i)
-                                        .title
+                                    "Status": data.elementAt(i).status,
+                                    "title": data.elementAt(i).title
                                   };
                                 });
                                 return Column(
@@ -146,14 +131,15 @@ class _SupportScreenState extends State<SupportScreen> {
                                     ),
                                     Row(
                                       children: [
-                                        SizedBox(width: 25,),
+                                        SizedBox(
+                                          width: 25,
+                                        ),
                                         Text(
                                           'Date'.tr(),
                                           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                         ),
                                       ],
                                     ),
-
                                     Padding(
                                       padding: const EdgeInsets.all(20),
                                       child: ListView.builder(
@@ -169,134 +155,92 @@ class _SupportScreenState extends State<SupportScreen> {
                                                   Padding(
                                                     padding: const EdgeInsets.all(15.0),
                                                     child: Column(children: [
-                                                    Row(
-                                                    children: [
-                                                    Text(
-                                                    'Date'.tr(),
-                                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                                    child: Text(":"),
-                                                  ),
-                                                  Text(_products.elementAt(index)["id"]),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            'Date'.tr(),
+                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 10, right: 10),
+                                                            child: Text(":"),
+                                                          ),
+                                                          Text(_products.elementAt(index)["id"]),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            "Type".tr(),
+                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 10, right: 10),
+                                                            child: Text(":"),
+                                                          ),
+                                                          Text(_products.elementAt(index)["name"]),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            'Description'.tr(),
+                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 10, right: 10),
+                                                            child: Text(":"),
+                                                          ),
+                                                          Text(_products.elementAt(index)["price"]),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            'Status'.tr(),
+                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 10, right: 10),
+                                                            child: Text(":"),
+                                                          ),
+                                                          Text(_products.elementAt(index)["Status"]),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            'Action'.tr(),
+                                                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 10, right: 10),
+                                                            child: Text(":"),
+                                                          ),
+                                                          ElevatedButton(
+                                                            child: Text(_products.elementAt(index)['View'].toString(),
+                                                                textAlign: TextAlign.center),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (c) => TicketView(
+                                                                          _products.elementAt(index)["name"],
+                                                                          _products.elementAt(index)["title"],
+                                                                          _products.elementAt(index)["Status"])));
+                                                            },
+                                                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ]),
+                                                  )
                                                 ],
                                               ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "Type".tr(),
-                                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                                    child: Text(":"),
-                                                  ),
-                                                  Text(_products.elementAt(index)["name"]),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Description'.tr(),
-                                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                                    child: Text(":"),
-                                                  ),
-                                                  Text(_products.elementAt(index)["price"]),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    'Status'.tr(),
-                                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                                    child: Text(":"),
-                                                  ),
-                                                  Text(_products.elementAt(index)["Status"]),
-                                                ],
-                                              ), Row(
-                                                children: [
-                                                  Text(
-                                                    'Action'.tr(),
-                                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 10, right: 10),
-                                                    child: Text(":"),
-                                                  ),
-                                                  ElevatedButton(
-                                                    child: Text(_products.elementAt(index)['View'].toString(), textAlign: TextAlign.center),
-                                                   onPressed: () {   Navigator.push(context, MaterialPageRoute(builder: (c) =>
-                                                      TicketView(_products.elementAt(index)["name"], _products.elementAt(index)["title"],
-                                                          _products.elementAt(index)["Status"]))); },style: ButtonStyle(backgroundColor:  MaterialStateProperty.all(Colors.green)),)
-
-                                                    ],
-                                                  ),
-                                                ]),
-                                            )],
-                                            )
-                                            ,
                                             );
                                           }),
                                     ),
                                   ],
-                                );
-                                return DataTable(
-                                  columnSpacing: 5,
-                                  sortColumnIndex: _currentSortColumn,
-                                  sortAscending: _isAscending,
-                                  headingRowColor: MaterialStateProperty.all(Colors.white),
-                                  columns: [
-                                    DataColumn(
-                                        label: Text(
-                                          'Date'.tr(),
-                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                        ),
-                                        onSort: (columnIndex, _) {
-                                          setState(() {
-                                            _currentSortColumn = columnIndex;
-                                            if (_isAscending == true) {
-                                              _isAscending = false;
-                                              _products.sort((productA, productB) => productB['price'].compareTo(productA['price']));
-                                            } else {
-                                              _isAscending = true;
-                                              _products.sort((productA, productB) => productA['price'].compareTo(productB['price']));
-                                            }
-                                          });
-                                        }),
-                                    DataColumn(label: Text('Type'.tr())),
-                                    DataColumn(label: Text('Description'.tr())),
-                                    DataColumn(label: Text('Status'.tr())),
-                                    DataColumn(
-                                      label: Text(
-                                        'Action'.tr(),
-                                      ),
-                                      // Sorting function
-                                    ),
-                                  ],
-                                  rows: _products.map((item) {
-                                    return DataRow(cells: [
-                                      DataCell(Text(
-                                        item['id'].toString(),
-                                      )),
-                                      DataCell(Text(item['name'], textAlign: TextAlign.center)),
-                                      DataCell(Text(item['price'].toString(), textAlign: TextAlign.center)),
-                                      DataCell(Text(item['Status'].toString(), textAlign: TextAlign.center)),
-                                      DataCell(InkWell(
-                                        child: Text(item['View'].toString(), textAlign: TextAlign.center),
-                                        onTap: () {
-                                          Navigator.push(
-                                              context, MaterialPageRoute(builder: (c) => TicketView(item["name"], item["title"], item["Status"])));
-                                        },
-                                      ))
-                                    ]);
-                                  }).toList(),
                                 );
                               },
                               loading: () => Center(child: CircularProgressIndicator()),

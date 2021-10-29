@@ -5,7 +5,6 @@ import 'package:grocery/core/services/api/http_api.dart';
 import 'package:grocery/core/services/preference/preference.dart';
 import 'package:grocery/support/repository/remote/support_api.dart';
 
-var supportRepoProvider = Provider((ref) => SupportRepo());
 
 class SupportRepo implements SupportApi {
   var token = Preference.getString(PrefKeys.token);

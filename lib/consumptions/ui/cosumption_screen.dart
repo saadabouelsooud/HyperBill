@@ -22,6 +22,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentSortColumn = 0;
   bool _isAscending = true;
+
   final oCcy = new NumberFormat("#,##0.00", "en_US");
 
   _itemChoice(choice) {
@@ -106,8 +107,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                         SliderWidget(data),
                         Consumer(
                           builder: (BuildContext context, T Function<T>(ProviderBase<Object, T>) watc, Widget child) {
-                            var asyncValue = watch(
-                                consumptionDataFutureProvider(context.read(counterProvider).state.meterId.toString()));
+                            var asyncValue = watch(consumptionDataFutureProvider(context.read(counterProvider).state.meterId.toString()));
                             String lang;
                             if (EasyLocalization.of(context).locale == Locale('ar', "")) {
                               lang = "ar";
@@ -119,15 +119,15 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                   if (amountText == null) {
                                     var d = data.first.amount / 1000;
                                     amountText = oCcy.format(double.parse(d.toStringAsFixed(2))) + "  " + "EGP".tr();
-                                    amountDate = DateFormat('MMM').format(data.first.readingDate);
+                                    amountDate = DateFormat('MMM').format(data.first.consumptionMonth);
                                     consumptionsText = data.first.consumption.toStringAsFixed(2) + "  " + "KWh".tr();
-                                    consumptionsDate = DateFormat('MMM').format(data.first.readingDate);
+                                    consumptionsDate = DateFormat('MMM').format(data.first.consumptionMonth);
                                   }
                                   final List<Map> _products = List.generate(data.length, (i) {
                                     var amount = data.elementAt(i).amount / 1000;
                                     return {
-                                      "Month": DateFormat('MMM-yyyy',lang).format(data.elementAt(i).consumptionMonth),
-                                      "Date": DateFormat('d MMMM yyy', lang).format(data.elementAt(i).readingDate),
+                                      "Month": DateFormat('MMM-yyyy', lang).format(data.elementAt(i).readingDate),
+                                      "Date": DateFormat('d MMMM yyy', lang).format(data.elementAt(i).consumptionMonth),
                                       "KWh": data.elementAt(i).consumption.toStringAsFixed(2),
                                       "Amount": oCcy.format(double.parse(amount.toStringAsFixed(2)))
                                     };
@@ -140,34 +140,34 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                         child: Column(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 15, right: 15),                                              child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    color: Colors.transparent),
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      consumptionsText,
-                                                      style: TextStyle(
-                                                        color: Colors.green,
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: "Schyler",
+                                              padding: const EdgeInsets.only(left: 15, right: 15),
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Container(
+                                                  decoration:
+                                                      BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.transparent),
+                                                  child: Column(
+                                                    children: [
+                                                      Text(
+                                                        consumptionsText,
+                                                        style: TextStyle(
+                                                          color: Colors.green,
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: "Schyler",
+                                                        ),
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Text(
-                                                      "Consumptions".tr() + " " + consumptionsDate,
-                                                      style: TextStyles.largeHintHeaderStyle,
-                                                    ),
-                                                  ],
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        "Consumptions".tr() + " " + consumptionsDate,
+                                                        style: TextStyles.largeHintHeaderStyle,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                          ),
                                             ),
                                             Container(
                                               margin: EdgeInsets.all(10),
@@ -182,9 +182,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                 height: 100,
                                                 // Height size of chart
                                                 data: data
-                                                    .map((e) => LineChartModel(
-                                                        amount: double.parse(e.consumption.toString()),
-                                                        date: e.readingDate))
+                                                    .map((e) =>
+                                                        LineChartModel(amount: double.parse(e.consumption.toString()), date: e.consumptionMonth))
                                                     .toList(),
                                                 // The value to the chart
                                                 linePaint: Paint()
@@ -215,8 +214,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                 // On your circle of the chart, have a second circle, which is inside and a slightly smaller size.
                                                 onValuePointer: (value) {
                                                   setState(() {
-                                                    consumptionsText =
-                                                        value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
+                                                    consumptionsText = value.chart.amount.toStringAsFixed(2) + "  " + "KWh".tr();
                                                     consumptionsDate = DateFormat('MMM').format(value.chart.date);
                                                   });
                                                 },
@@ -225,7 +223,6 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                     () {}, // This callback is called when it is on the pointer and removes your finger from the screen
                                               ),
                                             ),
-
                                           ],
                                         ),
                                       ),
@@ -238,9 +235,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                               child: Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10),
-                                                      color: Colors.transparent),
+                                                  decoration:
+                                                      BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.transparent),
                                                   child: Column(
                                                     children: [
                                                       Text(
@@ -277,8 +273,8 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                 height: 100,
                                                 // Height size of chart
                                                 data: data
-                                                    .map((e) => LineChartModel(
-                                                        amount: double.parse(e.amount.toString()), date: e.readingDate))
+                                                    .map((e) =>
+                                                        LineChartModel(amount: double.parse(e.amount.toString()), date: e.consumptionMonth))
                                                     .toList(),
 
                                                 // The value to the chart
@@ -311,9 +307,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                 onValuePointer: (value) {
                                                   setState(() {
                                                     var amount = value.chart.amount / 1000;
-                                                    amountText = oCcy.format(double.parse(amount.toStringAsFixed(2))) +
-                                                        "  " +
-                                                        "EGP".tr();
+                                                    amountText = oCcy.format(double.parse(amount.toStringAsFixed(2))) + "  " + "EGP".tr();
                                                     amountDate = DateFormat('MMM').format(value.chart.date);
                                                   });
                                                 },
@@ -347,8 +341,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                   return Card(
                                                     child: ExpansionTile(
                                                       title: Text(_products.elementAt(index)["Date"],
-                                                          style: TextStyle(
-                                                              color: Colors.black, fontWeight: FontWeight.bold)),
+                                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
                                                       children: [
                                                         Padding(
                                                           padding: const EdgeInsets.all(15.0),
@@ -357,8 +350,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   'Month'.tr(),
-                                                                  style: TextStyle(
-                                                                      color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -371,8 +363,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   "Reading Date".tr(),
-                                                                  style: TextStyle(
-                                                                      color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -385,8 +376,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   'KWh'.tr(),
-                                                                  style: TextStyle(
-                                                                      color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),
@@ -399,8 +389,7 @@ class _ConsumptionsState extends State<ConsumptionsScreen> {
                                                               children: [
                                                                 Text(
                                                                   'Amount'.tr(),
-                                                                  style: TextStyle(
-                                                                      color: Colors.black, fontWeight: FontWeight.bold),
+                                                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                                                 ),
                                                                 Padding(
                                                                   padding: const EdgeInsets.only(left: 10, right: 10),

@@ -115,7 +115,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       icon: dashboardItemsIcons[0],
                                       text: dashboardItemsName[0],
                                       text2: oCcy.format(double.parse(
-                                          data.balance.toStringAsFixed(2))),
+                                          data.balance.toStringAsFixed(2)))+ " "+"EGP".tr(),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[1],
@@ -125,25 +125,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Item(
                                       icon: dashboardItemsIcons[2],
                                       text: dashboardItemsName[2],
-                                      text2:oCcy.format(double.parse(data.totalConsumption.toStringAsFixed(2))),
+                                      text2:oCcy.format(double.parse(data.totalConsumption.toStringAsFixed(2)))+" "+"KWh".tr(),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[3],
                                       text: dashboardItemsName[3],
-                                      text2: data.lastReadingDate,
+                                      text2: DateFormat('dd MMM yyyy').format(data.lastReadingDate),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[4],
                                       text: dashboardItemsName[4],
                                       text2: oCcy.format(double.parse(data
                                           .thisMonthConsumptionEgp
-                                          .toStringAsFixed(2))),
+                                          .toStringAsFixed(2)))+" "+"EGP".tr(),
                                     ),
                                     Item(
                                       icon: dashboardItemsIcons[5],
                                       text: dashboardItemsName[5],
                                       text2: data.thisMonthConsumptionKwh
-                                          .toStringAsFixed(2),
+                                          .toStringAsFixed(2)+" "+"KWh".tr(),
                                     ),
                                   ],
                                   gridDelegate:
