@@ -15,6 +15,7 @@ class DashboardController {
   DashboardRepo repo;
 
   Future<List<MeterModel>> getDashboardData() async {
+
     var response = await repo.getDashBoardData();
 
     var dataList = response.data as List;

@@ -48,7 +48,7 @@
   "To": "الى",
   "From": "من",
   "You Will Pay": "سوف تدفع",
-  "KWh": "ك.وت",
+  "KWh": "ك.وس",
   "Phone": "الهاتف",
   "Amount (EGP)": "المبلغ (ج.م)",
   "Reading Date": " تاريخ القراءة",
@@ -66,6 +66,4 @@
   "Unit No :": "رقم الوحدة : ",
   "Meter serial :": "رقم العداد",
   "This Month Consumption": "استهلاك الشهر الحالى"
-
-
 }

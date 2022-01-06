@@ -50,7 +50,7 @@ class MeterDetailModel {
   bool status;
   double totalConsumption;
   DateTime lastReadingDate;
-  int thisMonthConsumptionEgp;
+  double thisMonthConsumptionEgp;
   double thisMonthConsumptionKwh;
 
   factory MeterDetailModel.fromJson(Map<String, dynamic> json) => MeterDetailModel(
@@ -59,7 +59,7 @@ class MeterDetailModel {
     status: json["status"],
     totalConsumption: json["totalConsumption"].toDouble(),
     lastReadingDate: DateTime.parse(json["lastReadingDate"]),
-    thisMonthConsumptionEgp: json["thisMonthConsumptionEGP"],
+    thisMonthConsumptionEgp: (json["thisMonthConsumptionEGP"]/1000),
     thisMonthConsumptionKwh: json["thisMonthConsumptionKWH"].toDouble(),
   );
 

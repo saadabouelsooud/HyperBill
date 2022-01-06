@@ -107,7 +107,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                             height: 30,
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width * .7,
+                            width: MediaQuery.of(context).size.width * .8,
                             child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
@@ -149,7 +149,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                           ),
                           Container(
                             height: 60,
-                            width: MediaQuery.of(context).size.width * .7,
+                            width: MediaQuery.of(context).size.width * .8,
                             child: TextFormField(
                               controller: amountTextEditingController,
                               keyboardType: TextInputType.number,
@@ -235,7 +235,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                     child: Container(
                                       height: 60,
                                       width: MediaQuery.of(context).size.width *
-                                          .7,
+                                          .8,
                                       child: TextFormField(
                                         onTap: () {
                                           FocusScope.of(context).unfocus();
@@ -306,7 +306,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
                                                 value.formattedAmt.toString();
                                             if (rechargeModel != null) {
                                               String url =
-                                                  //"https://test-iframe.kashier.io/payment?" +
+                                                  // "https://test-iframe.kashier.io/payment?" +
                                                    "https://iframe.kashier.io/payment?"+
                                                       "mid=${rechargeModel.mid}&orderId=${rechargeModel.orderId}&amount=${rechargeModel.formattedAmt}&currency=${rechargeModel.currency}&hash=${rechargeModel.hash}&merchantRedirect=${rechargeModel.redirectUrl}";
                                               Navigator.of(context)
