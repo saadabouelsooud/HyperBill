@@ -32,23 +32,27 @@ class WebViewExampleState extends State<WebViewExample> {
         javascriptMode: JavascriptMode.unrestricted,
         navigationDelegate: (request) {
           var parse = Uri.parse(request.url);
-          if (parse.queryParameters['paymentStatus'] == 'SUCCESS' ||
-              parse.queryParameters['paymentStatus'] == 'Success' ||
-              parse.queryParameters['paymentStatus'] == 'success') {
+          if (request.url.contains('app/pay/status') && !request.url.contains('FAILURE') && request.url.contains('SUCCESS')) {
+            // context.read(rechargeControllerProvider).addSuccessRecharge(PaymentSuccessModel(
+            //         paymentStatus: parse.queryParameters['paymentStatus'],
+            //         cardDataToken: parse.queryParameters['cardDataToken'],
+            //         maskedCard: parse.queryParameters['maskedCard'],
+            //         merchantOrderId: parse.queryParameters['merchantOrderId'],
+            //         orderId: parse.queryParameters['orderId'],
+            //         cardBrand: parse.queryParameters['cardBrand'],
+            //         orderReference: parse.queryParameters['orderReference'],
+            //         transactionId: parse.queryParameters['transactionId'],
+            //         amount: parse.queryParameters['amount'],
+            //         currency: parse.queryParameters['currency'],
+            //         signature: parse.queryParameters['signature'],
+            //         mode: parse.queryParameters['mode'])
+            //     .toJson());
             context.read(rechargeControllerProvider).addSuccessRecharge(PaymentSuccessModel(
-                    paymentStatus: parse.queryParameters['paymentStatus'],
-                    cardDataToken: parse.queryParameters['cardDataToken'],
-                    maskedCard: parse.queryParameters['maskedCard'],
-                    merchantOrderId: parse.queryParameters['merchantOrderId'],
-                    orderId: parse.queryParameters['orderId'],
-                    cardBrand: parse.queryParameters['cardBrand'],
-                    orderReference: parse.queryParameters['orderReference'],
-                    transactionId: parse.queryParameters['transactionId'],
-                    amount: parse.queryParameters['amount'],
-                    currency: parse.queryParameters['currency'],
-                    signature: parse.queryParameters['signature'],
-                    mode: parse.queryParameters['mode'])
-                .toJson());
+                amount:widget.model.formattedAmt,
+                currency:widget.model.currency,
+                merchantOrderId:widget.model.orderId,
+                orderId:widget.model.orderId,
+                paymentStatus:"SUCCESS").toJson());
 
             Navigator.pop(context);
             return NavigationDecision.prevent;
